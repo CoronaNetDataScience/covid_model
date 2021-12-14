@@ -1,0 +1,156 @@
+---
+title: "A Retrospective Bayesian Model for Measuring Covariate Effects on Observed COVID-19 Test and Case Counts"
+author: 
+  - "Robert Kubinec, Luiz Max Carvalho, Cindy Cheng, Joan Barcelo, Allison Spencer Hartnett and Luca Messerschmidt"
+institution: New York University Abu Dhabi
+date: "October 5, 2021"
+output: 
+  ioslides_presentation:
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Background 
+
+- The explosion in research on COVID-19 has led to numerous studies trying to understand both the *causes of* COVID-19 and the *effects of* COVID-19 on social-scientific variables:
+  - Partisanship
+  - Wealth/inequality
+  - Public protest (aka "George Floyd" protests)
+- It is difficult to employ traditional statistical methods to study COVID-19 due to well-known biases:
+  - Observed cases only a fraction of true infections. 
+  - Asymptomatic cases never tracked.
+  - Limited testing obscures scale of outbreak.
+  
+## Approach
+
+- We designed a Bayesian Stan-based model to use empirical information to identify the effects of covariates on the spread of COVID-19 among the 50 US states.
+
+- In contrast to existing approaches (SEIR/SIR), we do not attempt to forecast the disease, but rather to extrapolate from known data.
+
+- We use CDC serology surveys to identify a latent-variable model so that we can provide intelligible answers to social-scientific questions concerning COVID-19.
+
+## Structural Model
+
+```{r graph1,fig.width=6}
+knitr::include_graphics("tikz_fig.png",dpi=200)
+```
+
+
+## Some Math I
+
+We want to know the infection rate, $I_{ct}$ given the case count $a_{ct}$ and test count $q_{ct}$. Assume that:
+
+- We can model $a_{ct}$ and $q_{ct}$ as beta-binomial proportions of state populations $c$. 
+  - $q_{ct} \sim \operatorname{Beta-Binomial}(c_p, g(\alpha_2 + \beta_qI_{ct} + \beta_t I_{ct}T  ), \phi_q),$
+  - $a_{ct} \sim \operatorname{Beta-Binomial}(c_p, g(\alpha_3 + \beta_a I_{ct}), \phi_a)$
+  - $g(\cdot)$ is the inverse logit function
+  - $\beta_a$ and $\beta_{cq}$ are parameters relating the increase in infection rates to observed date (observation bias)
+  - $\beta_t I_{ct}T$ represents a linear time trend due to increasing testing capacity over time.
+
+## Some Math II
+
+$I_{ct}$ is defined as a latent variable with it's own separate equation:
+
+$I_{ct}$ = $g(\alpha_1 + \beta_{c1}t_{ct} + \beta_{c2}t_{ct}^2 + \beta_{c3}t_{ct}^3 + \beta_X X_{ct})$
+
+where 
+
+  - $X_{ct}$ are a set of covariates for which we want to know their effect on the latent infection rate.
+  - $\beta_{I1}t_{ct} + \beta_{I2}t_{ct}^2 + \beta_{I3}t_{ct}^3$ are state-varying cubic polynomial trends (modeled as hierarchical parameters with shared mean/variance).
+
+## Some Math III
+
+- Main problem is identification: $I_{ct}$ could either increase or decrease, and true infection rate at time point $t$ is unknown.
+- Solution:
+  - Use CDC data as informative (very tight) priors (12 serology surveys).
+  - For all later days in the sample, assume that the ratio of cases/infected is between 2 and 20 (log-normal prior on the ratio).
+  
+## Some Math IV
+
+  - Impose positivity constraint on $\beta_a$ (observation parameter for infection $\rightarrow$ cases)
+  - Impose an ordering constraint on $I_{ct}$ where 
+    - $I_{ct} = e^{I_{ct}} + I_{ct-1}$
+    - prevents latent variable from falling due to differences in test/case ratios
+    - helps to further identify relationship
+  - Add in CDC seroprevalence data to identify scale
+    
+
+## Data
+
+- We add in a whole set of covariates:
+  - NYT cases, COVID-19 Tracking Project tests (no federal govt. data)
+  - Health covariates from United Health Foundation (PM$_{2.5}$, public health funding, No. healthcare providers, No. cardiovascular deaths, smoking rates)
+  - Census: % foreign-born, % < 18
+  - 2019 state-level GDP per capita
+  - Google mobility data (residential, retail, workplace, transit, parks)
+  - 2016 Trump vote share
+  
+## Moar Data
+
+- Yet more:
+  - Daily Trump approval polls by state from Civiqs
+  - Daily concern over economy polls by state from Civiqs
+  - Daily concern over COVID polls by state from Civiqs
+  - YouGov mask poll April 29th showing mask-wearing prevalence by state
+  - Social justice protests following George Floyd's death (% state population)
+  - CoronaNet policy data: lockdowns, social distancing, mass gatherings, business restrictions, government restrictions, mask policies, testing policies
+  
+## Posterior Predictions: Tests
+
+```{r tests}
+
+knitr::include_graphics("tests_pred.png",dpi=300)
+
+```
+
+## Posterior Predictions: Cases
+
+```{r cases}
+
+knitr::include_graphics("cases_pred.png",dpi=300)
+
+```
+
+## Testing Capacity
+
+```{r testcap}
+
+knitr::include_graphics("testing.png",dpi=300)
+
+```
+
+## Results: Covariate Effects on COVID-19
+
+```{r marginal1}
+
+knitr::include_graphics("marginal_id.png",dpi=385)
+
+```
+
+## Results II: Mobility
+
+```{r mobility}
+
+knitr::include_graphics("mobility.png",dpi=300)
+
+```
+
+
+## Results III: Mediation
+
+```{r mediation}
+
+knitr::include_graphics("proportion_mediated.png",dpi=350)
+
+```
+
+## Conclusions
+
+- You are unlikely to get COVID if you hang out in parks and (increasingly) disapprove of Trump.
+- Very difficult to identify effect of policies. Disaggregation important.
+- Need to think about temporal validity (Munger 2019)
+- It is possible to capture our knowledge via informed priors + latent variables vs. fully modeling virus spread.
+

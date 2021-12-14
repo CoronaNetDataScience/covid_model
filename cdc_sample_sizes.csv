@@ -1,0 +1,47 @@
+site,round,sample_size
+Connecticut,1,1431
+Connecticut,2,1800
+Connecticut,3,1798
+Connecticut,4,1802
+Connecticut,5,1799
+Louisiana,1,1184
+Louisiana,2,770
+Louisiana,4,1069
+Minnesota,1,860
+Minnesota,2,1323
+Minnesota,3,1667
+Minnesota,4,1677
+Minnesota,5,1588
+Missouri,1,1882
+Missouri,2,1831
+Missouri,3,1850
+Missouri,4,1914
+Missouri,5,1931
+New York City Metro Area,1,2482
+New York City Metro Area,2,1618
+New York City Metro Area,3,1116
+New York City Metro Area,4,1581
+New York City Metro Area,5,1602
+New York City Metro Area,6,1547
+Philadelphia Metro Area,1,824
+Philadelphia Metro Area,2,1743
+Philadelphia Metro Area,3,1694
+Philadelphia Metro Area,4,1751
+Philadelphia Metro Area,5,1730
+South Florida,1,1742
+South Florida,2,1280
+South Florida,3,1790
+South Florida,4,1721
+San Francisco Bay Area,1,1224
+San Francisco Bay Area,2,1539
+San Francisco Bay Area,3,1223
+Utah,1,1132
+Utah,2,1940
+Utah,3,1976
+Utah,4,1824
+Utah,5,1906
+Western Washington Region,1,3264
+Western Washington Region,2,1719
+Western Washington Region,3,1803
+Western Washington Region,4,1797
+Western Washington Region,5,1718

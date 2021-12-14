@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=filled circle] (2) at (-5.25, -1.25) {$X_{ct}$};
+		\node [style=filled circle] (3) at (-1, -1.25) {$I_{ct}$};
+		\node [style=filled circle] (4) at (3, -3) {$q_{ct}$};
+		\node [style=filled circle] (5) at (3, 0) {$a_{ct}$};
+		\node [style=filled circle] (6) at (-1.75, 1.75) {$M_{ct}$};
+		\node [style=filled circle] (7) at (-4.5, 1.75) {$F_{ct}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=pointer] (3) to (5);
+		\draw [style=pointer] (2) to node [auto, swap, scale=0.75] {$g$} (3);
+		\draw [style=pointer] (3) to (4);
+		\draw [style=pointer] (4) to (5);
+		\draw [style=pointer, bend left=15] (6) to node [auto, scale=0.75] {$d$} (3);
+		\draw [style=pointer, bend right] (2) to node [auto, scale=0.75, swap] {$f$} (6);
+		\draw [style=pointer, bend left=15] (2) to node [auto, scale=0.75] {$a$} (7);
+		\draw [style=pointer, bend left, looseness=1.25] (7) to node [auto, scale=0.75] {$b$} (6);
+		\draw [style=pointer, bend right] (7) to node [auto, scale=0.75] {$e$} (3);
+	\end{pgfonlayer}
+\end{tikzpicture}
