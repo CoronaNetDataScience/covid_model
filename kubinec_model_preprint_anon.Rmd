@@ -1,6 +1,31 @@
 ---
 title: "Mediation Analysis of Partisanship and Policies on COVID-19 Infections via Bayesian Latent Variable Modeling"
-date: "August 25, 2021"
+date: "February 8, 2022"
+author: 
+  - Robert Kubinec:
+      email: rmk7@nyu.edu
+      institute: nyuad
+      correspondence: true
+  - Luiz Max Carvalho:
+      institute: gvf
+  - Joan Barceló:
+      institute: nyuad
+  -  Cindy Cheng:
+      institute: tum
+  - Luca Messerschmidt:
+      institute: tum
+  - Matthew Sean Cottrell:
+      institute: ucr
+  - Derek Duba:
+      institute: arizona
+csl: the-lancet-infectious-diseases.csl
+institute:
+  - gvf: School of Applied Mathematics, Getúlio Vargas Foundation, Brazil
+  - tum: Hochschule für Politik at the Technical University of Munich (TUM) and the TUM School of Governance, Munich, Germany
+  - nyuad: Social Science Division, New York University Abu Dhabi, Abu Dhabi, United Arab Emirates
+  - yale: Department of Political Science, University of Southern California
+  - arizona: School of Politics and Global Studies, Arizona State University
+  - ucr: University of California Riverside
 toc: false
 output: 
   bookdown::pdf_document2:
@@ -12,7 +37,7 @@ output:
       - '--lua-filter=scholarly-metadata.lua'
       - '--lua-filter=author-info-blocks.lua'
 bibliography: BibTexDatabase.bib
-abstract: "In this paper we present an original approach for measuring COVID-19 infections while incorporating testing bias and use it to understand the mechanisms through which social  and political factors affected the pandemic. To establish empirical relationships, we analyzed COVID-19 case and test data from the fifty United States from March to July of 2020. To allow us to perform mediation analyses, we devised a Bayesian modeling approach that semi-parametrically identifies the infection rate using seroprevalence surveys from the Centers for Disease Control. We are able to show with this analysis how social distancing measures, Trump approval rating, and mask-wearing differentially affected COVID-19 infections through changes in mobility and fear of the pandemic."
+abstract: "In this paper we present an original approach for measuring COVID-19 infections while incorporating testing bias and use it to understand the mechanisms through which social  and political factors affected the pandemic. To establish empirical relationships, we analyzed COVID-19 case and test data from the fifty United States from March to July of 2020. To allow us to perform mediation analyses, we devised a Bayesian modeling approach that semi-parametrically identifies the infection rate using seroprevalence surveys from the Centers for Disease Control. We are able to show with this analysis how social distancing measures, Trump approval rating, and mask-wearing differentially affected COVID-19 infections through changes in mobility and fear of the pandemic.^[A reproducible version of this paper is available as an Rmarkdown file at https://github.com/CoronaNetDataScience/covid_model."
 ---
 
 ```{r setup, include=FALSE}
@@ -909,7 +934,7 @@ We fit this model using Markov Chain Monte Carlo in the Stan software package [@
 
 The only data required to fit the model, in addition to the covariates of interest and serology surveys, are observed cases and tests for COVID-19 by day. In this section, we fit the model to numbers of COVID-19 case counts on US states and territories provided by [The New York Times](https://github.com/nytimes/covid-19-data). By doing so, we can use the differences in trajectories across states to help identify the effect of state-level covariates on the infection rate. We supplement these observed case counts with testing data by day from the [COVID-19 Tracking Project](https://github.com/COVID19Tracking/covid-tracking-data). We then take the 7-day rolling average of both series to account for reporting fluctuations and weekly reporting effects.
 
-We use exclusively state-level data in this paper for two reasons. First, it is our aim to understand mediating beliefs and behaviors, and measures of beliefs--in particular people's concern over COVID-19--are generally only available at state-level aggregates in time-varying format. Furthermore, county-level measures tend to have more significant problems with measurement error, while state-level aggregates are less affected by reporting bias and other limitations of county-level data.
+We note that COVID-19 cases and deaths are available at the county level in the US. We do not use this reduced level of aggregation for two reasons. First, and most importantly, our aim is to better understand the mechanisms of COVID transmission, which requires us to have access to daily polling data which is not available at the country level. Second, we note that what data is available is much more prone to measurement error due to issues with reporting that vary by county [@stoto2022]. Aggregating to the state level can reduce this idiosyncratic measurement error and permit more stable inferences, especially when looking at day-to-day changes in these covariates .
 
 ```{r runmodel,include=F}
 
