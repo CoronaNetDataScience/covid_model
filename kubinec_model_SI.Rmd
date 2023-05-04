@@ -1,6 +1,6 @@
 ---
 title: "Supplementary Information for Mediation Analysis of Partisanship and Policies on COVID-19 Infections via Bayesian Latent Variable Modeling"
-date: "August 25, 2021"
+date: "April 1st, 2022"
 output: 
   bookdown::pdf_document2:
     includes: 
@@ -39,106 +39,13 @@ run_model <- F
 serology <- readRDS("serology.rds")
 
 ```
-
-# Complete Model Definition
-
-Given this overview of the intuition behind our approach, we turn to a more formal definition. Our observed outcomes are the cumulative total of tests and cases reported on a given day $t$ in a given state $c$. We assume that the unobserved state-specific cumulative infection rate $I_{ct}$ can be modeled as a time-varying Beta-distributed random variable with a mean parameter $\mu \in (0,1)$ and shape parameter $\phi>0$ . We also assume that the over-time change in the disease can be modeled as a 3-order polynomial time trend that is a function of the number of post-outbreak time periods $T_O < T$, where an outbreak begins at the first reported case in a given area.
-
-It is important to note that the reason we employ a cubic function is based on theoretical considerations. In our model, the polynomial represents the rate of infection increase in the absence of any other covariates, or equivalently the *counterfactual* rate of infections. We know from the SIR/SEIR simulations that, in the absence of any countervailing measures, epidemics occur in ever-increasing waves until the herd immunity threshold is reached, although the curve is unlikely to be symmetric as a simpler quadratic function would require. As such, we employ this function because it represents a credible baseline for what the epidemic would do if no other factors impeded its spread. We further allow the polynomial trends to vary by states hierarchically, i.e., the information about the trends is partially pooled across states. The partial pooling is necessary to allow for state-level heterogeneity in the exact progress of the disease, which we note is further modeled by including data on when cases first were reported in each state. We believe this counterfactual infection function is considerably flexible while also motivated by our understanding of how epidemics progress.
-
-We define the conditional distribution of the unobserved infection rate $I_{ct}$ as:
-
-```{=tex}
-\begin{align}
-\operatorname{Pr}(I_{ct} \mid t=T) &\sim \operatorname{Beta}(\mu \phi, (1 - \mu)\phi)\\
-        \mu = & g^{-1}(\alpha_1 + \beta_{O1}\sum_{c=1}^{C} \sum_{t=1}^{T-14} a_{ct} + \\
-&\beta_{I1}t_o + \beta_{I2}t_o^2 + \beta_{I3}t_o^3 +
-                        \beta_C X_{ct})
-  (\#eq:binom)
-\end{align}
-```
-This parameterization of the Beta distribution in terms of $\mu$ and $\phi$ follows from the Beta regression literature [@ferrari2010] so that we can model the expected value $E[I_{ct}]$ directly via $\mu$. As such, we use $g^{-1}(\cdot)$, the inverse logit function, to scale the linear model in $\mu$ to the $(0,1)$ interval. For the parameters, $\beta_{O1}\sum_{c=1}^{C} \sum_{t=1}^{t-14} a_{ct}$ are the sum of observed cases in the country with a 14-day lag, which represents the possibility of cross-border spread in infections. The three $\beta_{Ii}$ are polynomial coefficients of the number of post-outbreak time periods $t_o$.
-
-The parameter vector $\beta_C$ represents the effect of independent covariate matrix $X_{ct}$ on the latent infection rate. These are our main variables of interest, and have effects in addition to the polynomial time trends. Finally, the parameter $\phi$ becomes a dispersion parameter governing the variability of latent infection rate.
-
-<!-- The second way suppression measures enter the model is through $\beta_{S2}X_c$, which can increase over time as the disease increases. This parameter reflects possible measures which will grow more effective as domestic transmission of the disease increases (i.e. as the polynomial time trend takes off). -->
-
-<!-- As such, it is assumed that any deviation from the common domestic transmission pattern is due to these time-varying suppression measures. -->
-
-Because we do not have measures of $I_{ct}$, we need to used the observed data, tests $q_{ct}$ and cases $a_{ct}$, to infer $I_{ct}$. First, we propose that the number of infections will almost certainly increase the number of tests as states try to stop the disease's spread via surveillance. Second, we can assume that a rising infection rate is associated with a higher ratio of positive results (reported cases) conditional on the number of tests, that is, COVID-19 is causing positive test results. We model both of these observed indicators, tests and cases, jointly to simultaneously adjust for the infection rate's influence on both factors. It is this joint modeling that permits us to directly incorporate testing bias. In fact, our model learns about the infection rate from the level of tests rather than trying to discard this information.
-
-To model the number of tests, we assume that each state has an unobserved level of testing capacity, which increases at a non-linear rate during the course of the epidemic. We employ a quadratic function of testing capacity to express the concept of diminishing marginal returns. States were able to ramp up testing once PCR tests were approved by the FDA, but faced constraints due to shortages of supplies, personnel and labs. The cumulative number of observed tests $q_{ct}$ for a given time point $t$ and state $c$ and as a fraction of the states' population, $c_{p}$, then has a binomial distribution:
-
-```{=tex}
-\begin{equation}
-q_{ct} \sim \operatorname{Binomial}(c_{p}, g^{-1}(\alpha_2 + \beta_b I_{ct} + 
-\beta_{cq1}L_t + \beta_{cq2} L_t^2)).
-(\#eq:binom2)
-\end{equation}
-```
-The parameters $\beta_{cq1}$ and $\beta_{cq2}$ represent the quadratic increase in testing capacity that varies by state $c$. We similarly allow for partial pooling of these coefficients as testing capacity will show a limited level of variability across states. The parameter $\beta_b$ then represents the independent contribution of the level of infections $I_{ct}$ on the total number of requests demanded marginal of testing capacity. The intercept $\alpha_2$ indicates how many tests would be performed in a state with an infection rate of zero and at time $t=0$, and as such is likely to be very low.
-
-<!-- Given the parameters $\beta_{cq1}$ and , a state could test almost no one or test far more than are actually infected depending on their willingness to impose tests. -->
-
-<!-- Because the capacity to test changed significantly over time, we include a linear time interaction (denoted $L_t$) to allow testing capacity to adjust accordingly.^[For a very compelling visualization of this process with empirical data from the COVID-19 pandemic, we refer the reader to this website: https://ourworldindata.org/grapher/covid-19-tests-cases-scatter-with-comparisons.] -->
-
-The binomial model for the number of observed tests $q_{ct}$ provides some information about $I_{ct}$, but not enough for useful estimates. We can learn much more about $I_{ct}$ by also modeling the number of observed cases $a_{ct}$ as another binomial random variable expressed as a proportion of the state population, $c_p$:
-
-```{=tex}
-\begin{equation}
-a_{ct} \sim \operatorname{Binomial}(c_p, g^{-1}(\alpha_3 + \beta_a I_{ct})),
-(\#eq:binom3)
-\end{equation} 
-```
-where $g^{-1}(\cdot)$ is again the inverse logit function, $\alpha_3$ is an intercept that indicates how many cases would test positive with an infection rate of zero (approximately equal to the false positive rate of the test), and $\beta_a$ is a parameter that determines how hard it is to find the infected people and test them as opposed to people who are not actually infected. The multiplication of this parameter and the infection rate determines the cumulative number of cases, $a_{ct}$, as a proportion of the state population, $c_p$.
-
-To summarize the model, infection rates determine how many tests a state is likely to undertake and also the number of positive tests they receive as cases. This simultaneous adjustment helps takes care of mis-interpreting the observed data by not taking into account varying testing rates, which has made it hard to generalize findings concerning the disease and also led some policy makers to claim that rising case rates are solely due to increasing numbers of tests. It also allows us to learn the likely location of the infection rate conditional on what we observe in terms of tests and cases.
-
-Because sampling from a model with a hierarchical Beta parameter can be difficult, we simplify the likelihood by combining the beta distribution and the binomial counts into a beta-binomial model for tests:
-
-```{=tex}
-\begin{align}
-q_{ct} & \sim \operatorname{Beta-Binomial}(c_p, \mu_q \phi_q, (1-\mu_q) \phi_q)\\
-\mu_q &= g^{-1}(\alpha_2 + \beta_b I_{ct} + 
-\beta_{cq1}L_t + \beta_{cq2}L_t^2)
-(\#eq:binom4)
-\end{align}
-```
-and cases:
-
-```{=tex}
-\begin{align}
-a_{ct} &\sim \operatorname{Beta-Binomial}(q_{ct}, \mu_a \phi_a, (1 - \mu_a) \phi_a) \\
-\mu_a &= g^{-1}(\alpha_3 + \beta_a I_{ct}).
-(\#eq:binom5)
-\end{align}
-```
-where $I_{ct}$ is now equal to the linear model vector $\mu$ shown in \@ref(eq:binom) and mapped to $(0,1)$ via the inverse logit function.
-
-## Identifiability
-
-This model contains an unobserved latent process $I_{ct}$, and as such the model as presented is not identified from the data alone without further information. For example, the parameters that control the influence of the infection rate on tests and cases could increase and the latent infection rate could decrease without the probability of the observed data changing.
-
-There two further steps taken to identify this model which we believe represent very limited additional assumptions, especially compared to existing modeling approaches. First, we must require that $I_{ct}$ is a non-decreasing quantity. The number of infected people cannot decrease in an epidemic, but the model as expressed does not require that to be true.[^1] We can eliminate that possibility from the model by imposing an ordered constraint on $I_{ct}$:
-
-[^1]: Note that we are not assuming that people cannot be re-infected, but rather that people cannot become uninfected after contracting the disease.
-
-```{=tex}
-\begin{equation}
-I_{ct} = \begin{cases}
-          I_{ct} & \text{if } t=1\\
-          I_{ct-1} + e^{I_{ct}} &  \text{if } 1 < t < T
-        \end{cases}
-(\#eq:trans)
-\end{equation}
-```
-This transformation forces $I_{ct}$ to be no less than $I_{ct-1}$. At the same time, we do not need to impose any constraints on the covariates themselves, allowing us to sample those in an unconstrained space before we transform $I_{ct}$.
-
-However, we also need some information about the empirical scale of testing bias to produce identified estimates of $I_{ct}$. We could do so by adding a prior to the model about the plausible range of total infections to reported cases, though we prefer to use information that is more precise. The Centers for Disease Control's serology surveys conducted during the pandemic represent an empirical way of relating $I_{ct}$ to plausible estimates of infections at varying time points. By including this information, we also implicitly account for many of the variables explicitly parameterized in compartmental models such as reporting delays. Because we have an estimate of the number infected at time $t$ that is independent of reported cases and tests, the model will find the parameter estimates that are most likely given the observed differences between the surveys and the reported data.
-
-
+# CDC Serology Surveys
 
 ```{r sero,echo=F}
+
+
+serology <- readRDS("serology.rds")
+
 serology %>% 
   mutate(`% Infected`=paste0(round(inf_pr*100,2),"%")) %>% 
   select(State="state_id",
@@ -151,69 +58,7 @@ serology %>%
   kableExtra::kable_styling(latex_options = c("hold_position","striped"))
 ```
 
-Because we model the infection rate as a cumulative count, it is straightforward to include this information in the model. For a given state $c$ and time point $t$ for which we have survey information, we model the count of infected $S_{ct}^P$ as a proportion of the total subjects in each serology survey $S^N_{ct}$ with the Binomial distribution:
-
-```{=tex}
-\begin{equation}
-S_{ct} \sim \operatorname{Binomial}(S^N_{ct},g^{-1}(I_{ct}))
-(\#eq:fix)
-\end{equation}
-```
-It is important that the serology surveys enter the model in this fashion so that we can model the survey count stochastically. This is necessary to propagate uncertainty in the sample size through to our estimates of $I_{ct}$. This uncertainty matters as well because the serology surveys exhibit random noise and do not always increase over time, as can be seen in Table \@ref(tab:sero). By modeling the relationship as a probabilistic one, we are making the weaker assumption that the infected rate is probably close to the serology estimate, but the two do not need to be the identical. The combined posterior estimates for $I_{ct}$ will then be weighted with the case and test likelihoods to produce the most credible estimate of $I_{ct}$.
-
-As we show in the supplemental information with simulations, no other identification restrictions are necessary to estimate the model beyond weakly informative priors assigned to parameters.
-
-These are:
-
-```{=tex}
-\begin{align}
-\beta_a &\sim \operatorname{Normal}(30,10),\\
-\beta_{qci} &\sim \operatorname{Normal}(\mu_{qi},\sigma_{qi}),\\
-\sigma_{qi} &\sim \operatorname{Exponential}(1),\\
-\mu_{qi} &\sim \operatorname{Normal}(0, 20),\\
-\beta_{C} &\sim \operatorname{Normal}(0, 5),\\
-\beta_{Ii} &\sim \operatorname{Normal}(\mu_{Ii}, \sigma_{Ii}),\\
-\mu_{Ii} &\sim \operatorname{Normal}(0, 10),\\
-\sigma_{Ii} &\sim \operatorname{Exponential}(1),\\
-\alpha_1 &\sim \operatorname{Normal} (0,10),\\
-\alpha_2 &\sim \operatorname{Normal}(0,10),\\
-\alpha_3 &\sim \operatorname{Normal}(0,10)
-(\#eq:binom6)
-\end{align} 
-```
-where the normal distribution is parameterized in terms of mean and standard deviation.
-
-The priors to note are the hierarchical regularizing prior put on the varying testing adjustment parameters $\beta_{qci}$ and varying polynomial trends $\beta_{Ii}$ with shared means and standard deviations. This partial pooling permits a reasonable degree of heterogeneity in the parameters while still constraining overall dispersion. Relatively informative priors are put on the hierarchical variance parameters $\sigma_{qi}$ and $\sigma_{Ii}$ to suggest that while state heterogeneity does exist, we do still expect the states' estimates to be within a given range.
-
-We note that a crucial advantage of this framework is providing a way to measured the count of infected adjusting for known biases in the number of tests. By comparing numbers of tests per capita and growth rates in cases across regions, the model is able to backwards infer a likely number of infected individuals in a given area. As such it exploits both within-area and between-area variance to adjust for the biases of imperfect testing. The wide variety of covariates we add to the model, which we describe in the next section, provide the mechanism through which the model can infer test/case relationships even in states which have not had a CDC serology survey.
-
-We also extend this model in order to analyze the mediation of a subset of covariates $X'_{ct}$ by adding mediators $M_{ct}$ for mobility and $F_{ct}$ for fear of the disease to the causal diagram, as in Figure 2. Figure 2 has several paths due to the fact that the influence of covariates $X_{ct}$ affects the two mediators differently. Given that beliefs and preferences precede actions, the covariates $X'_{ct}$ first influence $I_{ct}$ along the $ae$ and $abd$ path through perceptions of how dangerous the disease is. These beliefs both affect the chance of an individual getting infected and thus $I_{ct}$ directly on the path $ae$, such as by causing an individual to adopt social distancing behaviors, and also on an indirect path $abd$ by which an increase in a people's fear of the disease reduces mobility as people prefer to stay home.
-
-In addition to pathways through the fear mediator $F_{ct}$, a covariate could influence infections along the pathway through mobility $ed$ without increasing or decreasing fear. This situation could arise if government policies forced people to stay at home against their will and despite their unconcern about the disease. Finally, a covariate could have an unmediated direct effect $g$ on the infection rate. The total effect of a covariate $X_{ct}$ on the spread of the disease is then the sum of all the paths, $abd + af + ed + g$. To calculate the indirect effects and direct effects given the use of the inverse logit function $g^{-1}(\cdot)$, we employ the chain rule as in @winship1983 to calculate the marginal effect of covariates with respect to different pathways to $I_{ct}$.
-
-Adding the mediators to the model is relatively simple as they do not have link functions and can be included as Normal distributions (i.e., OLS regression) as in @Yuan2009. It should be noted that there are in fact five mobility covariates as explained in the following section, and so we explicitly model the covariance in mobility via a multivariate Normal distribution with a covariance matrix parameter $\Sigma_m$.
-
-```{=tex}
-\begin{figure}
-\label{tikzfig2}
-\caption{Directed Acyclic Graph for Latent Infection Rate with Mediators}
-\ctikzfig{policy_dag_mediate}
-\footnotesize{This figure adds mediators $M_{ct}$ (mobility data) and $F_{ct}$ (fear of COVID-19) that mediate the relationship between state-level covariates $X'_{ct}$ and the latent infection rate $I_{ct}$.} Because beliefs precede actions, $F_{ct}$ is causally prior to $M_{ct}$ and can affect infections both via reducing mobility (path $abd$) and directly apart from mobility (path $ae$), such as by encouraging individuals to remain socially distant.
-\end{figure}
-```
-To add our mediation covariates $M_{ct}$ and $F_{ct}$, which we describe in more detail in the next section, we multiply the following likelihoods with the joint posterior:
-
-```{=tex}
-\begin{align}
-M_{ct} &\sim MVN(\alpha_m + \beta_m X'_{ct},\Sigma_m)\\
-F_{ct} &\sim N(\alpha_f + \beta_f X'_{ct}, \sigma_f)
-(\#eq:mediate)
-\end{align}
-```
-We also include all of $M_{ct}$ and $F_{ct}$ as linear predictors in \@ref(eq:binom).
-
-We fit this model using Markov Chain Monte Carlo in the Stan software package [@carpenter2017]. We run the sampler for 1000 iterations with 500 warmup iterations and two chains to test for convergence.
-
+\newpage
 
 # Model Stan Code
 
