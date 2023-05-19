@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+data/pan_model_est.rds
+data/us_fit.rds
+data/mediator_eff.rds
+data/us_fit_scale.rds
