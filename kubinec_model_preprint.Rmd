@@ -536,6 +536,41 @@ coronanet <- group_by(coronanet,country,province,policy_id) %>%
                              type_sub_cat=="Masks") & type=="Social Distancing"~"Mask Restrictions",
                           TRUE~type),
            policy_type=coalesce(policy_type,"More Restrictions and/or More Supply"))
+  
+  # load COVID-AMP data: this is preferred as it is more complete at the US province level
+  
+  covid_amp <- read_excel("data/covid_amp_state_policy_data.xlsx",skip = 6) %>% rename(level="Authorizing level of government",
+                                                                                       id="Unique ID",
+                                                                                       country="Authorizing country name",
+                                                                                       state="Authorizing state/province, if applicable",
+                                                                                       policy_change="Policy relaxing or restricting",
+                                                                                       type="Policy category",
+                                                                                       start_date="Issued date",
+                                                                                       end_date="Actual end date",
+                                                                                       description="Policy/law name") %>% 
+    select(id, country, state, level, type, start_date, end_date,
+           description,
+           policy_change,
+           target="Policy target") %>% 
+    filter(start_date < ymd("2020-10-01"),
+           level=="State / Province",
+           country=="United States of America (USA)",
+           type %in% c("Emergency declarations",
+                       "Contact tracing/Testing",
+                       "Social distancing",
+                       "Support for public health and clinical capacity",
+                       "Face mask",
+                       "Enabling and relief measures",
+                       "Travel restrictions")) %>% 
+    mutate(start_date=ymd(start_date),
+           end_date=ymd(end_date),
+           policy_count=case_when(grepl(x=policy_change,pattern="Restricting")& target=="General population (inclusive)"~1,
+                                  grepl(x=policy_change,pattern="Relaxing") & target=="General population (inclusive)" ~ -1,
+    grepl(x=policy_change,pattern="Restricting") & target!="General population (inclusive)"~ 0.5,
+                                  grepl(x=policy_change,pattern="Relaxing") & target!="General population (inclusive)" ~ -0.5,                              
+                TRUE~NA_real_)) %>% 
+    filter(!is.na(policy_count))
+  
 }
 
 
@@ -585,12 +620,59 @@ if(run_model) {
       
     }) %>% bind_rows
   
-  },mc.cores=10) %>% bind_rows
+  },mc.cores=15) %>% bind_rows
   
   saveRDS(count_pol,"count_pol.rds")
   
+  # repeat same procedure for COVID amp data
+  
+    count_pol_covidamp <- parallel::mclapply(unique(covid_amp$state), function(p) {
+    
+    # loop over policies
+      these_pol <- unique(covid_amp$id[covid_amp$state==p])
+    
+    lapply(these_pol, function(t) {
+      
+      if(!is.na(p)) { 
+        this_chunk <- filter(covid_amp,id==t,state==p)
+      } else {
+        this_chunk <- filter(covid_amp,id==t)
+      }
+      
+      
+      # loop over days 
+      
+      lapply(seq(ymd("2019-12-30"),ymd("2020-07-14"),by=1), function(d) {
+        
+        this_day_pol <- group_by(this_chunk,type) %>%
+          filter(d>start_date,d<end_date) %>% 
+          summarize(tot_pol=sum(policy_count))
+        
+        if(nrow(this_day_pol)==0) {
+
+          tibble(month_day=d,
+                 type=paste0(unique(this_chunk$type),collapse=";"),
+                 count_pol_eff=rep(0,length(unique(this_chunk$type))),
+                 province=p)
+        } else {
+          
+          tibble(month_day=d,
+                 type=paste0(unique(this_chunk$type),collapse=";"),
+                 count_pol_eff=this_day_pol$tot_pol,
+                 province=p)
+        }
+        
+      }) %>% bind_rows
+      
+    }) %>% bind_rows
+  
+  },mc.cores=15) %>% bind_rows
+  
+  saveRDS(count_pol_covidamp,"count_pol_covidamp.rds")
+  
 } else {
   count_pol <- readRDS("count_pol.rds")
+  count_pol_covidamp <- readRDS("count_pol_covidamp.rds")
 }
 
 
@@ -609,13 +691,37 @@ count_pol <- mutate(count_pol,
 count_pol_sum <- group_by(count_pol,month_day,type,province) %>% 
   summarize(sum_pol=sum(count_pol_eff))
 
+count_pol_covidamp_sum <- group_by(count_pol_covidamp,month_day,type,province) %>% 
+  summarize(sum_pol=sum(count_pol_eff)) %>% 
+  mutate(sum_pol=ifelse(sum_pol<0, 0, sum_pol))
+
+## Recoding count_pol_covidamp_sum$type into count_pol_covidamp_sum$type_rec
+count_pol_covidamp_sum$type_rec <- count_pol_covidamp_sum$type
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Contact tracing/Testing"] <- "Contact Tracing"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Emergency declarations"] <- "Emergency"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Enabling and relief measures"] <- "Welfare"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Face mask"] <- "Masking"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Social distancing"] <- "Social Distancing"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Support for public health and clinical capacity"] <- "Health Resources"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Travel restrictions"] <- "Travel"
+
 count_pol_sum <- spread(count_pol_sum,key="type",value="sum_pol") %>% 
   mutate_at(vars(`Health Resources`:`Social Distancing`),~ifelse(month_day==min(month_day),
                                                                coalesce(.,0),
                                                                .)) %>% 
   fill(`Health Resources`:`Social Distancing`,.direction=c("down"))
 
-combined <- left_join(combined, count_pol_sum,by=c("state"="province","month_day"))
+count_pol_covidamp_wide <- spread(select(ungroup(count_pol_covidamp_sum),-type),
+                                 key="type_rec",value="sum_pol") %>% 
+  mutate_at(vars(`Contact Tracing`:Welfare),~ifelse(month_day==min(month_day),
+                                                               coalesce(.,0),
+                                                               .)) %>% 
+  fill(`Contact Tracing`:Welfare,.direction=c("down"))
+
+# combined <- left_join(combined, count_pol_sum,by=c("state"="province","month_day"))
+
+combined <- left_join(combined, count_pol_covid_amp_wide,
+                      by=c("state"="province","month_day"))
 
 # add in civiqs
 
@@ -1093,16 +1199,12 @@ To analyze the effect of suppression policies, we use data on counts of social d
 
 The policy data is plotted by state in Figure \@ref(fig:policy). As can be seen, there is a rise in policies after the pandemic begins in the middle of March, though the number of policies varies across categories. The count of policies is an admittedly imperfect measure though it communicates more information about policy activity than a simple binary coding. Generally speaking, states imposed many more policies designed to increase their access to PPE for health staff than they were willing to take on lockdowns, social distancing, and restrictions on businesses and government services. This difference likely has to do with the increased cost and salience of these policies vis-a-vis relatively less politically difficult options like gathering more masks and face shields for health care workers [@cheng2020].
 
-```{r policy,fig.cap="Count of Policies in Effect by Day and by State from the CoronaNet Dataset"}
+```{r policy,fig.cap="Aggregation of State-level Policies in Effect by Day and by State from the COVID-AMP Dataset"}
 
 # plot data 
 
-count_pol %>% group_by(type,month_day,province) %>% summarize(sum_pol=sum(count_pol_eff)) %>% ungroup %>% 
-  mutate(type=recode(type,
-                     `Restriction and Regulation of Businesses`="Business Restrictions",
-                     `Restriction and Regulation of Government Services`="Government Restrictions",
-                     `Restrictions of Mass Gatherings`="Mass Gatherings")) %>% 
-  ggplot(aes(y=sum_pol,x=month_day)) + geom_line(aes(group=province),alpha=0.5,colour="blue") + facet_wrap(~stringr::str_wrap(type,10)) + 
+count_pol_covidamp_sum %>% 
+  ggplot(aes(y=sum_pol,x=month_day)) + geom_line(aes(group=province),alpha=0.5,colour="blue") + facet_wrap(~stringr::str_wrap(type_rec,10),scales="free_y") + 
   theme(panel.grid = element_blank(),
         panel.background=element_blank(),
         strip.background = element_blank(),
