@@ -1,0 +1,1468 @@
+city,curfew_established,damage_inflicted,escalation,march,police_altercation,size,start_date,state,state_deployed_national_guard,type_of_gathering
+Auburn,No,No,No,Yes,No,Large,30-May,Alabama,No,Protests
+Birmingham,No,No,No,No,No,Large,30-May,Alabama,No,Protests
+Decatur,No,No,No,Yes,No,Large,31-May,Alabama,No,Protests
+Florence,No,No,No,Yes,No,Moderate,31-May,Alabama,No,Protests
+Gadsden,No,No,No,Yes,No,Moderate,31-May,Alabama,No,Protests
+Hoover,No,Yes,Yes,Yes,Yes,Large,31-May,Alabama,No,Protests with Observable Violence
+Huntsville,No,No,No,No,Yes,Large,31-May,Alabama,No,Protests
+Mobile,No,Yes,Yes,Yes,Yes,Large,31-May,Alabama,No,Protests with Observable Violence
+Montgomery,No,No,No,Yes,No,Large,30-May,Alabama,No,Protests
+Tuscaloosa,No,No,No,Yes,No,Large,30-May,Alabama,No,Protests
+Anchorage,No,No,No,No,Yes,Moderate,30-May,Alaska,Yes,Protests
+Anchorage,No,No,No,Yes,Yes,Moderate,30-May,Alaska,Yes,Protests
+Fairbanks,No,No,No,Yes,No,Large,30-May,Alaska,Yes,Protests
+Juneau,No,No,No,Yes,No,Moderate,30-May,Alaska,Yes,Protests
+Flagstaff,No,No,No,Yes,No,Small,29-May,Arizona,Yes,Protests
+Phoenix,Yes,Yes,Yes,Yes,Yes,Large,28-May,Arizona,Yes,Protests with Observable Violence
+Phoenix,Yes,No,No,Yes,No,Moderate,29-May,Arizona,Yes,Protests
+Phoenix,Yes,Yes,Yes,Yes,Yes,Large,30-May,Arizona,Yes,Protests with Observable Violence
+Phoenix,Yes,Yes,Yes,Yes,Yes,Large,31-May,Arizona,Yes,Protests with Observable Violence
+Phoenix,Yes,No,No,Yes,No,Large,1-Jun,Arizona,Yes,Protests
+Scottsdale,Yes,Yes,Yes,Yes,Yes,Large,30-May,Arizona,Yes,Protests with Observable Violence
+Tucson,Yes,Yes,Yes,Yes,Yes,Large,31-May,Arizona,Yes,Protests with Observable Violence
+Fayetteville,No,No,No,No,No,Moderate,30-May,Arkansas,No,Protests
+Fort Smith,No,No,No,No,No,Large,31-May,Arkansas,No,Protests
+Jonesboro,No,No,No,Yes,No,Large,31-May,Arkansas,No,Protests
+Little Rock,Yes,Yes,Yes,Yes,Yes,Large,31-May,Arkansas,Yes,Protests with Observable Violence
+Bakersfield,Yes,Yes,Yes,Yes,Yes,Large,29-May,California,Yes,Protests with Observable Violence
+Bakersfield,No,Yes,Yes,Yes,No,Large,3-Jun,California,No,Protests with Observable Violence
+Bakersfield,No,Yes,Yes,Yes,Yes,Large,5-Jun,California,No,Protests with Observable Violence
+Bakersfield ,Yes,Yes,Yes,Yes,Yes,Moderate,1-Jun,California,Yes,Protests with Observable Violence
+Berkeley,No,No,No,Yes,No,Large,6-Jun,California,Not recorded,Protests
+Berkeley,No,No,No,Yes,No,Large,6-Jun,California,Not recorded,Protests
+Berkeley,No,No,No,Yes,No,Large,6-Jun,California,Not recorded,Protests
+Berkeley,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+Berkeley (Oakland),Yes,No,No,Yes,Yes,Large,1-Jun,California,Yes,Protests
+Beverly Hills,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests with Observable Violence
+Chico,No,No,No,No,No,Moderate,30-May,California,Yes,Protests
+Chico,Yes,No,No,Yes,No,Moderate,2-Jun,California,Yes,Protests
+Chino Hills,Yes,No,No,No,No,Moderate,31-May,California,Yes,Protests
+Compton,No,No,No,Yes,No,Large,7-Jun,California,Yes,Protests
+Eureka,No,No,No,Yes,No,Large,30-May,California,Yes,Protests
+Fontana,Yes,Yes,Yes,Yes,Yes,Moderate,1-Jun,California,Yes,Protests with Observable Violence
+Fresno,Yes,No,No,No,No,Large,31-May,California,Yes,Protests
+Hayward,No,No,Yes,No,No,Moderate,31-May,California,Yes,Protests
+Huntington Beach,Yes,No,Yes,No,No,Moderate,31-May,California,Yes,Protests
+La Mesa,Yes,Yes,Yes,Yes,Yes,Large,31-May,California,Yes,Protests with Observable Violence
+Long Beach,Yes,No,Yes,Yes,No,Moderate,31-May,California,Yes,Protests
+Los Angeles,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests with Observable Violence
+Los Angeles,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests
+Los Angeles,Yes,Yes,Yes,Yes,Yes,Moderate,30-May,California,Yes,Protests with Observable Violence
+Modesto,Yes,No,Yes,Yes,No,Large,31-May,California,Yes,Protests
+Modesto,No,Yes,Yes,Yes,Yes,Moderate,31-May,California,No,Protests with Observable Violence
+Modesto,Yes,Yes,Yes,Yes,No,Large,1-Jun,California,Yes,Protests
+Monterey,No,No,Yes,No,No,Large,31-May,California,Yes,Protests
+Monterey,Yes,No,Yes,Yes,No,Moderate,1-Jun,California,Yes,Protests
+Napa,Yes,No,No,No,No,Small,31-May,California,Yes,Protests
+Oakland,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests with Observable Violence
+Oakland,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests with Observable Violence
+Oakland,Yes,Yes,Yes,No,No,Moderate,31-May,California,Yes,Protests
+Oakland,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,California,Yes,Protests with Observable Violence
+Oakland,Yes,No,Yes,Yes,Yes,Large,1-Jun,California,No,Protests
+Oakland,Yes,No,No,Yes,No,Large,2-Jun,California,No,Protests
+Oakland,Yes,No,No,Yes,No,Large,3-Jun,California,No,Protests
+Oakland,Yes,No,No,Yes,No,Large,3-Jun,California,No,Protests
+Oakland,No,No,No,Yes,No,Moderate,4-Jun,California,No,Protests
+Oakland,No,No,No,Yes,No,Large,5-Jun,California,No,Protests
+Oakland,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+Oakland,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+Oakland,No,No,No,Yes,No,Large,7-Jun,California,No,Protests
+Oakland,No,No,No,Yes,No,Large,7-Jun,California,No,Protests
+Oakland,Yes,No,No,Yes,No,Moderate,8-Jun,California,No,Protests
+Oxnard,No,No,Yes,No,No,Large,30-May,California,Yes,Protests
+Oxnard,Yes,No,Yes,Yes,Yes,Large,1-Jun,California,Yes,Protests
+Oxnard,No,Yes,Yes,Yes,Yes,Large,3-Jun,California,No,Protests with Observable Violence
+Oxnard,No,No,No,Yes,No,Small,5-Jun,California,No,Protests
+Palo Alto,No,No,No,No,No,Large,6-Jun,California,No,Protests
+Petaluma,Yes,No,No,Yes,No,Moderate,31-May,California,Yes,Protests
+Sacramento,Yes,No,Yes,Yes,Yes,Large,1-Jun,California,Yes,Protests
+Sacramento,Yes,Yes,Yes,Yes,Yes,Large,2-Jun,California,Yes,Protests with Observable Violence
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,Yes,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+Sacremento,Yes,No,Yes,Yes,No,Large,30-May,California,Yes,Protests
+San Clemente,Yes,No,Yes,No,No,Moderate,31-May,California,Yes,Protests
+San Diego,Yes,No,Yes,Yes,No,Large,31-May,California,Yes,Protests
+San Diego,Yes,No,Yes,Yes,No,Large,31-May,California,Yes,Protests
+San Diego,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,California,Yes,Protests with Observable Violence
+San Francisco,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests with Observable Violence
+San Francisco,Yes,Yes,Yes,Yes,No,Large,30-May,California,Yes,Protests with Observable Violence
+San Francisco,Yes,Yes,Yes,Yes,No,Large,30-May,California,Yes,Protests with Observable Violence
+San Francisco,Yes,Yes,Yes,Yes,No,Large,30-May,California,Yes,Protests
+San Francisco,Yes,Yes,Yes,Yes,Yes,Moderate,30-May,California,Yes,Protests with Observable Violence
+San Francisco,Yes,Yes,Yes,Yes,Yes,Moderate,30-May,California,Yes,Protests with Observable Violence
+San Francisco,Yes,No,No,Yes,No,Large,3-Jun,California,No,Protests
+San Francisco,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+San Francisco,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+San Francisco,No,No,No,No,No,Large,7-Jun,California,No,Protests
+San Jose,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests with Observable Violence
+San Jose,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests
+San Jose,No,No,No,No,No,Large,4-Jun,California,No,Protests
+San Jose,No,No,Yes,Yes,Yes,Large,5-Jun,California,No,Protests
+Santa Ana,Yes,No,Yes,No,No,Large,31-May,California,Yes,Protests
+Santa Ana,Yes,No,Yes,Yes,Yes,Large,6-Jun,California,No,Protests
+Santa Barbara,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+Santa Barbara,No,No,Yes,Yes,No,Large,7-Jun,California,Yes,Protests
+Santa Barbera,Yes,No,Yes,No,No,Moderate,31-May,California,Yes,Protests
+Santa Cruz,Yes,No,Yes,No,No,Moderate,31-May,California,Yes,Protests
+Santa Cruz,No,No,No,Yes,No,Large,3-Jun,California,No,Protests
+Santa Cruz,No,Yes,Yes,No,No,Moderate,3-Jun,California,No,Protests with Observable Violence
+Santa Maria,Yes,Yes,Yes,Yes,Yes,Large,31-May,California,No,Protests with Observable Violence
+Santa Maria,Yes,No,No,Yes,No,Small,4-Jun,California,No,Protests
+Santa Monica,Yes,No,Yes,No,No,Large,31-May,California,Yes,Protests
+Santa Monica,Yes,Yes,Yes,Yes,Yes,Large,31-May,California,Yes,Protests with Observable Violence
+Santa Rosa,Yes,Yes,Yes,Yes,Yes,Moderate,30-May,California,Yes,Protests
+Santa Rosa,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests
+Santa Rosa,Yes,Yes,Yes,Yes,Yes,Large,30-May,California,Yes,Protests
+Santa Rosa,Yes,No,Yes,Yes,Yes,Not recorded,2-Jun,California,No,Protests
+Santa Rosa,No,No,No,No,No,Large,6-Jun,California,No,Protests
+Seaside,No,No,Yes,No,No,Large,31-May,California,Yes,Protests
+Seaside,No,No,No,Yes,No,Large,2-Jun,California,No,Protests
+Stockton,Yes,No,Yes,No,No,Moderate,31-May,California,Yes,Protests
+Torrance,Yes,No,No,Yes,No,Large,31-May,California,Yes,Protests
+Tracy,Yes,No,No,Yes,No,Moderate,31-May,California,Yes,Protests
+Vallejo,No,No,Yes,No,No,Moderate,29-May,California,Yes,Protests
+Vallejo,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,California,No,Protests with Observable Violence
+Vallejo,Yes,Yes,Yes,Yes,Yes,Large,2-Jun,California,Yes,Protests with Observable Violence
+Vallejo,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+Visalia,Yes,No,No,Yes,No,Large,30-May,California,Yes,Protests
+Whittier,Yes,No,No,Yes,No,Large,31-May,California,Yes,Protests
+Boulder,Yes,No,No,Yes,No,Moderate,30-May,Colorado,Yes,Protests
+Colorado Springs,Yes,No,Yes,No,Yes,Large,31-May,Colorado,Yes,Protests
+Colorado Springs,Yes,No,No,Yes,No,Moderate,1-Jun,Colorado,Yes,Protests
+Colorado Springs,No,No,No,Yes,No,Moderate,1-Jun,Colorado,Yes,Protests
+Colorado Springs,No,No,No,Yes,No,Moderate,5-Jun,Colorado,No,Protests
+Colorado Springs,No,No,No,Yes,No,Moderate,6-Jun,Colorado,No,Protests
+Colorado Springs,No,No,No,Yes,No,Moderate,8-Jun,Colorado,No,Protests
+Denver,Yes,Yes,Yes,Yes,Yes,Large,31-May,Colorado,Yes,Protests with Observable Violence
+Denver,Yes,No,Yes,Yes,Yes,Large,1-Jun,Colorado,Yes,Protests
+Fort Collins,No,No,No,No,No,Moderate,1-Jun,Colorado,Yes,Protests
+Pueblo,Yes,No,No,Yes,No,Small,30-May,Colorado,Yes,Protests
+Pueblo,No,No,No,Yes,No,Moderate,1-Jun,Colorado,Yes,Protests
+Denver,Yes,No,No,Yes,No,Large,2-Jun,Colorado,No,Protests
+Denver,Yes,No,No,Yes,No,Large,3-Jun,Colorado,No,Protests
+Denver,Yes,No,No,Yes,No,Large,4-Jun,Colorado,No,Protests
+Denver,No,No,No,Yes,No,Large,5-Jun,Colorado,No,Protests
+Aurora,Yes,No,No,Yes,No,Large,6-Jun,Colorado,No,Protests
+Denver,Yes,No,No,Yes,No,Large,7-Jun,Colorado,No,Protests
+Hartford,No,No,No,No,No,Moderate,30-May,Connecticut,No,Protests
+New Britain,No,Yes,No,Yes,No,Large,30-May,Connecticut,No,Protests
+New Haven,No,Yes,Yes,Yes,Yes,Large,30-May,Connecticut,No,Protests with Observable Violence
+Norwalk,No,No,No,Yes,No,Large,31-May,Connecticut,No,Protests
+Stamford,No,No,No,Yes,No,Large,31-May,Connecticut,No,Protests
+Waterbury,No,No,No,Yes,Yes,Moderate,31-May,Connecticut,No,Protests
+Wilmington,Yes,Yes,Yes,Yes,Yes,Large,30-May,Delaware,No,Protests with Observable Violence
+Wilmington,No,No,No,No,No,Moderate,31-May,Delaware,No,Protests
+Washington,Yes,Yes,Yes,Yes,Yes,Large,30-May,District of Columbia,No,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Large,30-May,District of Columbia,No,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Large,30-May,District of Columbia,No,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Large,31-May,District of Columbia,Yes,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Large,31-May,District of Columbia,Yes,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Moderate,31-May,District of Columbia,Yes,Protests with Observable Violence
+Washington,Yes,No,No,Yes,No,Large,1-Jun,District of Columbia,Yes,Protests
+Washington,Yes,No,Yes,No,Yes,Large,1-Jun,District of Columbia,Yes,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Moderate,1-Jun,District of Columbia,Yes,Protests with Observable Violence
+Washington,Yes,Yes,Yes,Yes,Yes,Moderate,1-Jun,District of Columbia,Yes,Protests with Observable Violence
+Washington,Yes,No,Yes,Yes,Yes,Large,2-Jun,District of Columbia,Yes,Protests
+Washington,Yes,No,Yes,Yes,No,Small,2-Jun,District of Columbia,Not recorded,Protests
+Washington,Yes,No,No,Yes,No,Large,3-Jun,District of Columbia,Not recorded,Protests
+Washington,Yes,No,No,Yes,No,Large,3-Jun,District of Columbia,Not recorded,Protests
+Washington,Yes,No,No,Yes,No,Large,3-Jun,District of Columbia,Not recorded,Protests
+Washington,No,No,No,No,No,Large,4-Jun,District of Columbia,Not recorded,Protests
+Washington,No,No,No,No,No,Large,4-Jun,District of Columbia,Not recorded,Protests
+Washington,No,No,Yes,Yes,No,Large,6-Jun,District of Columbia,Not recorded,Protests
+Washington,No,No,No,Yes,No,Large,6-Jun,District of Columbia,Not recorded,Protests
+Washington,No,No,No,Yes,No,Large,6-Jun,District of Columbia,Not recorded,Protests
+Washington,No,No,No,Yes,No,Large,7-Jun,District of Columbia,Not recorded,Protests
+Fort Lauderdale,Yes,Yes,Yes,Yes,Yes,Large,31-May,Florida,Yes,Protests with Observable Violence
+Fort Meyers,No,No,No,Yes,No,Moderate,31-May,Florida,Yes,Protests
+Fort Meyers,No,No,No,No,No,Small,1-Jun,Florida,Yes,Protests
+Gainesville,No,No,No,Yes,No,Large,31-May,Florida,Yes,Protests
+Jacksonville,Yes,Yes,Yes,Yes,Yes,Large,31-May,Florida,Yes,Protests with Observable Violence
+Jacksonville,No,No,No,Yes,No,Small,1-Jun,Florida,Yes,Protests
+Lake Worth,No,Yes,No,Yes,No,Moderate,31-May,Florida,Yes,Protests
+Lakeland,No,Yes,Yes,Yes,Yes,Moderate,31-May,Florida,Yes,Protests with Observable Violence
+Miami,Yes,Yes,Yes,Yes,Yes,Large,30-May,Florida,Yes,Protests with Observable Violence
+Miami,Yes,Yes,Yes,Yes,Yes,Large,31-May,Florida,Yes,Protests with Observable Violence
+Miami,Yes,No,No,Yes,No,Large,1-Jun,Florida,Yes,Protests
+Ocala,No,No,No,Yes,No,Moderate,31-May,Florida,Yes,Protests
+Orlando,No,No,No,Yes,No,Moderate,30-May,Florida,Yes,Protests
+Orlando,Yes,No,Yes,Yes,Yes,Large,30-May,Florida,Yes,Protests with Observable Violence
+Orlando,Yes,No,No,No,Yes,Large,31-May,Florida,Yes,Protests
+Orlando,Yes,Yes,Yes,Yes,Yes,Large,31-May,Florida,Yes,Protests with Observable Violence
+Orlando,Yes,No,Yes,Yes,Yes,Large,1-Jun,Florida,Yes,Protests
+Panama City,No,No,No,No,No,Small,30-May,Florida,Yes,Protests
+Panama City,No,No,No,No,No,Small,30-May,Florida,Yes,Protests
+Pensacola,No,No,No,No,No,Large,29-May,Florida,Yes,Protests
+Pensacola,No,No,No,Yes,No,Large,30-May,Florida,Yes,Protests
+Port Orange,No,No,No,Yes,No,Moderate,31-May,Florida,Yes,Protests
+Saratosa,No,No,No,Yes,No,Small,30-May,Florida,Yes,Protests
+Saratosa,No,No,No,Yes,No,Moderate,31-May,Florida,Yes,Protests
+Saratosa,No,No,No,No,No,Small,1-Jun,Florida,Yes,Protests
+St Augustine,No,No,No,Yes,No,Moderate,30-May,Florida,Yes,Protests
+St Augustine,No,No,No,Yes,No,Moderate,31-May,Florida,Yes,Protests
+St Augustine,No,No,No,No,No,Moderate,1-Jun,Florida,Yes,Protests
+St Ptersburg,No,No,No,Yes,No,Moderate,30-May,Florida,Yes,Protests
+St Ptersburg,No,No,Yes,Yes,Yes,Moderate,31-May,Florida,Yes,Protests with Observable Violence
+Tallahassee,No,No,No,Yes,No,Moderate,30-May,Florida,Yes,Protests
+Tallahassee,Yes,No,No,No,No,Moderate,31-May,Florida,Yes,Protests
+Tallahassee,No,No,No,No,No,Small,1-Jun,Florida,Yes,Protests
+Tampa,Yes,Yes,Yes,No,Yes,Large,30-May,Florida,Yes,Protests with Observable Violence
+Tampa,Yes,Yes,Yes,No,Yes,Large,30-May,Florida,Yes,Protests with Observable Violence
+Tampa,No,No,No,No,No,Moderate,1-Jun,Florida,No,Protests
+West Palm Beach,Yes,Yes,Yes,Yes,Yes,Large,31-May,Florida,Yes,Protests with Observable Violence
+West Palm Beach,Yes,No,No,Yes,No,Small,2-Jun,Florida,No,Protests
+Albany,No,No,No,No,No,Small,30-May,Georgia,Yes,Protests
+Atlanta,Yes,Yes,Yes,Yes,Yes,Large,30-May,Georgia,Yes,Protests with Observable Violence
+Atlanta,Yes,Yes,Yes,Yes,Yes,Large,31-May,Georgia,Yes,Protests with Observable Violence
+Atlanta,Yes,No,Yes,Yes,Yes,Large,1-Jun,Georgia,Yes,Protests with Observable Violence
+Augusta,No,No,No,Yes,No,Small,30-May,Georgia,Yes,Protests
+Augusta,No,No,No,Yes,No,Small,31-May,Georgia,Yes,Protests
+Columbus,No,No,No,Yes,No,Moderate,31-May,Georgia,Yes,Protests
+Columbus,No,No,No,No,No,Small,1-Jun,Georgia,Yes,Protests
+Evans,No,No,No,Yes,No,Moderate,1-Jun,Georgia,Yes,Protests
+Gainesville,No,No,Yes,Yes,Yes,Large,30-May,Georgia,Yes,Protests with Observable Violence
+Gainesville,No,Yes,No,No,No,Moderate,31-May,Georgia,Yes,Protests
+Gainesville,No,No,No,Yes,No,Large,1-Jun,Virginia,Yes,Protests
+LaGrange,No,No,No,Yes,No,Moderate,31-May,Georgia,Yes,Protests
+Savannah,Yes,No,No,Yes,Yes,Moderate,31-May,Georgia,Yes,Protests
+Valdosta,No,No,No,No,No,Small,30-May,Georgia,Yes,Protests
+Warner Robins,No,No,No,No,No,Small,30-May,Georgia,Yes,Protests
+Warner Robins,No,No,No,No,No,Moderate,31-May,Georgia,Yes,Protests
+Honolulu,No,No,No,No,No,Moderate,29-May,Hawaii,No,Protests
+Honolulu,No,No,No,Yes,No,Moderate,30-May,Hawaii,No,Protests
+Honolulu,No,No,No,Yes,No,Moderate,3-Jun,Hawaii,No,Protests
+Honolulu,No,No,No,Yes,No,Moderate,5-Jun,Hawaii,No,Protests
+Honolulu,No,No,No,Yes,No,Large,6-Jun,Hawaii,No,Protests
+Kailua-Kona,No,No,No,No,No,Moderate,31-May,Hawaii,No,Protests
+Maui,No,No,No,No,No,Moderate,30-May,Hawaii,No,Protests
+Maui,No,No,No,No,No,Small,8-Jun,Hawaii,No,Protests
+Boise,Yes,No,Yes,No,No,Moderate,31-May,Idaho,No,Protests
+Boise,Yes,No,No,No,No,Small,7-Jun,Idaho,No,Protests
+Aurora,Yes,Yes,No,Yes,Yes,Large,31-May,Illinois,Yes,Protests with Observable Violence
+Barrington,No,No,No,No,No,Large,6-Jun,Illinois,Yes,Protests
+Canton,No,No,No,No,No,Small,2-Jun,Illinois,Yes,Protests
+Champaign-Urbana,No,No,No,Yes,No,Large,1-Jun,Illinois,Yes,Protests
+Chicago,Yes,Yes,Yes,Yes,Yes,Large,29-May,Illinois,Yes,Protests with Observable Violence
+Chicago,Yes,Yes,Yes,Yes,Yes,Large,30-May,Illinois,Yes,Protests with Observable Violence
+Chicago,Yes,Yes,Yes,Yes,Yes,Large,30-May,Illinois,Yes,Protests with Observable Violence
+Chicago,Yes,Yes,Yes,Yes,Yes,Large,31-May,Illinois,Yes,Protests with Observable Violence
+Chicago,Yes,No,No,Yes,No,Large,1-Jun,Illinois,Yes,Protests
+Cicero,Yes,Yes,Yes,Yes,Yes,Moderate,1-Jun,Illinois,Yes,Protests with Observable Violence
+Elgin,No,No,No,Yes,No,Moderate,1-Jun,Illinois,Yes,Protests
+Joliet,No,No,No,Yes,No,Moderate,29-May,Illinois,Yes,Protests
+Napersville,No,No,No,No,No,Large,1-Jun,Illinois,Yes,Protests
+Peoria,Yes,No,No,No,No,Large,30-May,Illinois,Yes,Protests
+Peoria,Yes,Yes,Yes,Yes,Yes,Large,30-May,Illinois,Yes,Protests with Observable Violence
+Saint Charles,No,No,No,No,No,Large,1-Jun,Illinois,Yes,Protests
+Springfield,No,No,No,No,No,Large,1-Jun,Illinois,Yes,Protests
+Indianapolis,Yes,No,No,No,No,Moderate,1-Jun,Indiana,No,Protests
+Indianapolis,No,No,No,No,No,Moderate,3-Jun,Indiana,No,Protests
+Evansville,No,No,No,No,Yes,Moderate,30-May,Indiana,No,Protests
+Fort Wayne,No,Yes,Yes,Yes,Yes,Large,30-May,Indiana,No,Protests with Observable Violence
+Indianapolis,Yes,Yes,Yes,Yes,Yes,Large,30-May,Indiana,No,Protests with Observable Violence
+Indianapolis,Yes,No,No,Yes,No,Large,6-Jun,Indiana,No,Protests
+South Bend,No,No,No,Yes,No,Large,30-May,Indiana,No,Protests
+Crown Point,No,No,No,Yes,No,Small,1-Jun,Indiana,No,Protests
+Ames,No,No,No,Yes,No,Moderate,30-May,Iowa,No,Protests
+Cedar Rapids,No,No,No,Yes,No,Large,30-May,Iowa,No,Protests
+Davenport,Yes,Yes,Yes,Yes,Yes,Large,30-May,Iowa,No,Protests with Observable Violence
+Des Moines,Yes,Yes,Yes,Yes,Yes,Large,30-May,Iowa,No,Protests with Observable Violence
+Sioux City,Yes,Yes,Yes,Yes,Yes,Large,30-May,Iowa,No,Protests with Observable Violence
+Hutchinson,No,No,Yes,No,No,Moderate,30-May,Kansas,No,Protests
+Junction City,No,No,No,No,No,Small,30-May,Kansas,No,Protests
+Manhattan,No,No,No,No,No,Small,31-May,Kansas,No,Protests
+Salina,No,No,No,No,No,Large,31-May,Kansas,No,Protests
+Topeka,No,No,No,No,No,Large,30-May,Kansas,No,Protests
+Wichita,No,No,No,No,No,Large,30-May,Kansas,No,Protests
+Bowling Green,No,No,No,No,No,Moderate,31-May,Kentucky,Yes,Protests
+Hopkinsville,No,No,No,No,No,Moderate,31-May,Kentucky,Yes,Protests
+Lexington,No,No,No,Yes,No,Large,30-May,Kentucky,Yes,Protests
+Owensboro,No,No,No,Yes,No,Large,30-May,Kentucky,Yes,Protests
+Lafayette,No,No,No,Yes,No,Large,31-May,Louisiana,No,Protests
+Lake Charles,No,No,No,Yes,No,Large,31-May,Louisiana,No,Protests
+Monroe,No,No,No,Yes,No,Moderate,30-May,Louisiana,No,Protests
+New Iberia,No,No,No,Yes,No,Small,30-May,Louisiana,No,Protests
+New Orleans,No,No,No,Yes,No,Large,30-May,Louisiana,No,Protests
+Shreveport,No,No,No,Yes,No,Large,30-May,Louisiana,No,Protests
+Augusta,No,No,No,Yes,No,Large,7-Jun,Maine,No,Protests
+Bangor,No,No,No,Yes,No,Large,1-Jun,Maine,No,Protests
+Bangor,No,No,Yes,Yes,Yes,Large,1-Jun,Maine,No,Protests
+Belfast,No,No,No,Yes,No,Large,31-May,Maine,No,Protests
+Gorham ,No,No,No,Yes,No,Large,3-Jun,Maine,No,Protests
+Kittery,No,No,No,Yes,No,Large,6-Jun,Maine,No,Protests
+Portland,No,No,No,Yes,No,Large,30-May,Maine,No,Protests
+Portland,No,Yes,Yes,Yes,Yes,Large,1-Jun,Maine,No,Protests with Observable Violence
+Portland,No,Yes,Yes,No,Yes,Large,3-Jun,Maine,No,Protests
+Portland,No,No,No,Yes,No,Large,5-Jun,Maine,No,Protests
+Portland ,No,No,Yes,Yes,Yes,Large,2-Jun,Maine,No,Protests with Observable Violence
+Sanford,Yes,No,No,Yes,No,Large,6-Jun,Maine,No,Protests
+South Portland,No,No,No,Yes,No,Large,4-Jun,Maine,No,Protests
+Annapolis,No,No,No,No,No,Small,30-May,Maryland,No,Protests
+Baltimore,No,No,No,Yes,No,Moderate,29-May,Maryland,No,Protests
+Baltimore,No,No,No,Yes,Yes,Moderate,30-May,Maryland,No,Protests
+Baltimore,No,No,No,Yes,No,Moderate,31-May,Maryland,No,Protests
+Baltimore,No,Yes,Yes,Yes,Yes,Large,1-Jun,Maryland,No,Protests with Observable Violence
+Bethesda,No,No,No,Yes,No,Large,2-Jun,Maryland,No,Protests
+Hagerstown,No,No,No,No,No,Small,31-May,Maryland,No,Protests
+Pocomoke City,No,No,No,Yes,No,Small,3-Jun,Maryland,No,Protests
+Salisbury,No,No,No,No,No,Small,1-Jun,Maryland,No,Protests
+Salisbury,No,No,No,Yes,No,Small,2-Jun,Maryland,No,Protests
+Ashfield,No,No,No,Yes,No,Moderate,7-Jun,Massachusetts,No,Protests
+Boston,Yes,Yes,Yes,Yes,Yes,Large,29-May,Massachusetts,Yes,Protests with Observable Violence
+Boston,Yes,Yes,Yes,Yes,Yes,Large,30-May,Massachusetts,Yes,Protests with Observable Violence
+Boston,No,Yes,Yes,Yes,Yes,Large,31-May,Massachusetts,Yes,Protests with Observable Violence
+Boston,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Massachusetts,Yes,Protests with Observable Violence
+Boston,Yes,No,Yes,Yes,No,Large,2-Jun,Massachusetts,Yes,Protests
+Boston,No,No,Yes,Yes,No,Large,2-Jun,Massachusetts,Yes,Protests
+Boston,No,No,No,Yes,No,Large,3-Jun,Massachusetts,Yes,Protests
+Boston,No,No,No,No,No,Large,4-Jun,Massachusetts,No,Protests
+Boston,No,No,No,Yes,No,Large,5-Jun,Massachusetts,No,Protests
+Boston,No,No,No,Yes,No,Large,7-Jun,Massachusetts,No,Protests
+Brockton,No,Yes,Yes,Yes,Yes,Large,2-Jun,Massachusetts,Yes,Protests with Observable Violence
+Brokton,No,No,Yes,No,Yes,Large,2-Jun,Massachusetts,Yes,Protests with Observable Violence
+Cambridge,No,No,No,Yes,No,Large,6-Jun,Massachusetts,No,Protests
+Greenfield,No,No,No,Yes,No,Large,6-Jun,Massachusetts,No,Protests
+Hyannis,No,No,No,Yes,No,Small,31-May,Massachusetts,Yes,Protests
+New Bedford,No,No,No,No,No,Small,30-May,Massachusetts,Yes,Protests
+New Bedford,No,No,No,No,No,Small,31-May,Massachusetts,Yes,Protests
+Shelburne Falls,No,No,No,No,No,Moderate,6-Jun,Massachusetts,No,Protests
+Springfield,Yes,No,No,No,No,Moderate,29-May,Massachusetts,Yes,Protests
+Taunton,No,No,No,No,Yes,Large,4-Jun,Massachusetts,No,Protests
+Worcester,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Massachusetts,Yes,Protests with Observable Violence
+Worcester,No,No,No,Yes,No,Large,1-Jun,Massachusetts,No,Protests
+Worcester,No,Yes,Yes,Yes,Yes,Large,2-Jun,Massachusetts,No,Protests with Observable Violence
+Worcester,No,No,No,Yes,No,Large,2-Jun,Massachusetts,No,Protests
+Worcester,No,No,No,Yes,No,Large,6-Jun,Massachusetts,No,Protests
+Ann Arbor,No,No,No,Yes,No,Large,30-May,Michigan,Yes,Protests
+Ann Arbor,No,No,No,Yes,No,Moderate,4-Jun,Michigan,Not recorded,Protests
+Bay City,No,No,No,No,No,Large,30-May,Michigan,Yes,Protests
+Detroit,Yes,Yes,Yes,Yes,Yes,Large,30-May,Michigan,No,Protests with Observable Violence
+Detroit,Yes,Yes,Yes,Yes,Yes,Large,31-May,Michigan,Yes,Protests with Observable Violence
+Detroit,Yes,No,No,Yes,No,Large,1-Jun,Michigan,No,Protests
+Detroit,Yes,No,No,Yes,No,Large,2-Jun,Michigan,No,Protests
+Detroit,Yes,No,No,Yes,No,Large,3-Jun,Michigan,No,Protests
+Detroit,Yes,No,No,Yes,No,Large,4-Jun,Michigan,No,Protests
+Detroit,Yes,No,No,Yes,No,Large,5-Jun,Michigan,No,Protests
+Detroit,Yes,No,No,Yes,No,Large,6-Jun,Michigan,No,Protests
+Detroit,Yes,No,No,Yes,No,Large,7-Jun,Michigan,No,Protests
+Flint,No,No,No,No,No,Large,30-May,Michigan,Yes,Protests
+Flint,No,No,No,Yes,No,Moderate,31-May,Michigan,Not recorded,Protests
+Flint,No,No,No,Yes,No,Moderate,1-Jun,Michigan,Not recorded,Protests
+Flint,No,No,No,Yes,No,Large,6-Jun,Michigan,Not recorded,Protests
+Grand Blanc,No,No,No,Yes,No,Large,5-Jun,Michigan,No,Protests
+Grand Rapids,Yes,Yes,Yes,Yes,Yes,Large,30-May,Michigan,Yes,Protests with Observable Violence
+Grand Rapids,Yes,Yes,Yes,Yes,Yes,Large,31-May,Michigan,Yes,Protests with Observable Violence
+Grand Rapids,Yes,No,Yes,No,Yes,Small,1-Jun,Michigan,Yes,Protests
+Grand Rapids,No,No,No,Yes,No,Large,3-Jun,Michigan,No,Protests
+Grand Rapids,No,No,No,Yes,Yes,Large,6-Jun,Michigan,No,Protests
+Holland,No,No,No,Yes,No,Moderate,31-May,Michigan,Yes,Protests
+Kalamazoo,Yes,Yes,Yes,Yes,Yes,Large,30-May,Michigan,Yes,Protests with Observable Violence
+Kalamazoo,Yes,No,Yes,Yes,Yes,Small,2-Jun,Michigan,Yes,Protests with Observable Violence
+Kalamazoo,No,No,No,Yes,No,Moderate,5-Jun,Michigan,No,Protests
+Lansing,Yes,Yes,Yes,Yes,Yes,Large,31-May,Michigan,Yes,Protests with Observable Violence
+Lansing,No,No,No,Yes,No,Moderate,5-Jun,Michigan,No,Protests
+Lansing,No,No,No,Yes,No,Moderate,6-Jun,Michigan,No,Protests
+Livonia,No,No,No,Yes,No,Large,6-Jun,Michigan,No,Protests
+Saginaw,No,No,No,No,No,Moderate,30-May,Michigan,Yes,Protests
+Saginaw,No,No,No,No,No,Small,1-Jun,Michigan,Not recorded,Protests
+Saginaw,No,No,No,Yes,No,Large,2-Jun,Michigan,Not recorded,Protests
+Troy,No,No,No,Yes,No,Large,5-Jun,Michigan,No,Protests
+Warren,No,No,No,Yes,No,Moderate,6-Jun,Michigan,No,Protests
+Ypsilanti,No,No,No,Yes,No,Large,6-Jun,Michigan,Not recorded,Protests
+Albert Lea,No,No,No,Yes,No,Large,2-Jun,Minnesota,Not recorded,Protests
+Duluth,Yes,Yes,Yes,Yes,Yes,Large,31-May,Minnesota,Yes,Protests with Observable Violence
+Duluth,No,No,No,Yes,No,Large,4-Jun,Minnesota,Not recorded,Protests
+Duluth,No,No,No,No,No,Small,5-Jun,Minnesota,Not recorded,Protests
+Minneapolis,Yes,Yes,Yes,Yes,Yes,Large,29-May,Minnesota,Yes,Protests with Observable Violence
+Minneapolis,Yes,Yes,Yes,Yes,Yes,Large,30-May,Minnesota,Yes,Protests with Observable Violence
+Minneapolis,Yes,No,Yes,Yes,Yes,Large,31-May,Minnesota,Yes,Protests with Observable Violence
+Minneapolis,Yes,No,No,No,No,Large,1-Jun,Minnesota,Yes,Protests
+Minneapolis,Yes,No,No,Yes,No,Large,1-Jun,Minnesota,Yes,Protests
+Minneapolis,Yes,No,No,Yes,No,Large,2-Jun,Minnesota,Yes,Protests
+Minneapolis,Yes,No,No,No,No,Large,2-Jun,Minnesota,Yes,Protests
+Minneapolis,Yes,No,No,No,No,Large,3-Jun,Minnesota,Yes,Protests
+Minneapolis,Yes,No,No,Yes,No,Large,6-Jun,Minnesota,Not recorded,Protests
+Rochester,No,No,No,Yes,No,Large,30-May,Minnesota,Yes,Protests
+Rochester ,No,No,No,Yes,No,Large,6-Jun,Minnesota,Not recorded,Protests
+St. Cloud,No,No,No,Yes,No,Large,30-May,Minnesota,Yes,Protests
+St. Paul,Yes,Yes,Yes,Yes,Yes,Large,29-May,Minnesota,Yes,Protests with Observable Violence
+St. Paul,No,No,No,No,No,Large,2-Jun,Minnesota,Yes,Protests
+Biloxi,No,No,No,No,No,Small,30-May,Mississippi,Yes,Protests
+Hattiesburg,No,No,No,Yes,No,Small,31-May,Mississippi,Yes,Protests
+Jackson,No,No,No,Yes,No,Large,29-May,Mississippi,Yes,Protests
+Oxford,No,No,No,Yes,No,Large,29-May,Mississippi,Yes,Protests
+Tupelo,No,No,No,Yes,No,Large,30-May,Mississippi,Yes,Protests
+Cape Girardeau,No,No,No,No,No,Large,30-May,Missouri,Yes,Protests
+Columbia,No,No,No,Yes,No,Moderate,31-May,Missouri,Yes,Protests
+Ferguson,Yes,Yes,Yes,Yes,Yes,Large,31-May,Missouri,Yes,Protests with Observable Violence
+Joplin,No,No,No,Yes,No,Moderate,31-May,Missouri,Yes,Protests
+Joplin,No,No,No,Yes,No,Moderate,31-May,Missouri,Yes,Protests
+Kansas City,No,Yes,No,Yes,No,Large,29-May,Missouri,Yes,Protests
+Kansas City,Yes,Yes,Yes,Yes,Yes,Large,30-May,Missouri,Yes,Protests with Observable Violence
+Kansas City,Yes,Yes,Yes,Yes,Yes,Large,31-May,Missouri,Yes,Protests with Observable Violence
+Kansas City,Yes,No,No,Yes,No,Small,1-Jun,Missouri,Yes,Protests
+Springfield,No,Yes,Yes,Yes,Yes,Large,31-May,Missouri,Yes,Protests with Observable Violence
+St. Louis,Yes,Yes,Yes,Yes,Yes,Large,31-May,Missouri,Yes,Protests with Observable Violence
+Billings,Yes,No,No,No,No,Moderate,30-May,Montana,No,Protests
+Billings,No,No,No,No,No,Moderate,7-Jun,Montana,No,Protests
+Bozeman,Yes,No,No,Yes,No,Large,31-May,Montana,No,Protests
+Helena,Yes,No,No,No,No,Moderate,31-May,Montana,No,Protests
+Missoula,Yes,No,No,No,No,Small,31-May,Montana,No,Protests
+Missoula,No,No,No,Yes,No,Small,1-Jun,Montana,No,Protests
+Missoula,No,No,No,No,No,Small,3-Jun,Montana,No,Protests
+Missoula,No,No,No,No,No,Small,6-Jun,Montana,No,Protests
+Grand Island,Yes,No,No,No,No,Moderate,31-May,Nebraska,Yes,Protests
+Kearney,No,No,No,No,No,Small,30-May,Nebraska,Yes,Protests
+Lincoln,Yes,Yes,Yes,Yes,Yes,Large,31-May,Nebraska,Yes,Protests with Observable Violence
+North Platte,No,No,No,No,No,Small,31-May,Nebraska,Yes,Protests
+Omaha,Yes,Yes,Yes,Yes,Yes,Large,31-May,Nebraska,Yes,Protests with Observable Violence
+Las Vegas,Yes,Yes,Yes,Yes,Yes,Large,31-May,Nevada,Yes,Protests with Observable Violence
+Reno,Yes,Yes,Yes,Yes,Yes,Large,30-May,Nevada,Yes,Protests
+Reno,Yes,Yes,Yes,Yes,Yes,Large,30-May,Nevada,Yes,Protests
+Concord,No,No,No,Yes,No,Large,6-Jun,New Hampshire,No,Protests
+Conway,No,No,No,Yes,No,Large,31-May,New Hampshire,No,Protests
+Dover,No,No,No,Yes,No,Large,30-May,New Hampshire,No,Protests
+Dover,No,No,No,Yes,No,Large,1-Jun,New Hampshire,No,Protests
+Exeter,No,No,No,No,No,Small,4-Jun,New Hampshire,No,Protests
+Laconia,No,No,No,Yes,No,Moderate,7-Jun,New Hampshire,No,Protests
+Manchester,No,No,No,Yes,Yes,Large,30-May,New Hampshire,No,Protests
+Manchester,No,No,Yes,Yes,Yes,Large,30-May,New Hampshire,No,Protests
+Portsmouth,No,No,No,Yes,No,Large,4-Jun,New Hampshire,No,Protests
+Portsmouth,No,No,No,Yes,No,Large,6-Jun,New Hampshire,No,Protests
+Portsmouth,No,No,No,Yes,No,Large,7-Jun,New Hampshire,No,Protests
+Salem ,No,No,No,No,No,Moderate,4-Jun,New Hampshire,No,Protests
+Asbury Park,Yes,No,No,Yes,Yes,Large,1-Jun,New Jersey,Yes,Protests with Observable Violence
+Atlantic City,Yes,Yes,Yes,No,Yes,Large,31-May,New Jersey,Yes,Protests with Observable Violence
+Camden,No,No,No,Yes,No,Moderate,30-May,New Jersey,Yes,Protests
+Englewood,No,No,Yes,Yes,No,Large,30-May,New Jersey,Yes,Protests
+Freehold Township,No,No,No,No,Yes,Moderate,30-May,New Jersey,Yes,Protests
+Glen Ridge,No,No,No,Yes,No,Small,31-May,New Jersey,Yes,Protests
+Jersey City,No,No,No,Yes,No,Moderate,1-Jun,New Jersey,Yes,Protests
+Morristown,No,No,No,Yes,No,Large,30-May,New Jersey,Yes,Protests
+New Brunswick,No,No,No,Yes,No,Moderate,30-May,New Jersey,Yes,Protests
+Newark,No,No,No,Yes,Yes,Moderate,30-May,New Jersey,Yes,Protests
+Trenton,Yes,Yes,Yes,Yes,Yes,Large,30-May,New Jersey,Yes,Protests with Observable Violence
+Albuquerque,No,Yes,Yes,No,Yes,Moderate,28-May,New Mexico,No,Protests
+Albuquerque,No,Yes,Yes,No,Yes,Moderate,28-May,New Mexico,No,Protests with Observable Violence
+Carlsbad,No,No,No,No,No,Small,28-May,New Mexico,No,Protests
+Farmington,No,No,No,No,No,Large,1-Jun,New Mexico,No,Protests
+Las Cruces,No,No,No,No,No,Small,30-May,New Mexico,No,Protests
+Roswell,No,No,No,No,No,Small,1-Jun,New Mexico,No,Protests
+Sante Fe,No,No,No,No,No,Moderate,29-May,New Mexico,No,Protests
+Sante Fe,No,No,No,Yes,No,Moderate,3-Jun,New Mexico,No,Protests
+Albany,Yes,Yes,No,Yes,Yes,Large,31-May,New York,No,Protests
+Albany,No,No,No,No,No,Small,1-Jun,New York,No,Protests
+Bronx,Yes,No,Yes,No,Yes,Small,2-Jun,New York,No,Protests
+Bronx,Yes,No,Yes,Yes,Yes,Large,4-Jun,New York,No,Protests
+Bronx,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Bronx,Yes,No,No,No,No,Large,6-Jun,New York,No,Protests
+Bronx,No,No,No,Yes,No,Large,7-Jun,New York,No,Protests
+Brooklyn,Yes,Yes,No,Yes,Yes,Large,31-May,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,1-Jun,New York,No,Protests
+Brooklyn,Yes,No,Yes,Yes,No,Large,2-Jun,New York,No,Protests with Observable Violence
+Brooklyn,Yes,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,3-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,3-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,4-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,4-Jun,New York,No,Protests
+Brooklyn,Yes,No,Yes,Yes,No,Large,5-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Small,5-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Brooklyn,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,8-Jun,New York,No,Protests
+Brooklyn,No,No,No,No,No,Large,8-Jun,New York,No,Protests
+Buffalo,Yes,Yes,Yes,Yes,Yes,Large,31-May,New York,No,Protests
+Buffalo,Yes,No,No,Yes,No,Moderate,1-Jun,New York,No,Protests
+Commack,No,No,No,No,No,Large,30-May,New York,No,Protests
+Commack,No,No,No,No,No,Large,31-May,New York,No,Protests
+Commack,No,No,No,No,No,Large,1-Jun,New York,No,Protests
+Commack,No,No,No,No,No,Large,2-Jun,New York,No,Protests
+Elmira,No,No,No,Yes,No,Moderate,31-May,New York,No,Protests
+Elmira,No,No,No,No,No,Small,1-Jun,New York,No,Protests
+Harlem,Yes,No,No,Yes,No,Large,31-May,New York,No,Protests
+Ithaca,Yes,No,No,Yes,No,Large,31-May,New York,No,Protests
+Ithaca,No,No,No,No,No,Small,1-Jun,New York,No,Protests
+Jamestown,Yes,No,No,Yes,No,Moderate,31-May,New York,No,Protests
+Jamestown,No,No,No,Yes,No,Moderate,1-Jun,New York,No,Protests
+Manahttan,No,No,No,Yes,No,Large,8-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,Yes,Large,31-May,New York,No,Protests
+Manhattan,Yes,Yes,No,Yes,No,Large,31-May,New York,No,Protests
+Manhattan,Yes,Yes,Yes,No,No,Small,1-Jun,New York,No,Protests with Observable Violence
+Manhattan,Yes,No,No,Yes,No,Large,1-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,2-Jun,New York,Not recorded,Protests
+Manhattan,Yes,No,No,Yes,No,Small,2-Jun,New York,No,Protests
+Manhattan,Yes,No,No,No,No,Small,2-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Manhattan,Yes,No,No,No,No,Moderate,2-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,3-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,4-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,4-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,5-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Moderate,5-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,5-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Manhattan,Yes,No,No,Yes,No,Large,6-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,7-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,7-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,7-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Moderate,7-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,8-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,8-Jun,New York,No,Protests
+Merrick,No,No,Yes,Yes,Yes,Moderate,2-Jun,New York,No,Protests
+Mineola,No,No,No,Yes,No,Moderate,31-May,New York,No,Protests
+New Paltz,No,No,No,Yes,No,Large,31-May,New York,No,Protests
+New Paltz,No,No,No,Yes,No,Small,1-Jun,New York,No,Protests
+Patchogue,No,No,No,No,No,Large,1-Jun,New York,No,Protests
+Plainview,No,No,No,No,No,Large,31-May,New York,No,Protests
+Port Jeff Station,No,No,No,Yes,No,Large,1-Jun,New York,No,Protests
+Poughkeepsie,No,No,No,Yes,No,Moderate,31-May,New York,No,Protests
+Poughkeepsie,No,No,No,Yes,No,Moderate,31-May,New York,No,Protests
+Poughkeepsie,No,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Large,30-May,New York,No,Protests
+Queens,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,New York,No,Protests with Observable Violence
+Queens,Yes,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Queens,Yes,No,No,Yes,No,Large,2-Jun,New York,No,Protests
+Queens,Yes,No,No,No,No,Large,3-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Moderate,4-Jun,New York,No,Protests
+Queens,No,No,No,No,No,Moderate,4-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Large,5-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Small,5-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Small,5-Jun,New York,No,Protests
+Queens,Yes,No,No,No,No,Large,6-Jun,New York,No,Protests
+Queens,No,No,No,No,No,Moderate,6-Jun,New York,No,Protests
+Queens,No,No,No,No,No,Moderate,7-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Small,7-Jun,New York,No,Protests
+Rochester,Yes,Yes,Yes,Yes,Yes,Large,30-May,New York,No,Protests
+Rochester,No,No,No,No,No,Small,1-Jun,New York,No,Protests
+Shirley,No,Yes,No,Yes,No,Moderate,1-Jun,New York,No,Protests
+Staten Island,Yes,No,No,Yes,No,Moderate,30-May,New York,No,Protests
+Staten Island,Yes,No,No,No,No,Small,1-Jun,New York,No,Protests
+Staten Island,Yes,No,No,Yes,No,Small,3-Jun,New York,No,Protests
+Staten Island,No,No,No,Yes,No,Large,7-Jun,New York,No,Protests
+Syracuse,Yes,Yes,Yes,Yes,Yes,Moderate,31-May,New York,No,Protests
+Syracuse,Yes,Yes,Yes,Yes,Yes,Large,31-May,New York,No,Protests with Observable Violence
+Syracuse,No,No,No,No,No,Large,1-Jun,New York,No,Protests
+Syracuse,No,No,No,No,No,Large,1-Jun,New York,No,Protests
+Utica,No,No,No,Yes,No,Large,31-May,New York,No,Protests
+West Islip,No,No,No,Yes,No,Large,1-Jun,New York,No,Protests
+Yonkers,No,No,No,Yes,No,Large,31-May,New York,No,Protests
+Yonkers,No,Yes,No,Yes,No,Small,2-Jun,New York,No,Protests
+Yonkers,No,No,No,Yes,No,Small,2-Jun,New York,No,Protests
+Asheville,No,No,No,No,No,Moderate,31-May,North Carolina,Yes,Protests
+Asheville,Yes,Yes,Yes,Yes,Yes,Moderate,1-Jun,North Carolina,Yes,Protests with Observable Violence
+Asheville,Yes,Yes,Yes,No,Yes,Large,2-Jun,North Carolina,Yes,Protests with Observable Violence
+Asheville,Yes,No,No,No,No,Large,5-Jun,North Carolina,No,Protests
+Asheville,No,No,No,Yes,No,Large,6-Jun,North Carolina,No,Protests
+Asheville ,Yes,Yes,Yes,No,Yes,Large,3-Jun,North Carolina,Yes,Protests with Observable Violence
+Asheville ,Yes,No,No,Yes,No,Large,4-Jun,North Carolina,No,Protests
+Asheville ,No,No,No,No,No,Small,7-Jun,North Carolina,No,Protests
+Charlotte,Yes,Yes,Yes,Yes,Yes,Moderate,29-May,North Carolina,Yes,Protests with Observable Violence
+Charlotte,Yes,Yes,Yes,Yes,Yes,Small,30-May,North Carolina,Yes,Protests with Observable Violence
+Charlotte,No,Yes,Yes,No,Yes,Large,2-Jun,North Carolina,No,Protests with Observable Violence
+Charlotte,No,Yes,Yes,Yes,Yes,Large,3-Jun,North Carolina,No,Protests with Observable Violence
+Charlotte,No,No,No,Yes,No,Large,4-Jun,North Carolina,No,Protests
+Charlotte,No,No,No,Yes,No,Moderate,5-Jun,North Carolina,No,Protests
+Charlotte,No,No,No,Yes,Yes,Moderate,6-Jun,North Carolina,No,Protests
+Charlotte,No,Yes,Yes,Yes,Yes,Large,7-Jun,North Carolina,No,Protests
+Durham,Yes,No,No,Yes,No,Moderate,30-May,North Carolina,Yes,Protests
+Durham,Yes,No,No,Yes,No,Large,1-Jun,North Carolina,Yes,Protests
+Durham,No,No,No,Yes,No,Small,2-Jun,North Carolina,No,Protests
+Durham,No,No,No,Yes,No,Moderate,3-Jun,North Carolina,No,Protests
+Durham,No,No,No,Yes,No,Large,4-Jun,North Carolina,No,Protests
+Durham,No,No,No,Yes,No,Small,5-Jun,North Carolina,No,Protests
+Durham,No,No,No,Yes,No,Large,6-Jun,North Carolina,No,Protests
+Durham,No,No,No,Yes,No,Small,7-Jun,North Carolina,No,Protests
+Durham ,No,No,No,Yes,No,Large,6-Jun,North Carolina,No,Protests
+Fayetteville,Yes,No,No,Yes,No,Moderate,30-May,North Carolina,Yes,Protests
+Greensboro,Yes,Yes,Yes,Yes,Yes,Moderate,30-May,North Carolina,Yes,Protests
+Greenville,Yes,Yes,Yes,Yes,Yes,Large,31-May,North Carolina,Yes,Protests with Observable Violence
+Jacksonville,Yes,No,Yes,Yes,No,Large,30-May,North Carolina,Yes,Protests
+Raleigh,Yes,Yes,Yes,Yes,Yes,Large,30-May,North Carolina,Yes,Protests with Observable Violence
+Wilmington,Yes,No,No,Yes,Yes,Moderate,31-May,North Carolina,Yes,Protests
+Winston-Salem,Yes,No,No,Yes,No,Moderate,31-May,North Carolina,Yes,Protests
+Bismarck,No,No,No,Yes,Yes,Large,31-May,North Dakota,Yes,Protests
+Bismarck,No,No,No,No,No,Small,2-Jun,North Dakota,No,Protests
+Fargo,Yes,Yes,Yes,Yes,Yes,Large,30-May,North Dakota,Yes,Protests with Observable Violence
+Minot,No,No,No,No,No,Moderate,30-May,North Dakota,Yes,Protests
+Akron,Yes,Yes,No,Yes,Yes,Moderate,30-May,Ohio,No,Protests with Observable Violence
+Akron,Yes,Yes,Yes,Yes,Yes,Large,31-May,Ohio,No,Protests
+Akron,No,No,No,Yes,No,Large,6-Jun,Ohio,No,Protests
+Ashland,No,No,No,Yes,No,Small,5-Jun,Ohio,No,Protests
+Athens,No,No,No,Yes,No,Small,31-May,Ohio,No,Protests
+Beavercreek,Yes,No,Yes,Yes,Yes,Small,2-Jun,Ohio,No,Protests
+Bowling Green,No,No,No,Yes,No,Large,1-Jun,Ohio,No,Protests
+Cincinnati,Yes,Yes,Yes,Yes,Yes,Large,29-May,Ohio,No,Protests with Observable Violence
+Cincinnati,No,Yes,Yes,Yes,Yes,Large,30-May,Ohio,No,Protests with Observable Violence
+Cincinnati,Yes,Yes,Yes,Yes,Yes,Large,31-May,Ohio,Yes,Protests with Observable Violence
+Cincinnati,No,No,No,Yes,No,Large,7-Jun,Ohio,No,Protests
+Cleveland,No,No,No,Yes,No,Large,30-May,Ohio,No,Protests with Observable Violence
+Cleveland,Yes,No,Yes,Yes,No,Large,6-Jun,Ohio,No,Protests
+Columbus,Yes,Yes,Yes,Yes,Yes,Large,29-May,Ohio,Yes,Protests with Observable Violence
+Columbus,No,Yes,Yes,Yes,Yes,Large,30-May,Ohio,No,Protests with Observable Violence
+Columbus,Yes,No,No,Yes,No,Large,31-May,Ohio,No,Protests with Observable Violence
+Columbus,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Ohio,Yes,Protests with Observable Violence
+Columbus,Yes,No,No,Yes,No,Large,1-Jun,Ohio,No,Protests
+Columbus,No,No,No,Yes,No,Large,2-Jun,Ohio,Yes,Protests
+Columbus,No,No,No,Yes,No,Small,3-Jun,Ohio,Yes,Protests
+Columbus,Yes,No,No,Yes,No,Large,3-Jun,Ohio,No,Protests
+Columbus,Yes,No,No,Yes,No,Moderate,4-Jun,Ohio,No,Protests
+Columbus,Yes,No,No,Yes,No,Large,5-Jun,Ohio,No,Protests
+Columbus,No,No,No,Yes,No,Large,6-Jun,Ohio,No,Protests
+Columbus,No,No,No,Yes,No,Moderate,7-Jun,Ohio,No,Protests
+Columbus ,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Ohio,No,Protests with Observable Violence
+Columbus ,Yes,No,No,Yes,No,Large,2-Jun,Ohio,No,Protests
+Dayton,No,No,No,No,No,Moderate,30-May,Ohio,No,Protests with Observable Violence
+Dayton,No,No,No,Yes,No,Small,31-May,Ohio,No,Protests
+Dayton,No,No,No,Yes,No,Large,7-Jun,Ohio,No,Protests
+Hamilton,No,Yes,Yes,Yes,Yes,Large,31-May,Ohio,No,Protests
+Hamilton,No,No,No,Yes,No,Small,3-Jun,Ohio,No,Protests
+Sandusky,No,No,No,Yes,No,Small,31-May,Ohio,No,Protests
+Sandusky,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Ohio,Yes,Protests
+Sandusky,No,No,No,Yes,No,Large,2-Jun,Ohio,Yes,Protests
+Springfield,No,No,No,No,No,Small,6-Jun,Ohio,No,Protests
+Toledo,Yes,Yes,Yes,Yes,Yes,Large,30-May,Ohio,Yes,Protests with Observable Violence
+Toledo,No,No,No,Yes,No,Small,31-May,Ohio,No,Protests
+Toledo,No,No,No,Yes,No,Large,6-Jun,Ohio,No,Protests
+Youngstown ,Yes,No,Yes,Yes,Yes,Large,31-May,Ohio,Yes,Protests
+Bricktown,No,No,No,Yes,No,Large,6-Jun,Oklahoma,No,Protests
+Lawton,No,No,No,No,No,Moderate,31-May,Oklahoma,Yes,Protests
+Oklahoma City,Yes,Yes,Yes,Yes,Yes,Large,31-May,Oklahoma,Yes,Protests with Observable Violence
+Tulsa,Yes,Yes,Yes,Yes,Yes,Large,30-May,Oklahoma,Yes,Protests with Observable Violence
+Ashland,No,No,No,No,No,Moderate,31-May,Oregon,Yes,Protests
+Bend,No,No,No,Yes,No,Moderate,30-May,Oregon,No,Protests
+Corvalis,Yes,No,No,No,No,Moderate,31-May,Oregon,Yes,Protests
+Eugene,Yes,No,No,Yes,No,Large,30-May,Oregon,No,Protests
+Portland,Yes,Yes,Yes,Yes,Yes,Large,31-May,Oregon,No,Protests with Observable Violence
+Salem,Yes,Yes,Yes,Yes,Yes,Moderate,31-May,Oregon,Yes,Protests with Observable Violence
+Allentown,No,No,No,Yes,No,Large,31-May,Pennsylvania,Yes,Protests
+Bethlehem,No,No,No,Yes,No,Moderate,31-May,Pennsylvania,Yes,Protests
+Bloomsburg,No,No,No,Yes,No,Large,2-Jun,Pennsylvania,Yes,Protests
+Butler,Yes,Yes,Yes,Yes,Yes,Small,30-May,Pennsylvania,Yes,Protests with Observable Violence
+Carlisle,No,No,No,Yes,No,Small,30-May,Pennsylvania,Yes,Protests
+Chambersburg,No,No,No,Yes,No,Small,1-Jun,Pennsylvania,Yes,Protests
+Danville,No,No,No,Yes,No,Large,7-Jun,Pennsylvania,Yes,Protests
+Darby,Yes,Yes,Yes,Yes,Yes,Large,31-May,Pennsylvania,Yes,Protests with Observable Violence
+Doylestown,No,No,No,Yes,No,Large,1-Jun,Pennsylvania,Yes,Protests
+Dubois,No,No,No,Yes,No,Moderate,31-May,Pennsylvania,Yes,Protests
+Easton,No,No,No,Yes,No,Large,31-May,Pennsylvania,Yes,Protests
+Erie,Yes,Yes,Yes,Yes,Yes,Large,30-May,Pennsylvania,Yes,Protests with Observable Violence
+Greensburg,No,No,No,Yes,No,Large,31-May,Pennsylvania,Yes,Protests
+Hanover,No,No,No,Yes,No,Small,31-May,Pennsylvania,Yes,Protests
+Harrisburg,Yes,Yes,Yes,Yes,Yes,Large,31-May,Pennsylvania,Yes,Protests with Observable Violence
+Harrisburg,No,No,No,Yes,No,Large,1-Jun,Pennsylvania,Yes,Protests
+Harrisburg,Yes,No,No,Yes,No,Large,3-Jun,Pennsylvania,Yes,Protests
+Hermitage,No,No,No,Yes,No,Moderate,31-May,Pennsylvania,Yes,Protests
+Hollidaysburg,No,No,No,Yes,No,Large,1-Jun,Pennsylvania,Yes,Protests
+Kennet Square,No,No,No,Yes,No,Large,1-Jun,Pennsylvania,No,Protests
+Lancaster,No,No,No,Yes,No,Large,31-May,Pennsylvania,Yes,Protests
+Lancaster,No,No,No,No,No,Small,1-Jun,Pennsylvania,Yes,Protests
+Lebanon,No,No,No,Yes,No,Large,4-Jun,Pennsylvania,Yes,Protests
+Meadville,No,No,No,Yes,No,Small,31-May,Pennsylvania,Yes,Protests
+Mifflinburg,No,No,No,Yes,No,Large,7-Jun,Pennsylvania,Yes,Protests
+Philadelphia,Yes,Yes,Yes,Yes,Yes,Large,30-May,Pennsylvania,Yes,Protests with Observable Violence
+Philadelphia,Yes,Yes,Yes,Yes,Yes,Large,30-May,Pennsylvania,Yes,Protests with Observable Violence
+Philadelphia,Yes,Yes,Yes,Yes,Yes,Large,31-May,Pennsylvania,Yes,Protests with Observable Violence
+Philadelphia,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Pennsylvania,Yes,Protests with Observable Violence
+Philadelphia,Yes,No,No,Yes,No,Large,2-Jun,Pennsylvania,Yes,Protests
+Philadelphia,Yes,No,No,Yes,No,Large,6-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,Yes,Yes,Yes,Yes,Large,30-May,Pennsylvania,Yes,Protests with Observable Violence
+Pittsburgh,Yes,No,No,Yes,No,Moderate,31-May,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,No,No,Yes,No,Large,1-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,No,No,Yes,No,Moderate,2-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,No,No,Yes,No,Large,2-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,No,No,No,No,Large,4-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,No,No,Yes,No,Large,5-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,Yes,No,No,Yes,No,Large,5-Jun,Pennsylvania,Yes,Protests
+Punxsutawney,No,No,No,No,No,Small,1-Jun,Pennsylvania,Yes,Protests
+Reading,No,No,No,No,No,Large,31-May,Pennsylvania,Yes,Protests
+Reading,No,No,No,No,No,Large,1-Jun,Pennsylvania,Yes,Protests
+Scranton,No,No,Yes,Yes,No,Small,30-May,Pennsylvania,Yes,Protests
+State College,No,No,No,Yes,No,Large,31-May,Pennsylvania,Yes,Protests
+Wilkes-Barre,No,No,Yes,Yes,No,Moderate,31-May,Pennsylvania,Yes,Protests
+Williamsport,No,No,No,No,No,Large,5-Jun,Pennsylvania,Yes,Protests
+York,No,No,No,Yes,No,Large,1-Jun,Pennsylvania,Yes,Protests
+Providence,No,Yes,No,Yes,No,Large,30-May,Rhode Island,No,Protests
+Providence,Yes,Yes,Yes,No,Yes,Moderate,1-Jun,Rhode Island,No,Protests with Observable Violence
+Beaufort,No,No,No,No,No,Small,30-May,South Carolina,Yes,Protests
+Bluffton,No,No,No,No,No,Moderate,30-May,South Carolina,No,Protests
+Charleston,Yes,Yes,Yes,No,Yes,Moderate,30-May,South Carolina,No,Protests with Observable Violence
+Charleston,Yes,No,No,Yes,Yes,Large,31-May,South Carolina,No,Protests
+Charleston,Yes,No,No,No,Yes,Moderate,31-May,South Carolina,No,Protests
+Charleston,Yes,No,No,Yes,Yes,Small,1-Jun,South Carolina,Yes,Protests
+Columbia,Yes,Yes,Yes,Yes,Yes,Large,30-May,South Carolina,No,Protests with Observable Violence
+Columbia,Yes,No,Yes,Yes,Yes,Large,31-May,South Carolina,Yes,Protests with Observable Violence
+Columbia,Yes,No,No,Yes,No,Moderate,1-Jun,South Carolina,Yes,Protests
+Greenville,No,No,Yes,Yes,Yes,Large,30-May,South Carolina,Yes,Protests with Observable Violence
+Greenville,No,No,No,Yes,No,Large,31-May,South Carolina,Yes,Protests
+Greenville,No,No,No,No,No,Small,1-Jun,South Carolina,Yes,Protests
+Myrtle Beach,No,No,No,Yes,Yes,Small,31-May,South Carolina,Yes,Protests
+Spartanburg,Yes,No,Yes,Yes,Yes,Moderate,31-May,South Carolina,Yes,Protests
+Spartanburg,No,No,No,No,No,Small,1-Jun,South Carolina,Yes,Protests
+Summerville,No,No,No,No,No,Small,31-May,South Carolina,Yes,Protests
+Summerville,No,No,No,Yes,No,Moderate,1-Jun,South Carolina,Yes,Protests
+Rapid City,No,No,No,Yes,No,Large,31-May,South Dakota,Yes,Protests
+Rapid City,No,No,No,No,No,Large,2-Jun,South Dakota,No,Protests
+Sioux Falls,Yes,Yes,Yes,Yes,Yes,Large,31-May,South Dakota,Yes,Protests with Observable Violence
+Clarksville,No,No,No,Yes,No,Moderate,31-May,Tennessee,Yes,Protests
+Jackson,No,No,No,Yes,No,Moderate,31-May,Tennessee,Yes,Protests
+Johnson City,No,No,No,Yes,No,Small,31-May,Tennessee,Yes,Protests
+Johnson City,No,No,Yes,Yes,Yes,Moderate,1-Jun,Tennessee,Yes,Protests with Observable Violence
+Knoxville,Yes,Yes,Yes,Yes,Yes,Small,31-May,Tennessee,Yes,Protests with Observable Violence
+Knoxville,No,No,No,Yes,No,Moderate,1-Jun,Tennessee,Yes,Protests
+Memphis,Yes,Yes,Yes,Yes,Yes,Large,31-May,Tennessee,Yes,Protests with Observable Violence
+Memphis,Yes,No,No,Yes,No,Moderate,1-Jun,Tennessee,Yes,Protests
+Nashville,Yes,Yes,Yes,Yes,Yes,Large,30-May,Tennessee,Yes,Protests with Observable Violence
+Abilene,Yes,No,No,Yes,No,Moderate,30-May,Texas,Yes,Protests
+Abilene,Yes,No,No,Yes,No,Small,31-May,Texas,Yes,Protests
+Amarillo,No,No,No,Yes,No,Small,31-May,Texas,Yes,Protests
+Austin,No,Yes,No,No,Yes,Large,30-May,Texas,Yes,Protests with Observable Violence
+Austin,No,Yes,No,No,Yes,Large,31-May,Texas,Yes,Protests with Observable Violence
+Austin,No,No,No,Yes,No,Large,1-Jun,Texas,Yes,Protests
+Austin,No,No,No,Yes,No,Large,7-Jun,Texas,Yes,Protests
+Beaumont,Yes,No,No,No,No,Small,31-May,Texas,Yes,Protests
+Beaumont,No,No,No,No,No,Moderate,1-Jun,Texas,Yes,Protests
+College Station,Yes,No,No,No,No,Moderate,30-May,Texas,Yes,Protests
+Corpus Christi,No,No,No,No,No,Moderate,31-May,Texas,Yes,Protests
+Dallas,Yes,Yes,Yes,Yes,Yes,Large,30-May,Texas,Yes,Protests with Observable Violence
+Dallas,Yes,No,Yes,Yes,Yes,Large,1-Jun,Texas,Yes,Protests
+Fort Worth,Yes,Yes,Yes,Yes,Yes,Large,31-May,Texas,Yes,Protests with Observable Violence
+Houston,Yes,Yes,Yes,Yes,Yes,Large,30-May,Texas,Yes,Protests with Observable Violence
+Houston,Yes,Yes,Yes,Yes,Yes,Large,31-May,Texas,Yes,Protests with Observable Violence
+Lubbock,Yes,No,No,No,No,Small,30-May,Texas,Yes,Protests
+Odessa,Yes,No,No,Yes,No,Moderate,31-May,Texas,Yes,Protests
+San Angelo,Yes,No,No,Yes,No,Moderate,31-May,Texas,Yes,Protests
+San Antonio,No,Yes,Yes,Yes,Yes,Large,30-May,Texas,Yes,Protests with Observable Violence
+Tyler,Yes,No,No,No,No,Moderate,31-May,Texas,Yes,Protests
+Tyler,No,No,No,Yes,No,Moderate,1-Jun,Texas,Yes,Protests
+Victoria,No,No,No,Yes,No,Small,1-Jun,Texas,Yes,Protests
+Ogden,No,No,No,No,No,Large,30-May,Utah,Yes,Protests
+Provo,No,No,No,Yes,No,Large,30-May,Utah,Yes,Protests
+Salt Lake City,Yes,Yes,Yes,Yes,Yes,Large,30-May,Utah,Yes,Protests with Observable Violence
+St. George,No,No,No,Yes,No,Moderate,30-May,Utah,Yes,Protests
+Burlington,No,Yes,Yes,Yes,No,Large,30-May,Vermont,No,Protests
+Burlington ,No,Yes,Yes,Yes,Yes,Large,30-May,Vermont,No,Protests
+Montpelier,No,No,No,Yes,No,Large,31-May,Vermont,No,Protests
+Montpelier,No,No,No,Yes,No,Large,7-Jun,Vermont,No,Protests
+Rutland,No,No,No,No,No,Moderate,2-Jun,Vermont,No,Protests
+Rutland,No,No,No,No,No,Large,7-Jun,Vermont,No,Protests
+St. Johnsbury,No,No,Yes,Yes,Yes,Moderate,3-Jun,Vermont,No,Protests
+Abingdon,No,No,No,Yes,No,Moderate,6-Jun,Virginia,Not recorded,Protests
+Accomac,No,No,No,Yes,No,Moderate,6-Jun,Virginia,No,Protests
+Appotomax,No,No,No,No,No,Large,4-Jun,Virginia,Not recorded,Protests
+Arlington,No,No,No,Yes,No,Large,4-Jun,Virginia,No,Protests
+Ashland,No,No,No,Yes,No,Moderate,3-Jun,Virginia,Not recorded,Protests
+Bedford,No,No,No,Yes,No,Small,6-Jun,Virginia,No,Protests
+Blacksburg,No,No,No,Yes,No,Moderate,1-Jun,Virginia,No,Protests
+Bowling Green,No,No,No,No,No,Small,7-Jun,Virginia,No,Protests
+Bristol,No,No,No,Yes,No,Moderate,31-May,Virginia,No,Protests
+Burke,No,No,No,No,No,Moderate,5-Jun,Virginia,No,Protests
+Charlottesville,No,No,No,Yes,No,Large,30-May,Virginia,No,Protests
+Charlottesville,No,No,No,Yes,No,Large,7-Jun,Virginia,No,Protests
+Chesterfield,No,No,No,Yes,No,Large,3-Jun,Virginia,No,Protests
+Chincoteague,No,No,No,No,No,Moderate,3-Jun,Virginia,Not recorded,Protests
+Covington,No,No,No,Yes,No,Small,5-Jun,Virginia,No,Protests
+Culpeper,No,No,No,No,No,Small,1-Jun,Virginia,No,Protests
+Culpeper,No,No,No,Yes,No,Large,6-Jun,Virginia,Not recorded,Protests
+Danville,No,No,No,Yes,No,Small,1-Jun,Virginia,Not recorded,Protests
+Dumfries,No,No,Yes,Yes,No,Small,5-Jun,Virginia,Not recorded,Protests
+Exmore,No,No,No,Yes,No,Small,6-Jun,Virginia,No,Protests
+Falls Church,No,No,No,Yes,No,Large,4-Jun,Virginia,No,Protests
+Fredericksburg,No,No,No,Yes,No,Moderate,30-May,Virginia,No,Protests
+Fredericksburg,No,No,Yes,Yes,Yes,Large,31-May,Virginia,No,Protests
+Fredericksburg,No,No,Yes,Yes,Yes,Large,1-Jun,Virginia,No,Protests
+Fredericksburg,Yes,No,Yes,Yes,Yes,Large,2-Jun,Virginia,No,Protests
+Fredericksburg,No,No,No,Yes,No,Large,5-Jun,Virginia,No,Protests
+Front Royal,No,No,No,Yes,No,Large,5-Jun,Virginia,No,Protests
+Galax,No,No,No,Yes,No,Small,3-Jun,Virginia,No,Protests
+Hampton Roads,No,No,Yes,Yes,No,Large,29-May,Virginia,No,Protests
+Hampton Roads,Yes,Yes,Yes,Yes,Yes,Large,3-Jun,Virginia,No,Protests
+Harrisonburg,No,No,No,No,No,Large,29-May,Virginia,No,Protests
+Harrisonburg,No,No,No,Yes,No,Large,1-Jun,Virginia,No,Protests
+Lawrenceville,No,No,No,Yes,No,Small,2-Jun,Virginia,No,Protests
+Leesburg,No,No,No,Yes,No,Large,31-May,Virginia,No,Protests
+Leesburg,No,No,No,Yes,No,Large,6-Jun,Virginia,No,Protests
+Lexington,No,No,No,Yes,No,Large,3-Jun,Virginia,No,Protests
+Lynchburg,No,No,No,Yes,No,Moderate,30-May,Virginia,No,Protests
+Lynchburg,Yes,Yes,Yes,Yes,Yes,Large,31-May,Virginia,No,Protests with Observable Violence
+Lynchburg,No,No,No,Yes,No,Large,6-Jun,Virginia,No,Protests
+Manassas,No,No,Yes,No,Yes,Large,30-May,Virginia,No,Protests
+Newport News,No,No,No,No,No,Small,31-May,Virginia,No,Protests
+Norfolk,No,No,No,Yes,No,Moderate,2-Jun,Virginia,No,Protests
+Norfolk,No,No,No,Yes,No,Moderate,5-Jun,Virginia,Not recorded,Protests
+Orange,No,No,No,Yes,No,Large,4-Jun,Virginia,No,Protests
+Poquoson,No,No,No,No,No,Small,5-Jun,Virginia,Not recorded,Protests
+Portsmouth,No,No,No,Yes,No,Large,30-May,Virginia,No,Protests
+Richmond,No,Yes,No,Yes,Yes,Large,29-May,Virginia,No,Protests with Observable Violence
+Richmond,No,Yes,Yes,Yes,Yes,Large,30-May,Virginia,No,Protests with Observable Violence
+Richmond,Yes,Yes,Yes,Yes,Yes,Large,31-May,Virginia,No,Protests with Observable Violence
+Richmond,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Virginia,No,Protests
+Richmond,Yes,No,Yes,Yes,No,Large,1-Jun,Virginia,No,Protests
+Richmond,Yes,No,No,Yes,No,Large,2-Jun,Virginia,No,Protests
+Richmond,Yes,No,No,Yes,No,Large,3-Jun,Virginia,No,Protests
+Richmond,Yes,No,No,Yes,No,Large,3-Jun,Virginia,No,Protests
+Richmond,Yes,No,No,Yes,No,Large,4-Jun,Virginia,No,Protests
+Richmond,Yes,No,No,Yes,No,Large,5-Jun,Virginia,No,Protests
+Richmond,Yes,Yes,No,Yes,No,Large,6-Jun,Virginia,No,Protests
+Richmond,Yes,Yes,Yes,Yes,No,Large,7-Jun,Virginia,No,Protests
+Roanoke,No,No,Yes,Yes,No,Moderate,30-May,Virginia,No,Protests
+Rocky Mount,No,No,No,Yes,No,Small,3-Jun,Virginia,Not recorded,Protests
+Staunton,No,No,No,Yes,No,Moderate,30-May,Virginia,No,Protests
+Sterling,No,No,No,Yes,No,Large,6-Jun,Virginia,No,Protests
+Virginia Beach,No,No,No,Yes,No,Moderate,2-Jun,Virginia,No,Protests
+Warrenton,No,No,No,No,No,Moderate,31-May,Virginia,No,Protests
+Waynesboro,No,No,No,No,No,Small,3-Jun,Virginia,No,Protests
+Winchester,No,No,No,Yes,No,Large,31-May,Virginia,No,Protests
+Wytheville,No,No,No,Yes,No,Moderate,2-Jun,Virginia,No,Protests
+Bellevue,Yes,No,Yes,Yes,No,Large,31-May,Washington,Yes,Protests
+Portland,Yes,Yes,Yes,No,Yes,Large,30-May,Washington,Yes,Protests with Observable Violence
+Portland,Yes,Yes,Yes,Yes,Yes,Large,30-May,Washington,Yes,Protests with Observable Violence
+Portland,Yes,Yes,Yes,Yes,Yes,Large,30-May,Washington,Yes,Protests with Observable Violence
+Portland,Yes,Yes,Yes,Yes,Yes,Large,2-Jun,Washington,Yes,Protests with Observable Violence
+Portland,Yes,No,No,Yes,No,Large,3-Jun,Washington,Yes,Protests
+Portland,Yes,Yes,Yes,Yes,Yes,Large,4-Jun,Washington,Yes,Protests with Observable Violence
+Portland,Yes,Yes,Yes,Yes,Yes,Large,5-Jun,Washington,Yes,Protests with Observable Violence
+Portland,Yes,No,Yes,Yes,Yes,Large,6-Jun,Washington,Yes,Protests
+Portland,Yes,No,Yes,Yes,Yes,Large,7-Jun,Washington,Yes,Protests
+Richland,No,No,No,Yes,No,Moderate,30-May,Washington,Yes,Protests
+Seattle,Yes,Yes,Yes,Yes,Yes,Large,30-May,Washington,Yes,Protests
+Seattle,Yes,Yes,Yes,Yes,Yes,Small,30-May,Washington,Yes,Protests
+Seattle,Yes,Yes,Yes,Yes,Yes,Large,30-May,Washington,Yes,Protests with Observable Violence
+Seattle,Yes,No,Yes,Yes,Yes,Large,30-May,Washington,Yes,Protests
+Seattle,Yes,Yes,Yes,Yes,No,Large,31-May,Washington,Yes,Protests with Observable Violence
+Seattle,Yes,No,Yes,Yes,No,Moderate,31-May,Washington,Yes,Protests
+Seattle,Yes,Yes,Yes,Yes,Yes,Large,2-Jun,Washington,Yes,Protests with Observable Violence
+Seattle,Yes,No,No,Yes,No,Large,3-Jun,Washington,Yes,Protests
+Seattle,No,No,No,Yes,No,Large,4-Jun,Washington,Yes,Protests
+Seattle,No,No,No,Yes,No,Large,5-Jun,Washington,Yes,Protests
+Seattle,No,No,Yes,Yes,Yes,Large,6-Jun,Washington,Yes,Protests
+Seattle,No,No,No,Yes,No,Large,7-Jun,Washington,Yes,Protests
+Spokane,Yes,No,Yes,Yes,No,Large,31-May,Washington,Yes,Protests
+Beckley,No,No,No,Yes,No,Small,31-May,West Virginia,No,Protests
+Charleston,Yes,Yes,Yes,Yes,Yes,Large,30-May,West Virginia,No,Protests with Observable Violence
+Charleston,Yes,No,No,Yes,No,Large,31-May,West Virginia,No,Protests
+Fairmont,No,No,No,Yes,No,Large,30-May,West Virginia,No,Protests
+Huntington,No,No,No,No,No,Large,30-May,West Virginia,No,Protests
+Morgantown,No,No,No,No,No,Moderate,30-May,West Virginia,No,Protests
+Wheeling,No,No,No,Yes,No,Large,31-May,West Virginia,No,Protests
+Appleton,No,No,No,Yes,No,Large,29-May,Wisconsin,Yes,Protests
+Green Bay,Yes,Yes,Yes,Yes,Yes,Large,30-May,Wisconsin,Yes,Protests with Observable Violence
+Madison,Yes,Yes,Yes,Yes,Yes,Large,30-May,Wisconsin,Yes,Protests with Observable Violence
+Milwaukee,Yes,Yes,Yes,Yes,Yes,Large,30-May,Wisconsin,Yes,Protests with Observable Violence
+Milwaukee,Yes,No,No,Yes,No,Large,6-Jun,Wisconsin,Yes,Protests
+Cheyenne,No,No,No,Yes,No,Large,29-May,Wyoming,No,Protests
+Jackson,No,No,No,Yes,No,Moderate,31-May,Wyoming,No,Protests
+Jacksonville,No,No,No,Yes,No,Large,2-Jun,Florida,Not recorded,Protests
+Jacksonville,No,No,No,No,No,Large,4-Jun,Florida,Not recorded,Protests
+Jacksonville,No,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,Yes,No,Large,2-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,No,No,Small,4-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,Yes,No,Large,5-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,Yes,No,Small,6-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,Yes,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,No,No,Small,6-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,No,No,Moderate,7-Jun,Florida,Not recorded,Protests
+Miami,Yes,No,No,Yes,No,Small,7-Jun,Florida,Not recorded,Protests
+Wynwood ,Yes,No,No,Yes,No,Large,7-Jun,Florida,Not recorded,Protests
+Orlando,Yes,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+St. Petersburg,No,No,No,Yes,No,Large,7-Jun,Florida,Not recorded,Protests
+St. Petersburg,No,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+St. Petersburg,No,No,No,Yes,No,Moderate,5-Jun,Florida,Not recorded,Protests
+St. Petersburg,No,No,No,Yes,No,Large,4-Jun,Florida,Not recorded,Protests
+St. Petersburg,No,No,Yes,Yes,No,Large,2-Jun,Florida,Not recorded,Protests
+Tampa,No,No,Yes,Yes,No,Moderate,2-Jun,Florida,Not recorded,Protests
+Tampa,No,No,No,Yes,No,Large,5-Jun,Florida,Not recorded,Protests
+Tampa,No,No,Yes,Yes,No,Large,4-Jun,Florida,Not recorded,Protests
+Tampa,No,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+Clearwater,No,No,No,Yes,No,Moderate,5-Jun,Florida,Not recorded,Protests
+Navarre,No,No,No,Yes,No,Moderate,3-Jun,Florida,Not recorded,Protests
+Navarre,No,No,No,Yes,No,Moderate,7-Jun,Florida,Not recorded,Protests
+Palm Coast,No,No,No,Yes,No,Moderate,3-Jun,Florida,Not recorded,Protests
+Pensacola,No,No,Yes,No,No,Moderate,6-Jun,Florida,Not recorded,Protests
+Pensacola,No,No,No,No,No,Moderate,5-Jun,Florida,Not recorded,Protests
+Port St. Lucie,No,No,No,Yes,No,Moderate,6-Jun,Florida,Not recorded,Protests
+Fort Myers,No,No,No,Yes,No,Moderate,2-Jun,Florida,Not recorded,Protests
+Fort Myers,No,No,No,Yes,No,Moderate,3-Jun,Florida,Not recorded,Protests
+Fort Myers,No,No,No,Yes,No,Moderate,4-Jun,Florida,Not recorded,Protests
+Fort Myers,No,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+Yardley,No,No,No,Yes,No,Large,5-Jun,Pennsylvania,Yes,Protests
+Raleigh,Yes,No,No,Yes,No,Large,2-Jun,North Carolina,No,Protests
+Raleigh,Yes,No,No,Yes,No,Moderate,3-Jun,North Carolina,No,Protests
+Raleigh,Yes,No,No,Yes,No,Large,4-Jun,North Carolina,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,7-Jun,California,Yes,Protests
+Los Angeles,No,No,No,No,No,Moderate,6-Jun,California,Yes,Protests
+Diamond Bar,Yes,No,Yes,Yes,Yes,Large,4-Jun,California,No,Protests with Observable Violence
+Raleigh,Yes,No,No,Yes,No,Large,5-Jun,North Carolina,No,Protests
+Raleigh,Yes,No,No,Yes,No,Large,6-Jun,North Carolina,No,Protests
+Raleigh,Yes,No,No,Yes,No,Large,7-Jun,North Carolina,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,8-Jun,California,No,Protests
+Reseda,No,No,No,Yes,No,Large,8-Jun,California,No,Protests
+Long Beach,No,No,No,Yes,No,Large,8-Jun,California,No,Protests
+Santa Ana,No,No,No,Yes,No,Large,8-Jun,California,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Los Angeles,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Culver City,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Century City,No,No,No,No,No,Moderate,6-Jun,California,Yes,Protests
+Pasadena,No,No,No,Yes,No,Moderate,6-Jun,Maryland,No,Protests
+Pasadena,Yes,No,No,Yes,No,Large,4-Jun,California,Yes,Protests
+Pasadena,Yes,No,No,Yes,No,Large,2-Jun,California,Yes,Protests
+Pasadena,No,No,No,No,No,Large,6-Jun,California,Yes,Protests
+San Pedro,No,No,No,Yes,No,Not recorded,6-Jun,California,Yes,Protests
+Simi Valley,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Austin,No,No,No,Yes,No,Large,2-Jun,Texas,Yes,Protests
+Parsippany,No,No,No,Yes,No,Large,3-Jun,New Jersey,No,Protests
+Fort Myers,No,No,No,Yes,No,Large,5-Jun,Florida,Yes,Protests
+Altadena,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Los Angeles,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Austin,No,Yes,Yes,Yes,Yes,Large,31-May,Texas,No,Protests with Observable Violence
+Dallas,Yes,Yes,Yes,Yes,Yes,Large,30-May,Texas,No,Protests with Observable Violence
+Dallas,Yes,No,No,Yes,No,Not recorded,31-May,Texas,No,Protests
+Dallas,Yes,Yes,No,Yes,Yes,Large,1-Jun,Texas,Yes,Protests with Observable Violence
+Madison,No,No,No,Yes,No,Large,7-Jun,Wisconsin,No,Protests
+Waco,No,No,No,Yes,No,Large,6-Jun,Texas,No,Protests
+Escondido,No,No,No,Yes,No,Large,5-Jun,California,Yes,Protests
+San Diego,No,No,Yes,Yes,Yes,Large,4-Jun,California,Yes,Protests
+San Diego,No,No,No,Yes,No,Large,3-Jun,California,No,Protests
+Imperial Beach,No,Yes,Yes,No,No,Small,7-Jun,California,No,Protests with Observable Violence
+Madison,No,No,No,Yes,No,Large,5-Jun,Wisconsin,Yes,Protests
+Madison,No,No,No,Yes,No,Small,6-Jun,Wisconsin,Yes,Protests
+Madison,Yes,Yes,Yes,Yes,Yes,Small,1-Jun,Wisconsin,Yes,Protests with Observable Violence
+Madison,No,No,No,Yes,No,Large,4-Jun,Wisconsin,Yes,Protests
+Madison,No,No,No,Yes,No,Large,3-Jun,Wisconsin,Yes,Protests
+Madison,Yes,No,No,Yes,Yes,Large,2-Jun,Wisconsin,Yes,Protests with Observable Violence
+Witchita,No,No,No,No,No,Small,3-Jun,Kansas,No,Protests
+Witchita,No,No,No,No,No,Large,3-Jun,Kansas,No,Protests
+Oceanside,No,No,No,Yes,No,Small,4-Jun,California,No,Protests
+Vista,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+San Diego,No,No,No,No,No,Large,6-Jun,California,Yes,Protests
+Encinitas,No,No,No,Yes,No,Large,7-Jun,California,No,Protests
+Santee,Yes,No,No,Yes,No,Large,7-Jun,California,Yes,Protests
+Chula Vista,No,No,No,Yes,No,Large,7-Jun,California,Yes,Protests
+San Diego,No,No,No,Yes,No,Large,6-Jun,California,Yes,Protests
+Arlington,No,Yes,Yes,Yes,Yes,Large,1-Jun,Texas,No,Protests with Observable Violence
+Arlington,No,No,No,Yes,No,Large,2-Jun,Texas,No,Protests
+Plano,No,No,No,Yes,No,Large,2-Jun,Texas,No,Protests
+Houston,No,Yes,Yes,Yes,No,Large,2-Jun,Texas,No,Protests with Observable Violence
+Carrollton,No,No,No,Yes,No,Large,2-Jun,Texas,No,Protests
+San Antonio,Yes,Yes,Yes,Yes,Yes,Large,2-Jun,Texas,Yes,Protests with Observable Violence
+Waxahachie,No,No,No,Yes,No,Small,6-Jun,Texas,No,Protests
+Red Oak,No,No,No,No,No,Small,3-Jun,Texas,No,Protests
+Vidor,No,No,No,No,No,Moderate,6-Jun,Texas,No,Protests
+Alpine,No,No,No,Yes,No,Moderate,6-Jun,Texas,No,Protests
+Fresno,No,No,No,Yes,No,Large,6-Jun,California,No,Protests
+Fresno,No,No,No,No,No,Moderate,6-Jun,California,No,Protests
+Eureka,No,No,No,Yes,No,Small,6-Jun,California,No,Protests
+Fontana,No,No,No,Yes,No,Large,4-Jun,California,No,Protests
+Highland,No,No,No,Yes,No,Large,3-Jun,California,No,Protests
+Chico,No,No,No,Yes,No,Moderate,2-Jun,California,No,Protests
+Chico,No,No,No,No,No,Moderate,3-Jun,California,No,Protests
+Chico,No,No,No,No,No,Moderate,4-Jun,California,No,Protests
+Chico,No,No,No,No,No,Large,5-Jun,California,No,Protests
+Harrison,No,No,No,Yes,No,Large,4-Jun,Arkansas,No,Protests
+Little Rock,Yes,No,Yes,Yes,Yes,Small,2-Jun,Arkansas,Yes,Protests
+Cabot ,No,No,No,Yes,No,Large,4-Jun,Arkansas,No,Protests
+Fort Smith,No,No,No,Yes,No,Moderate,4-Jun,Arkansas,No,Protests
+Pine Bluff,No,No,No,Yes,No,Not recorded,4-Jun,Arkansas,No,Protests
+Little Rock,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Arkansas,Yes,Protests with Observable Violence
+Witchita,No,No,Yes,No,No,Small,2-Jun,Kansas,No,Protests
+Witchita,No,Yes,Yes,No,Yes,Moderate,1-Jun,Kansas,No,Protests with Observable Violence
+Witchita,No,No,No,No,No,Moderate,5-Jun,Kansas,No,Protests
+Witchita,No,No,No,No,No,Large,6-Jun,Kansas,No,Protests
+Witchita,No,No,No,No,No,Small,4-Jun,Kansas,No,Protests
+Witchita,No,No,No,No,No,Large,3-Jun,Kansas,No,Protests
+Witchita,No,Yes,Yes,No,Yes,Small,2-Jun,Kansas,No,Protests with Observable Violence
+Witchita,No,No,No,No,No,Large,6-Jun,Kansas,No,Protests
+Tulsa,No,No,Yes,Yes,Yes,Not recorded,1-Jun,Oklahoma,Yes,Protests with Observable Violence
+Little Rock,Yes,No,Yes,Yes,Yes,Large,2-Jun,Arkansas,Yes,Protests
+Little Rock,Yes,No,No,Yes,Yes,Large,3-Jun,Arkansas,Yes,Protests
+Little Rock,Yes,No,No,No,No,Large,4-Jun,Arkansas,Yes,Protests
+Little Rock,Yes,No,No,No,No,Small,5-Jun,Arkansas,Yes,Protests
+Little Rock,Yes,No,No,Yes,No,Large,6-Jun,Arkansas,Yes,Protests
+Little Rock,Yes,No,No,Yes,No,Large,7-Jun,Arkansas,Yes,Protests
+Little Rock,Yes,No,No,Yes,No,Large,7-Jun,Arkansas,Yes,Protests
+Fayetteville,No,No,No,No,No,Large,2-Jun,Arkansas,No,Protests
+Bentonville,Yes,No,No,No,No,Large,7-Jun,Arkansas,No,Protests
+Bentonville,Yes,Yes,Yes,No,Yes,Large,1-Jun,Arkansas,No,Protests with Observable Violence
+Jonesboro,No,No,No,Yes,No,Large,6-Jun,Georgia,No,Protests
+Cotati,No,No,No,Yes,No,Small,7-Jun,California,No,Protests
+Tulsa,No,No,No,Yes,No,Large,7-Jun,Oklahoma,No,Protests
+Owasso,No,No,No,Yes,No,Large,5-Jun,Oklahoma,No,Protests
+Tulsa,No,No,No,Yes,No,Large,7-Jun,Oklahoma,No,Protests
+Tulsa,No,No,No,Yes,No,Large,8-Jun,Oklahoma,No,Protests
+Tulsa,No,No,Yes,Yes,No,Small,5-Jun,Oklahoma,Yes,Protests
+Tulsa,No,No,Yes,Yes,Yes,Small,2-Jun,Oklahoma,Yes,Protests
+Tulsa,No,No,No,Yes,No,Small,3-Jun,Oklahoma,Yes,Protests
+Oklahoma City,Yes,No,Yes,Yes,Yes,Large,31-May,Oklahoma,Yes,Protests
+Flagstaff,Yes,Yes,Yes,Yes,Yes,Large,2-Jun,Arizona,Yes,Protests with Observable Violence
+Oklahoma City,No,No,Yes,Yes,Yes,Large,30-May,Oklahoma,No,Protests with Observable Violence
+Fort Lauderdale,No,No,No,Yes,No,Large,6-Jun,Florida,No,Protests
+Boca Raton,No,Not recorded,No,Yes,No,Small,6-Jun,Florida,No,Protests
+Lakeland,No,No,No,Yes,No,Large,7-Jun,Florida,Not recorded,Protests
+Jasper,No,No,No,No,No,Moderate,6-Jun,Texas,No,Protests
+McKinney,No,No,No,No,No,Moderate,7-Jun,Texas,No,Protests
+Hondo,No,No,No,No,No,Small,6-Jun,Texas,No,Protests
+Weatherford,No,No,No,No,No,Small,31-May,Texas,No,Protests
+Dallas,No,No,No,No,No,Moderate,3-Jun,Texas,No,Protests
+Dallas,No,No,No,No,No,Large,3-Jun,Texas,No,Protests
+Denton,No,No,No,No,No,Small,3-Jun,Texas,No,Protests
+Georgetown,No,No,No,No,No,Large,3-Jun,Texas,No,Protests
+Austin,No,No,No,No,No,Large,7-Jun,Texas,No,Protests
+Austin,No,No,No,Yes,No,Large,4-Jun,Texas,No,Protests
+Katy,No,No,No,Yes,No,Large,4-Jun,Texas,No,Protests
+Conroe,No,No,No,Yes,No,Small,31-May,Texas,No,Protests
+Fort Worth,No,No,No,Yes,No,Large,4-Jun,Texas,No,Protests
+Fort Worth,Yes,No,Yes,Yes,Yes,Large,31-May,Texas,No,Protests with Observable Violence
+San Antonio,No,No,No,Yes,No,Large,3-Jun,Texas,No,Protests
+Bryan,No,No,No,No,No,Moderate,7-Jun,Texas,No,Protests
+Austin,No,No,No,No,No,Large,5-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Large,5-Jun,Texas,No,Protests
+Mansfield,No,No,No,Yes,No,Large,5-Jun,Texas,No,Protests
+Phoenix,Yes,No,No,Yes,No,Large,6-Jun,Arizona,Yes,Protests
+Phoenix,Yes,No,No,Yes,No,Large,5-Jun,Arizona,Yes,Protests
+Phoenix,Yes,No,No,Yes,No,Large,4-Jun,Arizona,Yes,Protests
+Phoenix,Yes,No,No,Yes,No,Large,3-Jun,Arizona,Yes,Protests
+Phoenix,Yes,No,No,Yes,No,Large,2-Jun,Arizona,Yes,Protests
+Phoenix,Yes,No,No,Yes,No,Large,1-Jun,Arizona,Yes,Protests
+Gilbert,No,No,No,Yes,No,Small,6-Jun,Arizona,Yes,Protests
+Cape Girardeau,No,No,No,Yes,No,Large,6-Jun,Missouri,No,Protests
+Cape Girardeau,No,No,No,Yes,No,Large,7-Jun,Missouri,No,Protests
+Phoenix,Yes,No,No,Yes,No,Large,7-Jun,Arizona,Yes,Protests
+Scottsdale,Yes,No,No,Yes,No,Large,7-Jun,Arizona,Yes,Protests
+Phoenix,No,No,No,Yes,No,Large,8-Jun,Arizona,Yes,Protests
+Tucson,Yes,No,No,Yes,Yes,Large,6-Jun,Arizona,Yes,Protests
+Phoenix,Yes,No,No,Yes,Yes,Large,6-Jun,Arizona,Yes,Protests
+Salt Lake City,No,No,No,No,No,Small,2-Jun,Utah,No,Protests
+Salt Lake City,No,No,No,Yes,No,Large,2-Jun,Utah,No,Protests
+Cheyenne,No,Yes,No,Yes,No,Small,1-Jun,Wyoming,No,Protests
+Laramire,No,No,No,Yes,No,Small,3-Jun,Wyoming,No,Protests
+Casper,No,No,No,Yes,No,Large,3-Jun,Wyoming,No,Protests
+Cheyenne,Yes,No,No,No,No,Moderate,7-Jun,Wyoming,No,Protests
+Oklahoma City,No,No,No,Yes,No,Large,2-Jun,Oklahoma,No,Protests
+Oklahoma City,No,No,No,Yes,No,Large,6-Jun,Oklahoma,No,Protests
+Lawton,No,No,No,Yes,No,Small,5-Jun,Oklahoma,No,Protests
+Riverton,No,No,No,Yes,No,Small,1-Jun,Wyoming,No,Protests
+Cheyenne,No,No,No,Yes,No,Small,30-May,Wyoming,No,Protests
+Barrington,No,No,No,No,No,Large,5-Jun,Illinois,Not recorded,Protests
+Chicago,Yes,No,No,Yes,No,Large,2-Jun,Illinois,Not recorded,Protests
+Chicago,Yes,No,No,Yes,No,Large,3-Jun,Illinois,Not recorded,Protests
+Chicago,Yes,No,No,Yes,No,Large,6-Jun,Illinois,Not recorded,Protests
+Chicago,Yes,No,No,Yes,No,Large,5-Jun,Illinois,Not recorded,Protests
+Chicago,Yes,No,No,Yes,No,Large,4-Jun,Illinois,Not recorded,Protests
+Chicago,Yes,No,No,Yes,No,Large,3-Jun,Illinois,Not recorded,Protests
+Cicero,Yes,No,No,No,No,Small,2-Jun,Illinois,Not recorded,Protests
+Cicero,No,No,No,Yes,No,Large,7-Jun,Illinois,Not recorded,Protests
+Cicero,Yes,No,No,Yes,No,Small,2-Jun,Illinois,Not recorded,Protests
+Downers Grove,No,No,No,Yes,No,Large,7-Jun,Illinois,Not recorded,Protests
+Elgin,No,No,No,No,No,Large,6-Jun,Illinois,Not recorded,Protests
+Joliet,No,No,No,No,No,Moderate,5-Jun,Illinois,Not recorded,Protests
+Monticello,No,No,No,No,No,Large,6-Jun,Illinois,Not recorded,Protests
+Mount Vernon,No,No,No,Yes,No,Large,5-Jun,Illinois,Not recorded,Protests
+Naperville,No,No,No,Yes,No,Small,5-Jun,Illinois,Not recorded,Protests
+Naperville,No,No,Yes,Yes,No,Large,5-Jun,Illinois,Not recorded,Protests
+Columbia,No,No,No,Yes,No,Small,3-Jun,Missouri,No,Protests
+Columbia ,No,No,No,Yes,No,Small,4-Jun,Missouri,No,Protests
+Columbia,No,No,No,Yes,No,Small,5-Jun,Missouri,No,Protests
+Columbia,No,No,No,Yes,No,Large,6-Jun,Missouri,No,Protests
+Columbia,No,No,No,Yes,No,Large,7-Jun,Missouri,No,Protests
+Joplin,No,No,No,No,No,Small,5-Jun,Missouri,No,Protests
+Joplin,No,No,No,No,No,Small,6-Jun,Missouri,No,Protests
+Kansas City,No,No,No,No,No,Small,2-Jun,Missouri,No,Protests
+Kansas City,No,No,No,Yes,No,Large,3-Jun,Missouri,No,Protests
+Kansas City,No,Yes,No,Yes,No,Moderate,4-Jun,Missouri,No,Protests
+Kansas City,No,No,No,Yes,No,Large,5-Jun,Missouri,No,Protests
+Kansas City,No,No,No,Yes,No,Large,6-Jun,Missouri,No,Protests
+Kansas City,No,No,No,Yes,No,Large,7-Jun,Missouri,No,Protests
+Springfield,No,No,No,No,No,Small,2-Jun,Missouri,No,Protests
+Springfield,No,No,No,Yes,No,Large,6-Jun,Missouri,No,Protests
+Springfield,No,No,No,No,No,Large,7-Jun,Missouri,No,Protests
+St Louis,No,No,No,No,No,Moderate,3-Jun,Missouri,No,Protests
+Ames,No,No,No,No,No,Small,5-Jun,Iowa,No,Protests
+Ames,No,No,No,No,No,Small,5-Jun,Iowa,No,Protests
+St Louis,No,No,No,Yes,No,Small,6-Jun,Missouri,No,Protests
+Cedar Rapids,No,No,No,No,No,Moderate,31-May,Iowa,No,Protests
+Cedar Rapids,No,No,No,No,No,Large,6-Jun,Iowa,No,Protests
+Davenport,No,No,No,No,No,Large,4-Jun,Iowa,No,Protests
+Davenport,Yes,Yes,Yes,No,Yes,Moderate,31-May,Iowa,Yes,Protests with Observable Violence
+Des Moines,Yes,Yes,Yes,Yes,Yes,Small,31-May,Iowa,No,Protests
+St Louis,No,No,No,Yes,No,Large,7-Jun,Missouri,No,Protests
+Billings ,No,No,No,No,No,Large,7-Jun,Montana,No,Protests
+Des Moines,Yes,No,No,No,No,Small,31-May,Iowa,No,Protests
+Des Moines,Yes,No,No,Yes,No,Moderate,31-May,Iowa,No,Protests
+Des Moines,Yes,No,Yes,Yes,Yes,Large,1-Jun,Iowa,No,Protests with Observable Violence
+Des Moines,Yes,No,No,Yes,No,Large,2-Jun,Iowa,No,Protests
+Des Moines,Yes,No,No,Yes,No,Large,3-Jun,Iowa,No,Protests
+New Lenox,No,No,No,Yes,No,Large,4-Jun,Illinois,Not recorded,Protests
+Albuquerque,No,No,No,No,No,Large,5-Jun,New Mexico,No,Protests
+Albuquerque,No,No,No,Yes,No,Large,5-Jun,New Mexico,No,Protests
+Albuquerque,No,No,No,Yes,No,Large,6-Jun,New Mexico,No,Protests
+Albuquerque,No,No,No,Yes,No,Large,4-Jun,New Mexico,No,Protests
+Albuquerque,No,No,No,Yes,No,Large,3-Jun,New Mexico,No,Protests
+Bozeman,No,No,No,Yes,No,Large,5-Jun,Montana,No,Protests
+Bozeman,No,No,No,Yes,No,Moderate,6-Jun,Montana,No,Protests
+Des Moines,No,No,No,Yes,No,Moderate,4-Jun,Iowa,No,Protests
+Des Moines,No,No,No,No,No,Moderate,5-Jun,Iowa,No,Protests
+Des Moines,No,No,No,Yes,No,Large,6-Jun,Iowa,No,Protests
+Missoula,No,No,No,No,No,Small,2-Jun,Montana,No,Protests
+Missoula,No,No,No,No,No,Small,3-Jun,Montana,No,Protests
+Missoula,No,No,No,No,No,Small,4-Jun,Montana,No,Protests
+Missoula,No,No,No,No,No,Large,5-Jun,Montana,No,Protests
+Peoria,No,No,No,Yes,No,Large,7-Jun,Illinois,Not recorded,Protests
+Albuquerque,No,No,No,Yes,No,Moderate,6-Jun,New Mexico,No,Protests
+Des Moines,No,No,No,Yes,No,Large,7-Jun,Iowa,No,Protests
+Des Moines,No,No,No,No,No,Small,9-Jun,Iowa,No,Protests
+Dubuque,No,No,No,No,No,Small,1-Jun,Iowa,No,Protests
+Iowa City,No,No,No,No,No,Large,6-Jun,Iowa,No,Protests
+Iowa City,No,No,No,Yes,No,Large,4-Jun,Iowa,No,Protests
+Iowa City,No,No,No,Yes,No,Large,8-Jun,Iowa,No,Protests
+Rockford ,No,No,No,Yes,No,Large,7-Jun,Illinois,Not recorded,Protests
+Rockford,No,No,No,Yes,No,Large,6-Jun,Illinois,Not recorded,Protests
+Rockford,No,No,No,Yes,No,Large,5-Jun,Illinois,Not recorded,Protests
+Rockford,No,No,No,Yes,No,Not recorded,4-Jun,Illinois,Not recorded,Protests
+Springfield,No,No,No,Yes,No,Large,7-Jun,Illinois,Not recorded,Protests
+Springfield,No,No,No,Yes,No,Moderate,3-Jun,Illinois,Not recorded,Protests
+St. Charles,No,No,No,Yes,No,Large,6-Jun,Illinois,Not recorded,Protests
+Streamwood,No,No,No,No,No,Small,6-Jun,Illinois,Not recorded,Protests
+Tinley Park,No,No,No,Yes,No,Moderate,2-Jun,Illinois,Not recorded,Protests
+Sarasota,No,No,No,Yes,No,Large,6-Jun,Florida,Not recorded,Protests
+Sarasota,No,No,No,Yes,No,Large,3-Jun,Florida,Not recorded,Protests
+Iowa City ,No,No,Yes,Yes,Yes,Moderate,3-Jun,Iowa,No,Protests with Observable Violence
+Sioux City,No,No,No,Yes,No,Moderate,5-Jun,Iowa,Not recorded,Protests
+Sioux City,No,Yes,Yes,Yes,Yes,Large,1-Jun,Iowa,No,Protests with Observable Violence
+Sarasota,No,No,No,Yes,No,Moderate,4-Jun,Florida,Not recorded,Protests
+Tallahassee,No,No,No,Yes,No,Large,3-Jun,Florida,Not recorded,Protests
+Gillette,No,No,No,No,No,Small,3-Jun,Wyoming,No,Protests
+Rock Springs,No,No,No,No,No,Small,3-Jun,Wyoming,No,Protests
+Cheyenne,No,No,No,No,No,Small,6-Jun,Wyoming,No,Protests
+Laramine,No,No,No,Yes,No,Large,6-Jun,Wyoming,No,Protests
+Pinedale,No,No,No,No,No,Small,4-Jun,Wyoming,No,Protests
+Omaha,Yes,No,Yes,No,Yes,Large,1-Jun,Nebraska,Yes,Protests
+Omaha,Yes,No,No,No,No,Large,2-Jun,Nebraska,Yes,Protests
+Omaha,No,No,No,Yes,No,Small,3-Jun,Nebraska,Yes,Protests
+Tallahassee,Yes,No,No,No,No,Large,6-Jun,Florida,Yes,Protests
+West Palm Beach,No,No,Yes,Yes,No,Large,6-Jun,Florida,Yes,Protests
+Omaha,No,No,No,No,No,Moderate,4-Jun,Nebraska,Yes,Protests
+Omaha,Yes,No,No,Yes,No,Large,7-Jun,Nebraska,Yes,Protests
+West Palm Beach,Yes,No,No,Yes,No,Small,5-Jun,Florida,Yes,Protests
+Sunrise,No,No,No,Yes,No,Large,2-Jun,Florida,Yes,Protests
+Albuquerque,No,No,No,Yes,No,Large,31-May,New Mexico,No,Protests
+Albuquerque,No,Yes,Yes,Yes,Yes,Moderate,1-Jun,New Mexico,No,Protests
+Santa Fe,No,No,Yes,Yes,No,Large,3-Jun,New Mexico,No,Protests
+Las Cruces,No,Yes,Yes,Yes,No,Moderate,6-Jun,New Mexico,No,Protests with Observable Violence
+Oakland,No,No,No,No,No,Small,9-Jun,California,No,Protests
+Louisville,No,Yes,Yes,Yes,Yes,Large,28-May,Kentucky,No,Protests with Observable Violence
+Dallas,Yes,No,No,Yes,No,Moderate,31-May,Texas,No,Protests
+Marco Island,Yes,No,Yes,Yes,No,Small,3-Jun,Florida,Yes,Protests
+Elizabethtown,No,No,No,No,No,Moderate,30-May,Kentucky,No,Protests
+Elizabethtown,No,No,No,No,No,Moderate,30-May,Kentucky,No,Protests
+Elizabethtown,No,No,No,No,No,Moderate,31-May,Kentucky,No,Protests
+Frankfort,No,No,No,Yes,No,Large,5-Jun,Kentucky,No,Protests
+Owensboro,No,No,No,Yes,No,Large,31-May,Kentucky,No,Protests
+Louisville,Yes,Yes,Yes,Yes,Yes,Large,1-Jun,Kentucky,Yes,Protests with Observable Violence
+Louisville,Yes,No,No,Yes,No,Large,2-Jun,Kentucky,Yes,Protests
+Louisville,Yes,No,No,Yes,No,Large,3-Jun,Kentucky,Yes,Protests
+Louisville,No,No,No,Yes,No,Large,4-Jun,Kentucky,Yes,Protests
+Louisville,No,No,No,Yes,No,Large,5-Jun,Kentucky,Yes,Protests
+Louisville,No,No,No,Yes,No,Large,6-Jun,Kentucky,Yes,Protests
+Louisville,No,No,No,Yes,No,Large,7-Jun,Kentucky,Yes,Protests
+Louisville,No,No,No,Yes,No,Small,8-Jun,Kentucky,Yes,Protests
+Louisville,Yes,Yes,Yes,Yes,Yes,Large,31-May,Kentucky,Yes,Protests with Observable Violence
+Louisville,Yes,Yes,Yes,Yes,Yes,Large,30-May,Kentucky,Yes,Protests with Observable Violence
+Louisville,Yes,No,No,No,No,Small,2-Jun,Kentucky,Yes,Protests
+Louisville,No,No,No,Yes,No,Moderate,3-Jun,Kentucky,Yes,Protests
+Lexington,No,Yes,Yes,Yes,Not recorded,Moderate,1-Jun,Kentucky,No,Protests with Observable Violence
+Lexington,No,No,No,Yes,No,Large,2-Jun,Kentucky,No,Protests
+Lexington,No,No,No,Yes,No,Large,3-Jun,Kentucky,No,Protests
+Lexington,No,No,No,Yes,No,Large,4-Jun,Kentucky,No,Protests
+Lexington,No,No,No,Yes,No,Large,5-Jun,Kentucky,No,Protests
+Lexington,No,No,Yes,Yes,No,Large,6-Jun,Kentucky,No,Protests with Observable Violence
+Bowling Green,No,No,No,Yes,No,Large,3-Jun,Kentucky,No,Protests
+Bowling Green,No,No,No,Yes,No,Large,5-Jun,Kentucky,No,Protests
+Bowling Green,No,Yes,Yes,No,No,Moderate,30-May,Kentucky,No,Protests with Observable Violence
+Richmond,No,No,No,No,No,Large,6-Jun,Kentucky,No,Protests
+Richmond,No,No,No,No,No,Small,31-May,Kentucky,No,Protests
+Berea,No,No,No,No,No,Small,1-Jun,Kentucky,No,Protests
+Naples,No,No,No,Yes,No,Moderate,6-Jun,Florida,Yes,Protests
+South Bend,No,No,No,Yes,No,Large,5-Jun,Indiana,No,Protests
+Indianapolis,Yes,No,No,Yes,No,Large,2-Jun,Indiana,Yes,Protests
+Indianapolis,No,No,No,Yes,No,Large,4-Jun,Indiana,Yes,Protests
+Indianapolis,Yes,No,No,Yes,No,Large,5-Jun,Indiana,Yes,Protests
+Austin,No,No,No,Yes,No,Large,6-Jun,Texas,Yes,Protests
+Dallas,No,No,No,Yes,No,Large,6-Jun,Texas,No,Protests
+Royse City,No,No,No,Yes,No,Moderate,6-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Not recorded,6-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Not recorded,6-Jun,Texas,No,Protests
+Fort Worth,No,No,No,Yes,No,Not recorded,5-Jun,Texas,No,Protests
+Garland,No,No,No,Yes,No,Not recorded,5-Jun,Texas,No,Protests
+Richardson,No,No,No,Yes,No,Not recorded,5-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Not recorded,5-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Not recorded,5-Jun,Texas,No,Protests
+Bloomington,No,No,No,Yes,No,Large,5-Jun,Indiana,No,Protests
+Princeton,No,No,No,Yes,No,Large,2-Jun,New Jersey,No,Protests
+Gary,No,No,No,Yes,No,Small,5-Jun,Indiana,No,Protests
+Gary,No,No,No,No,No,Small,4-Jun,Indiana,No,Protests
+Evansville,No,No,No,Yes,No,Large,6-Jun,Indiana,Yes,Protests
+Fort Wayne ,No,No,Yes,No,No,Small,5-Jun,Indiana,No,Protests
+Fort Wayne,No,No,No,Yes,No,Moderate,4-Jun,Indiana,No,Protests
+Fort Wayne,No,No,No,No,No,Moderate,1-Jun,Indiana,No,Protests
+Fort Wayne,No,Yes,Yes,Yes,Yes,Large,31-May,Indiana,No,Protests with Observable Violence
+Franklin Township,No,No,Yes,Yes,No,Small,8-Jun,New Jersey,No,Protests
+Englewood,No,No,Yes,Yes,No,Large,30-May,New Jersey,No,Protests
+Dallas,No,No,No,Yes,No,Large,6-Jun,Texas,No,Protests
+Fort Worth,No,No,No,Yes,No,Large,6-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Large,7-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Large,7-Jun,Texas,No,Protests
+Dallas,No,No,No,Yes,No,Large,7-Jun,Texas,No,Protests
+Denton,No,No,No,Yes,No,Moderate,7-Jun,Texas,No,Protests
+Columbus,No,No,No,No,No,Small,2-Jun,Nebraska,No,Protests
+Beatrice,No,No,No,No,No,Small,4-Jun,Nebraska,No,Protests
+Lincoln,Yes,No,No,Yes,No,Large,1-Jun,Nebraska,Yes,Protests
+Lincoln,Yes,No,Yes,Yes,Yes,Small,31-May,Nebraska,Yes,Protests with Observable Violence
+Norfolk,No,No,No,Yes,No,Moderate,30-May,Nebraska,No,Protests
+Lincoln,No,No,No,Yes,No,Large,2-Jun,Nebraska,Yes,Protests
+Lincoln,No,No,No,No,No,Large,3-Jun,Nebraska,No,Protests
+Fremont,No,No,No,No,No,Small,31-May,Nebraska,No,Protests
+Newark,No,No,No,Yes,No,Large,30-May,New Jersey,No,Protests
+Bloomfield,No,No,No,Yes,No,Large,5-Jun,New Jersey,No,Protests
+Philadelphia,No,No,Yes,Yes,No,Moderate,9-Jun,Pennsylvania,No,Protests
+Jersey City,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Atlantic City,No,No,No,Yes,No,Moderate,6-Jun,New Jersey,No,Protests
+Newton,No,No,No,No,No,Large,6-Jun,New Jersey,No,Protests
+Hackensack,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Wayne,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Trenton,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Jackson,No,No,No,Yes,No,Large,7-Jun,New Jersey,No,Protests
+Lakewood,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Hoboken,No,No,No,Yes,No,Large,5-Jun,New Jersey,No,Protests
+Sayreville,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Newark,No,No,No,Yes,No,Large,2-Jun,New Jersey,No,Protests
+Dover,No,No,No,No,No,Moderate,6-Jun,Delaware,No,Protests
+Wilmington,No,No,No,Yes,No,Moderate,5-Jun,Delaware,No,Protests
+Rehoboth Beach,No,No,No,No,No,Large,5-Jun,Delaware,No,Protests
+Salisbury,No,No,No,Yes,No,Small,4-Jun,Maryland,No,Protests
+Grand Island,No,No,Yes,Yes,Yes,Small,2-Jun,Nebraska,No,Protests with Observable Violence
+Kearney,No,No,No,Yes,No,Small,31-May,Nebraska,No,Protests
+Kearney,No,No,No,Yes,No,Small,31-May,Nebraska,No,Protests
+Kearney,No,No,No,No,No,Small,30-May,Nebraska,No,Protests
+Harvard,No,No,No,No,No,Small,2-Jun,Nebraska,No,Protests
+North Platte,No,No,No,No,No,Moderate,7-Jun,Nebraska,No,Protests
+Dover,No,Yes,Yes,Yes,Yes,Large,31-May,Delaware,No,Protests with Observable Violence
+Dover,No,No,No,Yes,No,Moderate,3-Jun,Delaware,No,Protests
+Dover,No,No,Yes,Yes,Yes,Not recorded,9-Jun,Delaware,No,Protests with Observable Violence
+Morristown,No,No,No,Yes,No,Large,31-May,New Jersey,No,Protests
+Elizabeth,No,No,No,Yes,No,Large,7-Jun,New Jersey,No,Protests
+Elizabeth,No,No,No,Yes,No,Large,6-Jun,New Jersey,No,Protests
+Elizabeth,No,No,No,Yes,No,Moderate,7-Jun,New Jersey,No,Protests
+Boise,No,No,No,No,No,Small,7-Jun,Idaho,No,Protests
+Boise,No,No,Yes,No,No,Large,2-Jun,Idaho,No,Protests
+Boise,No,No,No,Yes,No,Large,3-Jun,Idaho,No,Protests
+Idaho Falls,No,No,Yes,No,No,Small,2-Jun,Idaho,No,Protests
+Coeur d'Alene,No,No,Yes,No,No,Small,2-Jun,Idaho,No,Protests
+Salt Lake City,No,No,Yes,No,No,Large,9-Jun,Utah,No,Protests
+Fargo,No,Yes,Yes,Yes,Yes,Large,30-May,North Dakota,No,Protests with Observable Violence
+Bismark,No,No,No,No,No,Moderate,2-Jun,North Dakota,No,Protests
+Fargo,No,No,No,No,No,Moderate,5-Jun,North Dakota,No,Protests
+Bismark,No,No,No,No,No,Large,30-May,North Dakota,No,Protests
+Minot,No,No,No,No,No,Large,31-May,North Dakota,No,Protests
+Williston,No,No,No,No,No,Small,5-Jun,North Dakota,No,Protests
+Salt Lake City,No,No,No,No,No,Large,5-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,No,No,Small,5-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,No,No,Large,6-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,No,No,Large,6-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,Yes,No,Small,6-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,Yes,No,Large,8-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,Yes,No,Large,10-Jun,Utah,Yes,Protests
+Salt Lake City ,No,No,No,Yes,No,Moderate,5-Jun,Utah,Yes,Protests
+Salt Lake City,No,No,No,No,No,Small,5-Jun,Utah,Yes,Protests
+Moab,No,No,No,Yes,No,Large,5-Jun,Utah,No,Protests
+Kanab,No,No,No,Yes,No,Small,4-Jun,Utah,No,Protests
+St. George,No,No,No,No,No,Large,4-Jun,Utah,No,Protests
+Cedar City ,No,No,No,No,No,Small,7-Jun,Utah,No,Protests
+Provo,No,No,No,No,No,Large,5-Jun,Utah,No,Protests
+Seattle,No,No,No,Yes,No,Large,9-Jun,Washington,Yes,Protests
+Seattle,No,No,No,Yes,No,Large,9-Jun,Washington,Yes,Protests
+Seattle,No,Yes,Yes,Yes,Yes,Large,8-Jun,Washington,Yes,Protests with Observable Violence
+Seattle,No,Yes,Yes,Yes,Yes,Large,7-Jun,Washington,Yes,Protests with Observable Violence
+Seattle,No,Yes,Yes,Yes,Yes,Large,6-Jun,Washington,Yes,Protests with Observable Violence
+Seattle,No,No,No,Yes,No,Large,6-Jun,Washington,Yes,Protests
+Everett,No,No,No,Yes,No,Large,6-Jun,Washington,Yes,Protests
+Hartford,No,No,No,Yes,No,Large,1-Jun,Connecticut,No,Protests
+Hartford,No,No,No,Yes,No,Large,6-Jun,Connecticut,No,Protests
+Manchester,No,No,No,Yes,No,Large,6-Jun,Connecticut,No,Protests
+New Haven,No,No,No,Yes,No,Large,6-Jun,Connecticut,No,Protests
+New Haven,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Bridgeport,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Colchester,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Deep River,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+East Haven,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Mystic,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+New Britain,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Pomfret,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Plainville,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Simsbury,No,No,No,Yes,No,Moderate,5-Jun,Connecticut,No,Protests
+Westport,No,No,No,Yes,No,Large,5-Jun,Connecticut,No,Protests
+Wethersfield,No,No,No,Yes,No,Large,5-Jun,Connect,No,Protests
+East Hartford ,No,No,No,Yes,No,Large,7-Jun,Connecticut,No,Protests
+Branford,No,No,No,No,No,Large,7-Jun,Connecticut,No,Protests
+Danbury,No,No,No,No,No,Large,6-Jun,Connecticut,No,Protests
+Danbury,No,No,No,Yes,No,Large,3-Jun,Connecticut,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,9-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,9-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,9-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Moderate,9-Jun,New York,No,Protests
+Washington,No,No,No,Yes,No,Large,8-Jun,DC,No,Protests
+Portland,No,No,No,No,No,Large,8-Jun,Oregon,No,Protests
+Portland,No,No,No,No,No,Large,9-Jun,Oregon,No,Protests
+Portland,No,No,No,No,No,Large,9-Jun,Oregon,No,Protests
+Chicago,No,No,No,Yes,No,Moderate,8-Jun,Illinois,No,Protests
+Chicago,No,No,No,Yes,No,Small,8-Jun,Illinois,No,Protests
+Stamford,No,No,No,Yes,No,Large,7-Jun,Connecticut,No,Protests
+Savannah ,No,No,No,Yes,No,Large,6-Jun,Georgia,No,Protests
+Brunswick,No,No,No,Yes,No,Small,31-May,Georgia,No,Protests
+Atlanta,Yes,Yes,Yes,No,Yes,Large,2-Jun,Georgia,Yes,Protests with Observable Violence
+Atlanta,Yes,Yes,Yes,No,Yes,Large,3-Jun,Georgia,Yes,Protests with Observable Violence
+Atlanta,Yes,No,Yes,Yes,Yes,Large,4-Jun,Georgia,Yes,Protests
+Atlanta,Yes,No,No,Yes,No,Large,5-Jun,Georgia,Yes,Protests
+Atlanta,No,No,No,Yes,No,Large,6-Jun,Georgia,Yes,Protests
+Atlanta,No,No,No,Yes,No,Large,7-Jun,Georgia,Yes,Protests
+Atlanta,No,No,No,Yes,No,Large,8-Jun,Georgia,No,Protests
+Atlanta,No,No,No,Yes,No,Large,8-Jun,Georgia,No,Protests
+Decatur,No,No,No,Yes,No,Large,3-Jun,Georgia,No,Protests
+Atlanta,Yes,Yes,Yes,No,Yes,Large,1-Jun,Georgia,Yes,Protests
+Stone Mountain,No,No,No,No,No,Small,31-May,Georgia,No,Protests
+Augusta,No,No,No,Yes,No,Moderate,6-Jun,Georgia,No,Protests
+Twin Falls,No,No,No,Yes,No,Small,3-Jun,Idaho,No,Protests
+Rome,No,No,No,Yes,No,Small,29-May,Georgia,No,Protests
+Brattleboro,No,No,No,Yes,No,Moderate,31-May,Vermont,No,Protests
+Bellows Falls,No,No,No,Yes,No,Large,6-Jun,Vermont,No,Protests
+Indianapolis,No,No,No,Yes,No,Small,7-Jun,Indiana,No,Protests
+Monroeville,No,No,No,Yes,No,Large,9-Jun,Pennsylvania,Yes,Protests
+Pittsburgh,No,No,No,Yes,No,Large,7-Jun,Pennsylvania,Yes,Protests
+Philadelphia,No,No,No,Yes,No,Large,9-Jun,Pennsylvania,Yes,Protests
+Irwin,No,No,No,Yes,No,Small,7-Jun,Pennsylvania,Yes,Protests
+West Mifflin,No,No,No,Yes,No,Moderate,7-Jun,Pennsylvania,Yes,Protests
+Boston,No,No,No,Yes,No,Large,10-Jun,Massachusetts,No,Protests
+Boston,No,No,No,No,No,Small,9-Jun,Massachusetts,No,Protests
+Revere,No,No,No,Yes,No,Large,9-Jun,Massachusetts,No,Protests
+Watertown,No,No,No,No,No,Large,9-Jun,Massachusetts,No,Protests
+Boston,No,No,No,No,No,Large,7-Jun,Massachusetts,No,Protests
+Cambridge,No,No,No,No,No,Large,7-Jun,Massachusetts,No,Protests
+Boston,No,No,No,No,No,Moderate,8-Jun,Massachusetts,No,Protests
+Cambridge,No,No,No,No,No,Moderate,8-Jun,Massachusetts,No,Protests
+Springfield,No,No,No,No,No,Large,3-Jun,Massachusetts,No,Protests
+Worcester,No,No,No,No,No,Large,6-Jun,Massachusetts,No,Protests
+New Bedford,No,No,No,No,No,Moderate,30-May,Massachusetts,No,Protests
+New Bedford,No,No,No,No,No,Moderate,31-May,Massachusetts,No,Protests
+New Bedford,No,No,No,No,Yes,Moderate,1-Jun,Massachusetts,No,Protests
+New Bedford,No,No,No,No,No,Moderate,2-Jun,Massachusetts,No,Protests
+New Bedford,No,No,No,No,Yes,Moderate,3-Jun,Massachusetts,No,Protests
+New Bedford,No,No,No,No,Yes,Small,4-Jun,Massachusetts,No,Protests
+Valdosta,No,No,No,No,Yes,Small,31-May,Georgia,No,Protests
+Valdosta,No,No,No,No,Yes,Small,1-Jun,Georgia,No,Protests
+Valdosta,No,No,No,No,Yes,Small,2-Jun,Georgia,No,Protests
+Valdosta,No,No,No,No,Yes,Small,3-Jun,Georgia,No,Protests
+Valdosta,No,No,No,No,Yes,Small,4-Jun,Georgia,No,Protests
+Valdosta,No,No,No,No,Yes,Small,5-Jun,Georgia,No,Protests
+Warner Robbins,No,No,No,No,Yes,Large,2-Jun,Georgia,No,Protests
+Manchester,No,Yes,Yes,Yes,Yes,Large,2-Jun,New Hampshire,No,Protests with Observable Violence
+Providence,Yes,No,No,Yes,Yes,Large,6-Jun,Rhode Island,No,Protests
+Rochester,No,Yes,No,Yes,No,Moderate,9-Jun,Virginia,No,Protests
+Richmond,No,Yes,No,No,No,Moderate,10-Jun,Virginia,No,Protests
+Hobart,No,Yes,Yes,No,Yes,Moderate,31-May,Indiana,No,Protests with Observable Violence
+Portage,No,No,No,No,No,Moderate,1-Jun,Indiana,No,Protests
+Lake Station,No,No,No,No,No,Small,7-Jun,Indiana,No,Protests
+Valparaiso,No,No,No,No,No,Small,2-Jun,Indiana,No,Protests
+Boise,No,No,No,No,No,Moderate,8-Jun,Idaho,No,Protests
+Boise,No,No,No,No,No,Moderate,9-Jun,Idaho,No,Protests
+St. Petersburg,No,No,No,Yes,No,Moderate,8-Jun,Florida,No,Protests
+St. Petersburg,No,No,No,Yes,No,Moderate,9-Jun,Florida,No,Protests
+Jacksonville,Yes,No,No,Yes,No,Large,8-Jun,Florida,No,Protests
+Philadelphia,No,No,No,Yes,No,Large,8-Jun,Pennsylvania,Yes,Protests
+Philadelphia,No,No,No,Yes,No,Large,9-Jun,Pennsylvania,Yes,Protests
+San Antonio,No,No,No,Yes,No,Large,8-Jun,Texas,No,Protests
+San Antonio,No,No,Yes,Yes,No,Moderate,9-Jun,Texas,No,Protests
+Lewiston,No,No,No,Yes,No,Large,4-Jun,Maine,No,Protests
+Lewiston,No,No,No,Yes,Yes,Small,1-Jun,Maine,No,Protests
+Auburn,No,No,No,Yes,No,Large,3-Jun,Washington,No,Protests
+Portsmouth,No,Yes,No,No,No,Moderate,11-Jun,Virginia,No,Protests
+Louisville,No,Yes,No,No,No,Large,9-Jun,Kentucky,No,Protests
+Louisville,No,Yes,No,No,No,Large,10-Jun,Kentucky,No,Protests
+Louisville,No,Yes,No,No,No,Large,11-Jun,Kentucky,No,Protests
+Atlanta,Yes,Yes,Yes,Yes,Yes,Large,13-Jun,Georgia,No,Protests with Observable Violence
+Atlanta,No,No,No,No,No,Moderate,14-Jun,Georgia,No,Protests
+Washington,No,No,No,No,No,Small,13-Jun,District of Columbia,No,Protests
+Atlanta,No,No,No,No,No,Moderate,13-Jun,Georgia,No,Protests
+Atlanta,No,No,No,No,No,Moderate,13-Jun,Georgia,No,Protests
+Atlanta,No,No,No,No,No,Large,13-Jun,Georgia,No,Protests
+Atlanta,No,No,No,No,No,Moderate,13-Jun,Georgia,No,Protests
+New Orleans,No,Yes,Yes,Yes,No,Moderate,13-Jun,Louisiana,No,Protests with Observable Violence
+Los Angeles,No,No,No,Yes,No,Large,12-Jun,California,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,13-Jun,California,No,Protests
+Los Angeles,No,No,No,Yes,No,Moderate,13-Jun,California,No,Protests
+Los Angeles,No,No,No,Yes,No,Moderate,13-Jun,California,No,Protests
+Diamond Bar,No,No,No,Yes,No,Moderate,13-Jun,California,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,13-Jun,California,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,14-Jun,California,No,Protests
+Chicago,No,No,No,Yes,No,Large,12-Jun,Illinois,No,Protests
+Chicago,No,No,No,No,No,Small,12-Jun,Illinois,No,Protests
+Chicago,No,No,No,No,No,Small,13-Jun,Illinois,No,Protests
+Chicago,No,No,No,No,No,Moderate,13-Jun,Illinois,No,Protests
+Chicago,No,No,No,Yes,No,Large,13-Jun,Illinois,No,Protests
+Chicago,No,No,No,Yes,No,Large,14-Jun,Illinois,No,Protests
+Chicago,No,No,No,No,No,Moderate,14-Jun,Illinois,No,Protests
+Chicago,No,No,No,No,No,Small,14-Jun,Illinois,No,Protests
+Houston,No,No,No,Yes,No,Small,13-Jun,Texas,No,Protests
+Phoenix,No,No,No,Yes,No,Moderate,12-Jun,Arizona,No,Protests
+Phoenix,No,No,No,Yes,No,Moderate,13-Jun,Arizona,No,Protests
+Phoenix,No,No,No,Yes,No,Large,13-Jun,Arizona,No,Protests
+Phoenix,No,No,No,Yes,No,Small,14-Jun,Arizona,No,Protests
+Phoenix,No,No,No,Yes,No,Moderate,14-Jun,Arizona,No,Protests
+Philadelphia,No,No,No,Yes,No,Large,13-Jun,Pennsylvania,No,Protests
+San Antonio,No,No,No,No,No,Small,12-Jun,Texas,No,Protests
+San Antonio,No,No,No,No,No,Small,13-Jun,Texas,No,Protests
+San Antonio,No,No,No,No,No,Small,13-Jun,Texas,No,Protests
+Detroit,No,No,No,Yes,No,Large,13-Jun,Michigan,No,Protests
+Detroit,No,No,No,Yes,No,Moderate,12-Jun,Michigan,No,Protests
+Detroit,No,No,No,Yes,No,Moderate,10-Jun,Michigan,No,Protests
+Detroit,No,No,No,Yes,No,Moderate,15-Jun,Michigan,No,Protests
+Richmond,No,No,No,Yes,Yes,Large,13-Jun,Virginia,No,Protests
+Richmond,No,No,Yes,Yes,No,Large,14-Jun,Virginia,No,Protests
+San Diego,No,No,No,Yes,No,Moderate,14-Jun,California,No,Protests
+San Diego,No,No,No,No,No,Moderate,14-Jun,California,No,Protests
+San Diego,No,No,No,Yes,No,Moderate,14-Jun,California,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,14-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,14-Jun,New York,No,Protests
+Bronx,No,No,No,Yes,No,Moderate,12-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,12-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,12-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Large,13-Jun,New York,No,Protests
+Queens,No,No,No,Yes,No,Moderate,13-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,13-Jun,New York,No,Protests
+Brooklyn,No,No,No,Yes,No,Moderate,14-Jun,New York,No,Protests
+Manhattan,No,No,No,Yes,No,Large,13-Jun,New York,No,Protests
+San Diego,No,No,No,No,No,Moderate,14-Jun,California,No,Protests
+San Diego,No,No,No,Yes,No,Moderate,14-Jun,California,No,Protests
+San Diego,No,No,No,Yes,No,Large,13-Jun,California,No,Protests
+San DIego,No,No,No,Yes,No,Moderate,13-Jun,California,No,Protests
+Edison,No,No,No,Yes,No,Moderate,14-Jun,New Jersey,No,Protests
+Cranbury,No,No,No,Yes,No,Large,14-Jun,New Jersey,No,Protests
+Brooklyn ,No,No,No,Yes,No,Large,14-Jun,New York,No,Protests
+Los Angeles,No,No,No,Yes,No,Large,14-Jun,California,No,Protests
+Atlanta,No,No,No,Yes,No,Large,14-Jun,Georgia,No,Protests
+Atlanta,No,Yes,No,Yes,No,Large,13-Jun,Georgia,No,Protests
+Louisville,No,Yes,No,Yes,No,Small,15-Jun,Kentucky,No,Protests
+Salt Lake City,No,No,No,Yes,No,Moderate,15-Jun,Utah,No,Protests
+Albuquerque ,No,Yes,No,Yes,No,Moderate,15-Jun,New Mexico,No,Protests
+Providence,No,No,No,Yes,No,Large,14-Jun,Rhode Island,No,Protests
+Providence,No,No,No,Yes,No,Moderate,14-Jun,Rhode Island,No,Protests
