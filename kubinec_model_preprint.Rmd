@@ -77,7 +77,7 @@ knitr::opts_chunk$set(warning=F,message=F,dev="png")
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
-run_model <- F
+run_model <- T
 
 # whether to use fresher coronanet policy data
 
@@ -536,6 +536,41 @@ coronanet <- group_by(coronanet,country,province,policy_id) %>%
                              type_sub_cat=="Masks") & type=="Social Distancing"~"Mask Restrictions",
                           TRUE~type),
            policy_type=coalesce(policy_type,"More Restrictions and/or More Supply"))
+  
+  # load COVID-AMP data: this is preferred as it is more complete at the US province level
+  
+  covid_amp <- read_excel("data/covid_amp_state_policy_data.xlsx",skip = 6) %>% rename(level="Authorizing level of government",
+                                                                                       id="Unique ID",
+                                                                                       country="Authorizing country name",
+                                                                                       state="Authorizing state/province, if applicable",
+                                                                                       policy_change="Policy relaxing or restricting",
+                                                                                       type="Policy category",
+                                                                                       start_date="Issued date",
+                                                                                       end_date="Actual end date",
+                                                                                       description="Policy/law name") %>% 
+    select(id, country, state, level, type, start_date, end_date,
+           description,
+           policy_change,
+           target="Policy target") %>% 
+    filter(start_date < ymd("2020-10-01"),
+           level=="State / Province",
+           country=="United States of America (USA)",
+           type %in% c("Emergency declarations",
+                       "Contact tracing/Testing",
+                       "Social distancing",
+                       "Support for public health and clinical capacity",
+                       "Face mask",
+                       "Enabling and relief measures",
+                       "Travel restrictions")) %>% 
+    mutate(start_date=ymd(start_date),
+           end_date=ymd(end_date),
+           policy_count=case_when(grepl(x=policy_change,pattern="Restricting")& target=="General population (inclusive)"~1,
+                                  grepl(x=policy_change,pattern="Relaxing") & target=="General population (inclusive)" ~ -1,
+    grepl(x=policy_change,pattern="Restricting") & target!="General population (inclusive)"~ 0.5,
+                                  grepl(x=policy_change,pattern="Relaxing") & target!="General population (inclusive)" ~ -0.5,                              
+                TRUE~NA_real_)) %>% 
+    filter(!is.na(policy_count))
+  
 }
 
 
@@ -585,12 +620,59 @@ if(run_model) {
       
     }) %>% bind_rows
   
-  },mc.cores=10) %>% bind_rows
+  },mc.cores=15) %>% bind_rows
   
   saveRDS(count_pol,"count_pol.rds")
   
+  # repeat same procedure for COVID amp data
+  
+    count_pol_covidamp <- parallel::mclapply(unique(covid_amp$state), function(p) {
+    
+    # loop over policies
+      these_pol <- unique(covid_amp$id[covid_amp$state==p])
+    
+    lapply(these_pol, function(t) {
+      
+      if(!is.na(p)) { 
+        this_chunk <- filter(covid_amp,id==t,state==p)
+      } else {
+        this_chunk <- filter(covid_amp,id==t)
+      }
+      
+      
+      # loop over days 
+      
+      lapply(seq(ymd("2019-12-30"),ymd("2020-07-14"),by=1), function(d) {
+        
+        this_day_pol <- group_by(this_chunk,type) %>%
+          filter(d>start_date,d<end_date) %>% 
+          summarize(tot_pol=sum(policy_count))
+        
+        if(nrow(this_day_pol)==0) {
+
+          tibble(month_day=d,
+                 type=paste0(unique(this_chunk$type),collapse=";"),
+                 count_pol_eff=rep(0,length(unique(this_chunk$type))),
+                 province=p)
+        } else {
+          
+          tibble(month_day=d,
+                 type=paste0(unique(this_chunk$type),collapse=";"),
+                 count_pol_eff=this_day_pol$tot_pol,
+                 province=p)
+        }
+        
+      }) %>% bind_rows
+      
+    }) %>% bind_rows
+  
+  },mc.cores=15) %>% bind_rows
+  
+  saveRDS(count_pol_covidamp,"count_pol_covidamp.rds")
+  
 } else {
   count_pol <- readRDS("count_pol.rds")
+  count_pol_covidamp <- readRDS("count_pol_covidamp.rds")
 }
 
 
@@ -609,13 +691,37 @@ count_pol <- mutate(count_pol,
 count_pol_sum <- group_by(count_pol,month_day,type,province) %>% 
   summarize(sum_pol=sum(count_pol_eff))
 
+count_pol_covidamp_sum <- group_by(count_pol_covidamp,month_day,type,province) %>% 
+  summarize(sum_pol=sum(count_pol_eff)) %>% 
+  mutate(sum_pol=ifelse(sum_pol<0, 0, sum_pol))
+
+## Recoding count_pol_covidamp_sum$type into count_pol_covidamp_sum$type_rec
+count_pol_covidamp_sum$type_rec <- count_pol_covidamp_sum$type
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Contact tracing/Testing"] <- "Contact Tracing"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Emergency declarations"] <- "Emergency"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Enabling and relief measures"] <- "Welfare"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Face mask"] <- "Masking"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Social distancing"] <- "Social Distancing"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Support for public health and clinical capacity"] <- "Health Resources"
+count_pol_covidamp_sum$type_rec[count_pol_covidamp_sum$type == "Travel restrictions"] <- "Travel"
+
 count_pol_sum <- spread(count_pol_sum,key="type",value="sum_pol") %>% 
   mutate_at(vars(`Health Resources`:`Social Distancing`),~ifelse(month_day==min(month_day),
                                                                coalesce(.,0),
                                                                .)) %>% 
   fill(`Health Resources`:`Social Distancing`,.direction=c("down"))
 
-combined <- left_join(combined, count_pol_sum,by=c("state"="province","month_day"))
+count_pol_covidamp_wide <- spread(select(ungroup(count_pol_covidamp_sum),-type),
+                                 key="type_rec",value="sum_pol") %>% 
+  mutate_at(vars(`Contact Tracing`:Welfare),~ifelse(month_day==min(month_day),
+                                                               coalesce(.,0),
+                                                               .)) %>% 
+  fill(`Contact Tracing`:Welfare,.direction=c("down"))
+
+# combined <- left_join(combined, count_pol_sum,by=c("state"="province","month_day"))
+
+combined <- left_join(combined, count_pol_covidamp_wide,
+                      by=c("state"="province","month_day"))
 
 # add in civiqs
 
@@ -679,12 +785,11 @@ combined <- group_by(combined,state) %>%
               "transit",
               "workplaces",
               "Health Resources",
-              "Health Testing",
-              "Mask Restrictions",
-              "Restriction and Regulation of Businesses",
-              "Restrictions of Mass Gatherings",
-              "Quarantine",
-              "Restriction and Regulation of Government Services",
+              "Contact Tracing",
+              "Masking",
+              "Travel",
+              "Emergency",
+              "Welfare",
               "Social Distancing",
               "sum_prot",
               "trendline_approve",
@@ -917,14 +1022,13 @@ just_data <- select(ungroup(combined),month_day,state,state_pop,trump,air="Air P
                       gdp,
                     density,
                     trump_int,
-                      mask_pol="Mask Restrictions",
+                      mask_pol="Masking",
                       resources="Health Resources",
-                      testing_cap="Health Testing",
-                      quarantine="Quarantine",
-                      business="Restriction and Regulation of Businesses",
-                    govt_services="Restriction and Regulation of Government Services",
-                    mass_gathering="Restrictions of Mass Gatherings",
+                      testing_cap="Contact Tracing",
+                      emergency="Emergency",
+                    travel="Travel",
                     social_distance="Social Distancing",
+                    welfare="Welfare",
                     sum_prot,
                     mask_wear,
                       trendline_approve,
@@ -943,36 +1047,36 @@ sds_mean <- lapply(select(just_data,-month_day,-state_pop,-state), function(c) {
 
 just_data <- just_data %>% 
     mutate_at(vars(-month_day,-state_pop,-state), ~as.numeric(scale(.))) %>% arrange(state,month_day) %>% 
-  mutate(int_lockdown=quarantine*outbreak_time,
-         int_business=business*outbreak_time,
+  mutate(int_testing_cap=testing_cap*outbreak_time,
          int_social=social_distance*outbreak_time,
-         int_govt=govt_services*outbreak_time,
-         int_gather=mass_gathering*outbreak_time,
+         int_masking=mask_pol*outbreak_time,
+         int_travel=travel*outbreak_time,
+         int_resources=resources*outbreak_time,
          trump_int=trump*trendline_approve)
 
 covs <- select(ungroup(just_data),-state,-state_pop,-month_day,-outbreak_time,
-               -int_lockdown,
-               -int_business,
+               -int_testing_cap,
+               -int_masking,
                -int_social,
-               -int_gather,
-               -int_govt,
-               -business,
-               -quarantine,
-               -govt_services,
-               -mass_gathering,
-               -social_distance) %>% as.matrix
+               -int_travel,
+               -int_resources,
+               -testing_cap,
+               -mask_pol,
+               -social_distance,
+               -travel,
+               -resources) %>% as.matrix
 
 mobility <- select(ungroup(combined),month_day,state,retail:residential) %>% arrange(state,month_day)
 
 covs_mob <- select(ungroup(mobility),-state,-month_day) %>% as.matrix
 
-lockdown <- select(ungroup(just_data),state,month_day,quarantine,business,
-                   mass_gathering,social_distance,govt_services,
-                   int_lockdown,
-                   int_business,
-                   int_social,
-                   int_gather,
-                   int_govt) %>% arrange(state,month_day)
+lockdown <- select(ungroup(just_data),state,month_day,testing_cap,
+                   mask_pol,social_distance,travel,resources,
+                   int_testing_cap,
+                  int_masking,
+                  int_social,
+                  int_travel,
+               int_resources) %>% arrange(state,month_day)
 
 covs_lock <- select(ungroup(lockdown),-state,-month_day)
 
@@ -1027,8 +1131,8 @@ real_data <- list(time_all=length(unique(combined$month_day)),
                  suppress=covs,
                  suppress2=covs[,-which(colnames(covs)=="trendline_extremely_concerned")],
                  mobility=scale(covs_mob),
-                 lockdown=covs_lock,
-                 states=select(state,-state))
+                 lockdown=as.matrix(covs_lock),
+                 states=as.matrix(select(state,-state)))
 
 saveRDS(real_data,"real_data.rds")
 
@@ -1067,13 +1171,13 @@ if(run_model) {
   pan_model_scale <- cmdstan_model("corona_tscs_betab_mix_prior.stan",
                                    cpp_options=list(stan_threads=TRUE))
   
-   us_fit_scale_mod <- pan_model_scale$sample(data=real_data,chains=2,
-                           iter_warmup=500,iter_sampling=500,
-                           threads_per_chain = 16,
+   us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
+                           threads_per_chain = 4,
                            init=init_vals,
-                           max_treedepth = 15,
-                           output_dir=".", validate_csv = FALSE,
-                           parallel_chains=2)
+                           max_treedepth = 16,
+                           parallel_chains=4)
+   
+   us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
    
   
   us_fit_scale <- rstan::sflist2stanfit(lapply(us_fit_scale_mod$output_files(),
@@ -1093,16 +1197,12 @@ To analyze the effect of suppression policies, we use data on counts of social d
 
 The policy data is plotted by state in Figure \@ref(fig:policy). As can be seen, there is a rise in policies after the pandemic begins in the middle of March, though the number of policies varies across categories. The count of policies is an admittedly imperfect measure though it communicates more information about policy activity than a simple binary coding. Generally speaking, states imposed many more policies designed to increase their access to PPE for health staff than they were willing to take on lockdowns, social distancing, and restrictions on businesses and government services. This difference likely has to do with the increased cost and salience of these policies vis-a-vis relatively less politically difficult options like gathering more masks and face shields for health care workers [@cheng2020].
 
-```{r policy,fig.cap="Count of Policies in Effect by Day and by State from the CoronaNet Dataset"}
+```{r policy,fig.cap="Aggregation of State-level Policies in Effect by Day and by State from the COVID-AMP Dataset"}
 
 # plot data 
 
-count_pol %>% group_by(type,month_day,province) %>% summarize(sum_pol=sum(count_pol_eff)) %>% ungroup %>% 
-  mutate(type=recode(type,
-                     `Restriction and Regulation of Businesses`="Business Restrictions",
-                     `Restriction and Regulation of Government Services`="Government Restrictions",
-                     `Restrictions of Mass Gatherings`="Mass Gatherings")) %>% 
-  ggplot(aes(y=sum_pol,x=month_day)) + geom_line(aes(group=province),alpha=0.5,colour="blue") + facet_wrap(~stringr::str_wrap(type,10)) + 
+count_pol_covidamp_sum %>% 
+  ggplot(aes(y=sum_pol,x=month_day)) + geom_line(aes(group=province),alpha=0.5,colour="blue") + facet_wrap(~stringr::str_wrap(type_rec,10),scales="free_y") + 
   theme(panel.grid = element_blank(),
         panel.background=element_blank(),
         strip.background = element_blank(),
