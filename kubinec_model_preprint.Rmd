@@ -1552,7 +1552,7 @@ Panel B in the plot shows our estimates of infected individuals, excepts that it
 
 # need to load in others predictions
 
-gu_inf <- read_csv("US.csv")
+gu_inf <- read_csv("data/US.csv")
 
 max_est <- as.integer(round(calc_sum$med_est[calc_sum$month_day==max(calc_sum$month_day)]))
 high_max_est <- as.integer(round(calc_sum$high_est[calc_sum$month_day==max(calc_sum$month_day)]))
