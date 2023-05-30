@@ -192,12 +192,6 @@ functions {
                           country2s * lin_counter[start2:end2,2] +
                           //country3s * lin_counter[start2:end2,3] +
                           test_baseline * prop_success);
-                          
-          // mu_tests[2] = exp(alpha_test[2] + 
-          //                 country1f * lin_counter[start2:end2,1] +
-          //                 country2f * lin_counter[start2:end2,2] +
-          //                 country3f * lin_counter[start2:end2,3] +
-          //                 test_baseline[2] * prop_fail);
         
         // observed data model
         // loop over serology surveys to add informative prior information
@@ -211,23 +205,6 @@ functions {
             
             log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
             log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
-            
-            // we're going to re-scale the distribution so that the reported cases is 
-            // always the lower bound
-            
-            //log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|.5,5) - beta_lccdf(cur_infect|.5,5);
-            
-            //log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|.5,5);
-            
-            if(n==start2) {
-              
-               //log_prob += log_inv_logit(prop_infected[n-start2+1]) + log1m_inv_logit(prop_infected[n-start2+1]);
-            
-            } else {
-               //log_prob += log(prop_infected[n-start2+1] - prop_infected[n-start2]) +
-                 //       log_inv_logit(prop_infected[n-start2+1]) + log1m_inv_logit(prop_infected[n-start2+1]);
-            
-            }
 
           } else if(q > 0) {
             
@@ -322,7 +299,6 @@ parameters {
   vector[num_country] poly3; // polinomial function of time
   real mu_test_raw[1];
   real finding; // difficulty of identifying infected cases 
-  //vector<lower=0,upper=1>[R] survey_prop; // variable that stores survey proportions from CDC data
   real<lower=0> world_infect; // infection rate based on number of travelers
   vector[S] suppress_effect_raw; // suppression effect of govt. measures, cannot increase virus transmission rate
   vector[L] lockdown_effect_raw;
@@ -330,16 +306,12 @@ parameters {
   vector[S] suppress_med_raw[G];
   vector[L] lockdown_med_raw_fear;
   vector[S-1] suppress_med_raw_fear;
-  //real test_lin_counter;
   real test_baseline;
-  //real test_lin_counter2;
   real mu_test_raw2[1];
   real mu_test_raw3[1];
-  real pcr_spec; // anticipated 1 - specificity of RT-PCR tests (taken from literature)
-  // constraint equal to upper limit spec of 98 percent, 2% FPR of PCR test results
+  real pcr_spec; 
   vector[3] mu_poly; // hierarchical mean for poly coefficients
   vector[G] mob_effect_raw;
-  //real test_max_par;
   vector<lower=0>[3] sigma_poly; // varying sigma polys
   vector[G] mob_alpha_const; // mobility hierarchical intercepts
   vector[num_country] country_test_raw; // unobserved rate at which countries are willing to test vs. number of infected
@@ -365,7 +337,7 @@ model {
   matrix[G, G] M_Sigma;
   int grainsize = 1;
   
-  sigma_poly ~ exponential(1);
+  sigma_poly ~ exponential(.1);
   mu_poly ~ normal(0,30);
   mu_test_raw ~ normal(0,20);
   
@@ -379,10 +351,7 @@ model {
   phi_raw ~ exponential(1);
   mob_effect_raw ~ normal(0,5);
   suppress_effect_raw ~ normal(0,5);
-  //test_max_par ~ normal(0,5);
   test_baseline ~ normal(0,20);
-  //test_lin_counter ~ normal(0,20);
-  //test_lin_counter2 ~ normal(0,20);
   
   mob_alpha_const ~ normal(0,5);
   pcr_spec ~ normal(0,20);
