@@ -49,6 +49,7 @@ require(stringr)
 require(lubridate)
 require(bayesplot)
 require(historydata)
+library(posterior)
 require(readr)
 require(datasets)
 require(extraDistr)
@@ -77,7 +78,7 @@ knitr::opts_chunk$set(warning=F,message=F,dev="png")
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
-run_model <- T
+run_model <- F
 
 # whether to use fresher coronanet policy data
 
@@ -788,8 +789,6 @@ combined <- group_by(combined,state) %>%
               "Contact Tracing",
               "Masking",
               "Travel",
-              "Emergency",
-              "Welfare",
               "Social Distancing",
               "sum_prot",
               "trendline_approve",
@@ -842,6 +841,14 @@ combined <- group_by(combined,state) %>%
   arrange(state,month_day) %>% 
   mutate(tests2=ifelse(tests < cummax(coalesce(tests,0)),NA,tests),
          tests3=imputeTS::na_interpolation(tests2,option="linear"))
+
+# make a key
+
+combined <- mutate(ungroup(combined),key=1:n())
+
+state_id <- distinct(combined,state,state_pop) %>% 
+  ungroup %>% 
+  mutate(state_num=as.numeric(factor(state)))
 
 # need to calculate world infection parameter (use lag to adjust)
 
@@ -918,6 +925,67 @@ cdc_sero <- mutate(cdc_sero,
 
 cdc_sero_indata <- filter(cdc_sero,!is.na(state_pop))
 
+# add in expert estimate for March 23rd
+# use beta distribution to calculate correct number
+
+expert_survey_2023 <- read_csv("data/consensusForecastsDB.csv") %>% 
+  filter(questionLabel=="QF4",
+         surveyIssued==ymd("2020-03-23"))
+
+# need to get estimates for effective sample size
+
+expert_code <- cmdstan_model("estimate_beta_priors.stan")
+
+# data = random sample from empirical distribution
+
+prop_expert <- sample(expert_survey_2023$bin,
+                      size=5000,
+                      replace=T,
+                      prob=expert_survey_2023$prob)
+
+# stratify by state
+
+state_strat <- select(state_id,
+                     state_pop,
+                     state) %>% 
+              left_join(select(filter(combined,
+                                      month_day==ymd("2020-03-21")),
+                               cases,state,tests)) %>% 
+  mutate(counter_test=floor((sum(tests)/sum(state_pop))*state_pop),
+         # adjust for below/above average test rates
+         case_adj = (cases + cases * (counter_test/tests)),
+         case_prop=cases/sum(cases),
+         case_prop_adj=case_adj/sum(case_adj))
+
+# (prop_expert*((state_strat$case_prop_adj[state_strat$state==s]*state_strat$state_pop[state_strat$state==s])/(sum(state_strat$state_pop*state_strat$case_prop_adj))))/state_strat$state_pop[state_strat$state==s]
+
+# loop over states 
+
+over_states <- parallel::mclapply(unique(state_strat$state), function(s) {
+  
+  expert_mod <- expert_code$sample(data=list(N=length(prop_expert),
+                                  y=(prop_expert*state_strat$case_prop_adj[state_strat$state==s])/state_strat$state_pop[state_strat$state==s]),
+                                 refresh=0,parallel_chains = 4)
+  
+  draws_df <- as_draws_df(expert_mod$draws(c("successes",
+                                             "denominator",
+                                             "failures")))
+  
+  tibble(state_id=s,
+         inf_pr=mean(draws_df$successes/draws_df$denominator),
+         pop_size=state_strat$state_pop[state_strat$state==s],
+         cases_pr=state_strat$cases[state_strat$state==s]/state_strat$state_pop[state_strat$state==s],
+         survey_size=floor(mean(draws_df$denominator)),
+         date_begin=ymd("2020-03-21"),
+         date_end=ymd("2020-03-23"),
+         alpha=mean(draws_df$successes),
+         beta=mean(draws_df$failures)) %>% 
+    mutate(inflation=inf_pr/cases_pr)
+  
+},mc.cores=10) %>% bind_rows
+
+
+
 serology <- select(cdc_sero_indata,state_id="state",
                    inf_pr,cases_pr,
                    survey_size="sample_size",
@@ -926,7 +994,10 @@ serology <- select(cdc_sero_indata,state_id="state",
                    date_end,
                    pop_size="state_pop")
 
-saveRDS(serology,"serology.rds")
+# add row for expert data
+# stratify estimates by observed counts for each state
+
+#serology <- bind_rows(serology,over_states)
 
 # add in commerical survey data
 
@@ -963,16 +1034,17 @@ comm_data <- left_join(comm_data,
 #                    !(state_id=="Utah" & date_end==ymd("2020-06-05")),
 #                    !(state_id=="Minnesota" & date_end==ymd("2020-06-07")))
 
-serology <- left_join(serology,mutate(select(ungroup(combined),month_day,state),key=1:n()),
-                      by=c("date_end"="month_day","state_id"="state")) %>%
-  mutate(key=key - 1:n())
+serology <- left_join(serology,
+                      mutate(select(ungroup(combined),month_day,state,key)),
+                      by=c("date_end"="month_day","state_id"="state"))
 
 saveRDS(serology,"serology.rds")
 
-# remove rows from combined that are in the sero data
-combined$key <- 1:nrow(combined)
+serology_real <- left_join(over_states,
+                      mutate(select(ungroup(combined),month_day,state,key)),
+                      by=c("date_end"="month_day","state_id"="state"))
 
-  #filter(state %in% c("New York","California","Alabama","Florida","Vermont","New Mexico"))
+saveRDS(serology_real,"serology_real.rds")
 
 # look at how days after lockdown versus days after emergency compare
 
@@ -992,7 +1064,6 @@ combined$key <- 1:nrow(combined)
 #           subtitle="Negative Numbers Indicate Policy Was Implemented After First COVID-19 Case")
 # 
 # ggsave("check_scatter.png",width=8,height=6)
-
 
 saveRDS(combined,"combined.rds")
 
@@ -1025,10 +1096,8 @@ just_data <- select(ungroup(combined),month_day,state,state_pop,trump,air="Air P
                       mask_pol="Masking",
                       resources="Health Resources",
                       testing_cap="Contact Tracing",
-                      emergency="Emergency",
                     travel="Travel",
                     social_distance="Social Distancing",
-                    welfare="Welfare",
                     sum_prot,
                     mask_wear,
                       trendline_approve,
@@ -1107,11 +1176,18 @@ out_sero <- mutate(serology,
   select(num_pos,survey_size) %>% 
   as.matrix
 
+out_sero_real <- serology_real %>% 
+  select(alpha,beta) %>% 
+  as.matrix
+
+# obtain expert consensus for first part of 
+
 real_data <- list(time_all=length(unique(combined$month_day)),
                  num_country=length(unique(combined$state)),
                  num_rows=nrow(combined),
                  cc=as.numeric(factor(combined$state,levels=unique(combined$state))),
                  R=nrow(serology), # number of CDC samples
+                 RE=nrow(serology_real), # number of expert surveys (states)
                  S=ncol(covs),
                  G=ncol(covs_mob),
                  L=ncol(covs_lock),
@@ -1119,6 +1195,8 @@ real_data <- list(time_all=length(unique(combined$month_day)),
                  date_id=as.numeric(factor(combined$date)),
                  sero=out_sero,
                  sero_row=serology$key,
+                 sero_real=out_sero_real,
+                 sero_row_real=serology_real$key,
                  country_pop=floor(combined$state_pop),
                  cases=cases_matrix_num[,1],
                  phi_scale=c(.001,.0001),
@@ -1173,20 +1251,27 @@ if(run_model) {
   
    us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
                            threads_per_chain = 4,
-                           init=init_vals,
+                           init=init_vals,iter_warmup = 500,
+                           iter_sampling = 1500,
                            max_treedepth = 16,
                            parallel_chains=4)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
-   
+  
+   summaries <- us_fit_scale_mod$summary() 
   
   us_fit_scale <- rstan::sflist2stanfit(lapply(us_fit_scale_mod$output_files(),
                                           rstan::read_stan_csv))
   
   saveRDS(us_fit_scale,"data/us_fit_scale.rds")
+  saveRDS(summaries, "data/rhat_summaries.rds")
 } else {
   us_fit_scale <- readRDS("data/us_fit_scale.rds")
+  us_fit_scale_mod <- readRDS("data/us_fit_scale_mod.rds")
+  summaries <- readRDS("data/rhat_summaries.rds")
 }
+
+summaries <- readRDS("data/rhat_summaries.rds")
 
 
 ```
@@ -1202,6 +1287,7 @@ The policy data is plotted by state in Figure \@ref(fig:policy). As can be seen,
 # plot data 
 
 count_pol_covidamp_sum %>% 
+  filter(!(type_rec %in% c("Welfare","Emergency"))) %>% 
   ggplot(aes(y=sum_pol,x=month_day)) + geom_line(aes(group=province),alpha=0.5,colour="blue") + facet_wrap(~stringr::str_wrap(type_rec,10),scales="free_y") + 
   theme(panel.grid = element_blank(),
         panel.background=element_blank(),
@@ -1250,7 +1336,7 @@ In addition, even when we cannot ensure causal identification, we can still lear
 
 <!-- The results of drawing from posterior values for the beta-binomial distribution of cases and tests are shown relative to the original observed values in Figure @ref(fig:postpredict) for five states. The plots show that although there is noise in the predictions (represented by the black shaded region), the model is generally able to capture the empirical values (represented by a red line) with relatively little uncertainty for confirmed cases. However, the relationship is more stochastic for test counts. While the model predicts that tests rise over time, it also allows for the possibility that test counts could have been higher or lower. This difference in predictive performance flows from the model as there are other factors which may impact testing whereas the latent trait is most directly related to confirmed case counts. Given that our intention is in bias adjustment rather than predicting test counts, the noise in the relationship for that part of the model is acceptable. To the extent that a relationship exists between tests and the infection rate, it will still be accounted for in the posterior estimates. -->
 
-```{r postpredict,fig.asp=0.75,fig.cap="Predictive Validity of Model Vis-a-vis Observed Cases and Tests",include=F}
+```{r postpredict,fig.asp=0.75,fig.cap="Predictive Validity of Model Vis-a-vis Observed Cases and Tests"}
 
 
 combined <- mutate(ungroup(combined),key=1:n()) %>% 
@@ -1568,7 +1654,7 @@ options(scipen=999)
 
 # load expert survey results
 
-expert_survey <- read_csv("data/consensusForecastsDB.csv") %>% 
+expert_survey2 <- read_csv("data/consensusForecastsDB.csv") %>% 
   filter(questionLabel %in% c("QF5","QF4","QF3"),
          surveyIssued>ymd("2020-03-16")) %>% 
     mutate(keep=case_when(surveyIssued==ymd("2020-03-02")~"QF4",
@@ -1615,7 +1701,7 @@ e1 <- calc_sum %>%
            label=c(paste0("Estimated Infected:\n",formatC(low_max_est,big.mark=",",format = "f",digits=0)," - ",
                                                          formatC(high_max_est,big.mark=",",format = "f",digits=0)),
                    paste0("Total Reported Cases:\n",formatC(max_obs,big.mark=",",format = "f",digits=0)))) +
-  geom_pointrange(data=expert_survey,aes(ymin=low_est,ymax=high_est),alpha=0.5) +
+  geom_pointrange(data=expert_survey2,aes(ymin=low_est,ymax=high_est),alpha=0.5) +
   theme(panel.grid = element_blank(),
         legend.position = "top") +
   xlab("")
@@ -1879,10 +1965,6 @@ over_days <- lapply(seq(max(combined$month_day) - days(7), max(combined$month_da
 
 
 saveRDS(over_days,"test_data.rds")
-
-state_id <- distinct(combined,state,state_pop) %>% 
-  ungroup %>% 
-  mutate(state_num=as.numeric(factor(state)))
 
 over_days %>%
   left_join(state_id,by="state_num") %>%

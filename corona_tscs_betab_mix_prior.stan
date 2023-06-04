@@ -52,8 +52,11 @@ functions {
                    int G,
                    int L,
                    int R,
+                   int RE,
                    int[] sero_row,
+                   int[] sero_row_real,
                    int[,] sero,
+                   matrix sero_real,
                    matrix mobility,
                    vector[] mob_array,
                    vector mob_alpha_const,
@@ -199,14 +202,22 @@ functions {
         for(n in start2:end2) {
           
           int q = r_in(n,sero_row);
+          int p = r_in(n, sero_row_real);
           real cur_infect = cases[n]*1.0 / country_pop[n]*1.0;
           
-          if(q <= 0) {
+          if(q <= 0 && p <= 0) {
             
             log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
             log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
 
-          } else if(q > 0) {
+          } else if(p>0) {
+            
+            // expert survey data
+            // beta prior
+            
+            log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|sero_real[p,1],sero_real[p,2]);
+            
+            } else if(q > 0) {
             
             // scaling function. we use seroprevalance data to 
             // set a ground truth for the relationship between covariates and
@@ -234,6 +245,7 @@ data {
   int G; // google mobility data (by type of mobility)
   int L; // just lockdown data (for hierarchical predictor)
   int R; // number of seroprevalence essays
+  int RE; // number of expert surveys
   matrix[num_rows,S] suppress; // time-varying suppression measures
   matrix[num_rows,S-1] suppress2; // without COVID poll
   matrix[num_rows,G] mobility; // time-varying mobility measures
@@ -244,6 +256,8 @@ data {
   vector[num_rows] test_max;
   int sero[R,2]; // sero-prevalence datas
   int sero_row[R];
+  matrix[RE,2] sero_real; // expert survey datas
+  int sero_row_real[RE];
   int country_pop[num_rows];
   matrix[num_rows,3] lin_counter;
   vector[2] phi_scale; // prior on how much change there could be in infection rate over time
@@ -411,8 +425,11 @@ target += reduce_sum_static(partial_sum, states,
                      G,
                      L,
                      R,
+                     RE,
                      sero_row,
+                     sero_row_real,
                      sero,
+                     sero_real,
                      mobility,
                      mob_array,
                      mob_alpha_const,
