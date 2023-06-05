@@ -54,8 +54,6 @@ require(readr)
 require(datasets)
 require(extraDistr)
 require(patchwork)
-require(rstanarm) # for observed data modeling
-require(tidycensus)
 require(RcppRoll)
 require(readxl)
 require(ggrepel)
@@ -353,15 +351,18 @@ unemp <- read_csv("data/simulation/unemployment/unemployment.csv")
 # note: you need a Census API key loaded to use this -- see package tidycensus docs and use 
 # function census_api_key with the key number and install=T
 
-census_api_key(Sys.getenv("CENSUS_API_KEY"))
+# census_api_key(Sys.getenv("CENSUS_API_KEY"))
+# 
+# acs_data <- get_acs("state",variables=c("B01003_001","B05002_013"),year=2018,survey="acs1") %>% 
+#   select(-moe) %>% 
+#   mutate(variable=recode(variable,
+#                          B01003_001="state_pop",
+#                          B05002_013="foreign_born")) %>% 
+#   spread("variable","estimate") %>% 
+#   mutate(prop_foreign=foreign_born/state_pop)
+# saveRDS(acs_data, "data/census_data.rds")
 
-acs_data <- get_acs("state",variables=c("B01003_001","B05002_013"),year=2018,survey="acs1") %>% 
-  select(-moe) %>% 
-  mutate(variable=recode(variable,
-                         B01003_001="state_pop",
-                         B05002_013="foreign_born")) %>% 
-  spread("variable","estimate") %>% 
-  mutate(prop_foreign=foreign_born/state_pop)
+acs_data <- readRDS("acs_data.rds")
 
 # population state density
 
