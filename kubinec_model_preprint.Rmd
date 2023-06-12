@@ -76,7 +76,7 @@ knitr::opts_chunk$set(warning=F,message=F,dev="png")
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
-run_model <- F
+run_model <- T
 
 # whether to use fresher coronanet policy data
 
@@ -362,7 +362,7 @@ unemp <- read_csv("data/simulation/unemployment/unemployment.csv")
 #   mutate(prop_foreign=foreign_born/state_pop)
 # saveRDS(acs_data, "data/census_data.rds")
 
-acs_data <- readRDS("acs_data.rds")
+acs_data <- readRDS("data/census_data.rds")
 
 # population state density
 
@@ -579,7 +579,7 @@ coronanet <- group_by(coronanet,country,province,policy_id) %>%
 
 # do a summing exercise over policy types in terms of what is still available at a given day
 
-if(run_model) {
+if(new_policy) {
   count_pol <- parallel::mclapply(unique(coronanet$province), function(p) {
     
     # loop over policies
@@ -1187,8 +1187,8 @@ real_data <- list(time_all=length(unique(combined$month_day)),
                  num_country=length(unique(combined$state)),
                  num_rows=nrow(combined),
                  cc=as.numeric(factor(combined$state,levels=unique(combined$state))),
-                 R=nrow(serology), # number of CDC samples
-                 RE=nrow(serology_real), # number of expert surveys (states)
+                 R=nrow(out_sero), # number of CDC samples
+                 RE=nrow(out_sero_real), # number of expert surveys (states)
                  S=ncol(covs),
                  G=ncol(covs_mob),
                  L=ncol(covs_lock),
@@ -1216,21 +1216,21 @@ real_data <- list(time_all=length(unique(combined$month_day)),
 saveRDS(real_data,"real_data.rds")
 
 init_vals <- function() {
-  list(phi_raw=c(1,1),
+  list(phi_raw=c(100,1),
        world_infect=0.1,
-       finding=c(1,1),
+       finding=18,
        suppress_effect_raw=rep(0,real_data$S),
        lockdown_effect_raw=rep(0,real_data$L),
        mob_effect_raw=rep(0,real_data$G),
        country_test_raw=rep(1,real_data$num_country),
        #sero_est=serology$inf_pr,
-       pcr_spec=c(-2,-2),
+       pcr_spec=70,
        sigma_test_raw=10,
        sigma_test_raw2=10,
        sigma_test_raw3=10,
        sigma_policy=c(10,10,10),
-       alpha_infect=-2,
-       alpha_test=c(-2,-2))
+       alpha_infect=-6,
+       alpha_test=25)
 }
 
 
@@ -1251,11 +1251,11 @@ if(run_model) {
                                    cpp_options=list(stan_threads=TRUE))
   
    us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
-                           threads_per_chain = 4,
+                           threads_per_chain = 10,
                            init=init_vals,iter_warmup = 500,
-                           iter_sampling = 1500,
+                           iter_sampling = 600,
                            max_treedepth = 16,
-                           parallel_chains=4)
+                           parallel_chains=10)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
   
