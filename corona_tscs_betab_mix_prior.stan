@@ -214,8 +214,10 @@ functions {
             
             // expert survey data
             // beta prior
+            // include Jacobian transformation
             
             log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|sero_real[p,1],sero_real[p,2]);
+            log_prob += log_inv_logit(prop_infected[n-start2+1]) + log1m_inv_logit(prop_infected[n-start2+1]);
             
             } else if(q > 0) {
             
