@@ -154,11 +154,11 @@ functions {
             
 
               
-        mu_infect = mean(prop_infected);
-        sd_infect = sd(prop_infected);
+        //mu_infect = mean(prop_infected);
+        //sd_infect = sd(prop_infected);
         
         prop_success = prop_infected; 
-        prop_fail = 1 - inv_logit(prop_infected);
+        //prop_fail = 1 - inv_logit(prop_infected);
         
         mu_cases = inv_logit(pcr_spec + finding*prop_success);
         //mu_cases[2] = exp(pcr_spec[2] + finding[2]*prop_fail);
@@ -207,8 +207,8 @@ functions {
           
           if(q <= 0 && p <= 0) {
             
-            log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
-            log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
+            //log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
+            //log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
 
           } else if(p>0) {
             
@@ -216,8 +216,10 @@ functions {
             // beta prior
             // include Jacobian transformation
             
-            log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|sero_real[p,1],sero_real[p,2]);
-            log_prob += log_inv_logit(prop_infected[n-start2+1]) + log1m_inv_logit(prop_infected[n-start2+1]);
+            log_prob += beta_proportion_lpdf(sero_real[p,1]|inv_logit(prop_infected[n-start2+1]),sero_real[p,2]);
+            
+            //log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|sero_real[p,1],sero_real[p,2]);
+            //log_prob += log_inv_logit(prop_infected[n-start2+1]) + log1m_inv_logit(prop_infected[n-start2+1]);
             
             } else if(q > 0) {
             
@@ -225,7 +227,8 @@ functions {
             // set a ground truth for the relationship between covariates and
             // infections measured non-parametrically
             
-            log_prob += binomial_lpmf(sero[q,1]|sero[q,2],inv_logit(prop_infected[n-start2+1]));
+            log_prob += binomial_lpmf(sero[q,1]|sero[q,2],
+                                      inv_logit(prop_infected[n-start2+1]));
             
           }
         }

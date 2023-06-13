@@ -935,7 +935,7 @@ expert_survey_2023 <- read_csv("data/consensusForecastsDB.csv") %>%
 
 # need to get estimates for effective sample size
 
-expert_code <- cmdstan_model("estimate_beta_priors.stan")
+expert_code <- cmdstan_model("estimate_beta_priors_v2.stan")
 
 # data = random sample from empirical distribution
 
@@ -968,19 +968,18 @@ over_states <- parallel::mclapply(unique(state_strat$state), function(s) {
                                   y=(prop_expert*state_strat$case_prop_adj[state_strat$state==s])/state_strat$state_pop[state_strat$state==s]),
                                  refresh=0,parallel_chains = 4)
   
-  draws_df <- as_draws_df(expert_mod$draws(c("successes",
-                                             "denominator",
-                                             "failures")))
+  draws_df <- as_draws_df(expert_mod$draws(c("mu",
+                                             "kappa",
+                                             "denominator")))
   
   tibble(state_id=s,
-         inf_pr=mean(draws_df$successes/draws_df$denominator),
+         inf_pr=mean(draws_df$mu),
          pop_size=state_strat$state_pop[state_strat$state==s],
          cases_pr=state_strat$cases[state_strat$state==s]/state_strat$state_pop[state_strat$state==s],
-         survey_size=floor(mean(draws_df$denominator)),
+         survey_size=mean(draws_df$denominator),
          date_begin=ymd("2020-03-21"),
          date_end=ymd("2020-03-23"),
-         alpha=mean(draws_df$successes),
-         beta=mean(draws_df$failures)) %>% 
+         kappa=mean(draws_df$kappa)) %>% 
     mutate(inflation=inf_pr/cases_pr)
   
 },mc.cores=10) %>% bind_rows
@@ -1178,7 +1177,7 @@ out_sero <- mutate(serology,
   as.matrix
 
 out_sero_real <- serology_real %>% 
-  select(alpha,beta) %>% 
+  select(inf_pr,kappa) %>% 
   as.matrix
 
 # obtain expert consensus for first part of 
@@ -1252,10 +1251,10 @@ if(run_model) {
   
    us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
                            threads_per_chain = 10,
-                           init=init_vals,iter_warmup = 500,
-                           iter_sampling = 600,
-                           max_treedepth = 16,
-                           parallel_chains=10)
+                           init=init_vals,iter_warmup = 250,
+                           iter_sampling = 250,
+                           max_treedepth = 15,
+                           chains=1)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
   
@@ -1588,8 +1587,19 @@ c1 <- cases_pred %>%
 ggsave("cases_pred.png")
 
 
-all_est_state <- select(combined,deaths,recovered,month_day,state,key,cum_sum_cases,state_pop,Difference,tests3,test_max,inf_pr,inflation) %>% 
+all_est_state <- select(combined,deaths,recovered,month_day,state,key,cum_sum_cases,state_pop,Difference,tests3,test_max) %>% 
   left_join(prop_infected,by="key")
+
+# join in serology data
+
+all_est_state <- left_join(all_est_state,
+                          bind_rows(select(serology, 
+                                 inf_pr,
+                                 key),
+                          select(serology_real,
+                                 inf_pr,
+                                 key)),
+                          by="key")
 
 # merge in deaths/recovered
 
@@ -1756,7 +1766,7 @@ calc_sum_state <- all_est_state %>%
     present_cases=cum_sum_cases - deaths,
   present_cases = present_cases-coalesce(dplyr::lag(present_cases,n=19),0)) %>%
   #cum_sum_cases = cum_sum_cases - coalesce(dplyr::lag(cum_sum_cases,n=14),0)) %>% 
-  group_by(month_day,state,cum_sum_cases,inf_pr,inflation,present_cases) %>% 
+  group_by(month_day,state,cum_sum_cases,inf_pr,present_cases) %>% 
   summarize(med_est=quantile(cum_est,.5),
             high_est=quantile(cum_est,.95),
             low_est=quantile(cum_est,.05),
@@ -1781,6 +1791,7 @@ top_5 <- filter(calc_sum_state,month_day==max(calc_sum_state$month_day)) %>%
 all <- calc_sum_state %>% 
   ggplot(aes(y=med_est,x=month_day)) +
   geom_line(aes(group=state,colour=med_est)) +
+  geom_point(aes(y=inf_pr),colour="blue") +
   # geom_ribbon(aes(ymin=low_est,
   # ymax=high_est,
   # group=state_num,
@@ -1808,7 +1819,7 @@ calc_sum_state <- all_est_state %>%
   present_cases=(cum_sum_cases/state_pop) - (deaths/state_pop),
   present_cases = present_cases-coalesce(dplyr::lag(present_cases,n=19),0)) %>%
   group_by(month_day,state,cum_sum_cases,tests3,Difference,state_pop,
-           test_max,inf_pr,inflation,present_cases) %>% 
+           test_max,inf_pr,present_cases) %>% 
   summarize(med_est=quantile(cum_est,.5),
             high_est=quantile(cum_est,.95),
             low_est=quantile(cum_est,.05),
@@ -1858,7 +1869,26 @@ per_cap <- calc_sum_state %>%
 all / per_cap + plot_annotation(tag_levels = "A")
 
 ggsave("certain_state_rates.png")
+
 ```
+
+```{r priors, fig.cap="Comparison of Predicted Infections Versus Prior Information for States"}
+
+# plot prior vs. estimated
+
+calc_sum_state %>% 
+  ggplot(aes(y=med_est, 
+             x=inf_pr)) +
+  geom_point() +
+  xlim(c(0,0.2)) +
+  ylim(c(0,0.2)) +
+  geom_abline(slope=1,intercept=0) +
+  stat_smooth(method="lm") 
+
+
+
+```
+
 
 In addition to the estimation of the cumulative count of infected individuals, the model provides further useful information by parameterizing the relationship between the unobserved infection rate and the number of tests conducted in a given state. These individual parameters are shown in Figure \@ref(fig:tpi). The scale of the y axis shows the number of people that a state was able to test relative to each person infected. The plot shows that some states have been able to test far more people than have been infected (New York, New Jersey), while other states like Pennsylvania and Oregon have tested barely twice as many as those who have been infected. The fact that new outbreaks have been seen in Texas and Arizona suggests that this shortfall in testing likely disguised early outbreaks that could have been detected otherwise.
 
