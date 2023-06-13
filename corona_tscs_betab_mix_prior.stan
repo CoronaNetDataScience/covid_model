@@ -2,6 +2,10 @@
 // Robert Kubinec and Luiz Carvalho
 // New York University Abu Dhabi & Getulio Vargas Foundation
 // January 5, 2021
+// variable type controls type of sampling:
+// 1 = priors only
+// 2 = priors + informative info on location of infections from seroprevalence/experts
+// 3 = priors + informative info + likelihood (full model)
 functions {
   
 
@@ -79,7 +83,8 @@ functions {
                    matrix M_Sigma,
                    vector fear,
                    real fear_const,
-                   real sigma_fear) {
+                   real sigma_fear,
+                   int type) {
                      
     // big loop over states
     real log_prob = 0;
@@ -98,14 +103,8 @@ functions {
         real country1s;
         real country2s;
         real country3s;
-        //real country1f;
-        //real country2f;
-        //real country3f;
-        real mu_infect;
-        real sd_infect;
         
         vector[end2 - start2 + 1] prop_success;
-        vector[end2 - start2 + 1] prop_fail;
         vector[end2 - start2 + 1] mu_cases;
         vector[end2 - start2 + 1] mu_tests;
         vector[G] mu_mob[end2 - start2 + 1];
@@ -118,13 +117,6 @@ functions {
         country2s = mu_test_raw2[1] + sigma_test_raw2[1]*country_test_raw2[s];
         country3s = mu_test_raw3[1] + sigma_test_raw3[1]*country_test_raw3[s];
         
-        //country1f = mu_test_raw[2] + sigma_test_raw[2]*country_test_raw[2,s];
-        //country2f = mu_test_raw2[2] + sigma_test_raw2[2]*country_test_raw2[2,s];
-        //country3f = mu_test_raw3[2] + sigma_test_raw3[2]*country_test_raw3[2,s];
-        
-        //country1 = country_test_raw[1];
-        //country2 = country_test_raw2[1];
-            
         // latent infection rate (unobserved), on the logit scale (untransformed)
         // constrained to *always* increase
         
@@ -151,22 +143,16 @@ functions {
         }
               
             //need a recursive function to transform to ordered vector
-            
-
-              
-        //mu_infect = mean(prop_infected);
-        //sd_infect = sd(prop_infected);
         
         prop_success = prop_infected; 
-        //prop_fail = 1 - inv_logit(prop_infected);
         
-        mu_cases = inv_logit(pcr_spec + finding*prop_success);
-        //mu_cases[2] = exp(pcr_spec[2] + finding[2]*prop_fail);
+        
+        if(type==3) {
+          
+          mu_cases = inv_logit(pcr_spec + finding*prop_success);
+          
+        }
 
-        // log_prob += normal_lpdf(to_vector(country_test_raw[1:2,s])|0,1); // more likely near the middle than the ends
-        // log_prob += normal_lpdf(to_vector(country_test_raw2[1:2,s])|0,1); // more likely near the middle than the ends
-        // log_prob += normal_lpdf(to_vector(country_test_raw3[1:2,s])|0,1);
-        
         log_prob += normal_lpdf(country_test_raw[s]|0,1); // more likely near the middle than the ends
         log_prob += normal_lpdf(country_test_raw2[s]|0,1); // more likely near the middle than the ends
         log_prob += normal_lpdf(country_test_raw3[s]|0,1);
@@ -189,12 +175,16 @@ functions {
           log_prob += normal_lpdf(fear[start2:end2]|fear_const + Q_lock[start2:end2,1:L]*lockdown_med_raw_fear +
                                 Q_supp2[start2:end2,1:(S-1)]*suppress_med_raw_fear,sigma_fear);
 
-        
+        if(type==3) {
+          
           mu_tests = inv_logit(alpha_test[1] + 
                           country1s * lin_counter[start2:end2,1] +
                           country2s * lin_counter[start2:end2,2] +
-                          //country3s * lin_counter[start2:end2,3] +
                           test_baseline * prop_success);
+          
+        }
+        
+          
         
         // observed data model
         // loop over serology surveys to add informative prior information
@@ -203,25 +193,20 @@ functions {
           
           int q = r_in(n,sero_row);
           int p = r_in(n, sero_row_real);
-          real cur_infect = cases[n]*1.0 / country_pop[n]*1.0;
           
-          if(q <= 0 && p <= 0) {
+          if(q <= 0 && p <= 0 && type==3) {
             
             log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
             log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
 
-          } else if(p>0) {
+          } else if(p>0 && (type==2 || type==3)) {
             
             // expert survey data
             // beta prior
-            // include Jacobian transformation
             
             log_prob += beta_proportion_lpdf(sero_real[p,1]|inv_logit(prop_infected[n-start2+1]),sero_real[p,2]);
             
-            //log_prob += beta_lpdf(inv_logit(prop_infected[n-start2+1])|sero_real[p,1],sero_real[p,2]);
-            //log_prob += log_inv_logit(prop_infected[n-start2+1]) + log1m_inv_logit(prop_infected[n-start2+1]);
-            
-            } else if(q > 0) {
+            } else if(q > 0 && (type==2 || type==3)) {
             
             // scaling function. we use seroprevalance data to 
             // set a ground truth for the relationship between covariates and
@@ -251,6 +236,7 @@ data {
   int L; // just lockdown data (for hierarchical predictor)
   int R; // number of seroprevalence essays
   int RE; // number of expert surveys
+  int type; // whether to sample from priors or from the full likelihood
   matrix[num_rows,S] suppress; // time-varying suppression measures
   matrix[num_rows,S-1] suppress2; // without COVID poll
   matrix[num_rows,G] mobility; // time-varying mobility measures
@@ -457,7 +443,8 @@ target += reduce_sum_static(partial_sum, states,
                      M_Sigma,
                      fear,
                      fear_const,
-                     sigma_fear);
+                     sigma_fear,
+                     type);
 
 }
 generated quantities {
