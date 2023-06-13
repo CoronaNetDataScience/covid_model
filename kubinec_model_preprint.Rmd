@@ -1210,7 +1210,8 @@ real_data <- list(time_all=length(unique(combined$month_day)),
                  suppress2=covs[,-which(colnames(covs)=="trendline_extremely_concerned")],
                  mobility=scale(covs_mob),
                  lockdown=as.matrix(covs_lock),
-                 states=as.matrix(select(state,-state)))
+                 states=as.matrix(select(state,-state)),
+                 type=3)
 
 saveRDS(real_data,"real_data.rds")
 
