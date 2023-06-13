@@ -359,12 +359,12 @@ model {
   test_baseline ~ normal(0,20);
   
   mob_alpha_const ~ normal(0,5);
-  pcr_spec ~ normal(0,20);
+  pcr_spec ~ normal(0,40);
   
   finding ~ normal(0,20);
-  sigma_test_raw ~ exponential(1);
-  sigma_test_raw2 ~ exponential(1);
-  sigma_test_raw3 ~ exponential(1);
+  sigma_test_raw ~ exponential(.1);
+  sigma_test_raw2 ~ exponential(.1);
+  sigma_test_raw3 ~ exponential(.1);
   sigma_fear ~ exponential(.1);
   fear_const ~ normal(0,5);
   
@@ -377,7 +377,7 @@ model {
   lockdown_med_raw_fear ~ normal(0,5);
   
   M_Omega ~ lkj_corr_cholesky(4);
-  M_sigma ~ cauchy(0, 2.5);
+  M_sigma ~ exponential(.1);
   
   M_Sigma = diag_pre_multiply(M_sigma, M_Omega); // Cholesky decomp for MVN for mobility
 
