@@ -1216,21 +1216,35 @@ real_data <- list(time_all=length(unique(combined$month_day)),
 saveRDS(real_data,"real_data.rds")
 
 init_vals <- function() {
-  list(phi_raw=c(100,1),
+  list(phi_raw=c(.001,.0001),
        world_infect=0.1,
-       finding=18,
+       finding=0.1,
+       test_baseline=0.1,
+       mob_alpha_const=0,
        suppress_effect_raw=rep(0,real_data$S),
        lockdown_effect_raw=rep(0,real_data$L),
        mob_effect_raw=rep(0,real_data$G),
-       country_test_raw=rep(1,real_data$num_country),
+       M_sigma=rep(1,real_data$G),
+       country_test_raw=rep(0,real_data$num_country),
+       country_test_raw2=rep(0,real_data$num_country),
+       country_test_raw3=rep(0,real_data$num_country),
+       mu_test_raw=rep(0,real_data$num_country),
+       mu_test_raw2=rep(0,real_data$num_country),
+       mu_test_raw3=rep(0,real_data$num_country),
+       mu_poly=rep(0,3),
+       sigma_poly=rep(1,3),
+       poly1=rep(0,real_data$num_country),
+       poly2=rep(0,real_data$num_country),
+       poly3=rep(0,real_data$num_country),
        #sero_est=serology$inf_pr,
-       pcr_spec=70,
-       sigma_test_raw=10,
-       sigma_test_raw2=10,
-       sigma_test_raw3=10,
-       sigma_policy=c(10,10,10),
+       pcr_spec=-6,
+       sigma_test_raw=0.01,
+       sigma_test_raw2=0.01,
+       sigma_test_raw3=0.01,
+       sigma_policy=c(1,1,1),
        alpha_infect=-6,
-       alpha_test=25)
+       alpha_test=-6,
+       sigma_fear=1)
 }
 
 
@@ -1251,10 +1265,10 @@ if(run_model) {
                                    cpp_options=list(stan_threads=TRUE))
   
    us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
-                           threads_per_chain = 10,
-                           init=init_vals,iter_warmup = 250,
+                           threads_per_chain = 10,init=init_vals,
+                           iter_warmup = 250,
                            iter_sampling = 250,
-                           max_treedepth = 15,
+                           max_treedepth = 16,
                            chains=1)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
@@ -1792,7 +1806,6 @@ top_5 <- filter(calc_sum_state,month_day==max(calc_sum_state$month_day)) %>%
 all <- calc_sum_state %>% 
   ggplot(aes(y=med_est,x=month_day)) +
   geom_line(aes(group=state,colour=med_est)) +
-  geom_point(aes(y=inf_pr),colour="blue") +
   # geom_ribbon(aes(ymin=low_est,
   # ymax=high_est,
   # group=state_num,
@@ -1851,6 +1864,7 @@ top_5 <- filter(calc_sum_state,month_day==max(calc_sum_state$month_day)) %>%
 per_cap <- calc_sum_state %>% 
   ggplot(aes(y=med_est,x=month_day)) +
   geom_line(aes(group=state,colour=med_est),alpha=0.5) +
+    geom_point(aes(y=inf_pr),colour="blue") +
   # geom_ribbon(aes(ymin=low_est,
   # ymax=high_est,
   # group=state_num,

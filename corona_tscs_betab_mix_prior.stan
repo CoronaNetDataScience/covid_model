@@ -123,10 +123,9 @@ functions {
         for(i in 1:obs) {
               if(i==1) {
                 prop_infected[1] = alpha_infect + 
-                count_outbreak[start2,1] * poly_nonc1 +
-                  count_outbreak[start2,2] * poly_nonc2 +
-                    count_outbreak[start2,3] * poly_nonc3 +
-                    world_infect*month_cases[start2] +
+                count_outbreak[start2+i-1,1] * poly_nonc1  +
+                  count_outbreak[start2+i-1,2] *poly_nonc2 +
+                    count_outbreak[start2+i-1,3] * poly_nonc3 +
                     Q_supp[start2,1:S]*suppress_effect_raw +
                     Q_lock[start2,1:L]*lockdown_effect_raw +
                     Q_mob[start2,1:G]*mob_effect_raw;
@@ -135,7 +134,6 @@ functions {
                 count_outbreak[start2+i-1,1] * poly_nonc1  +
                   count_outbreak[start2+i-1,2] *poly_nonc2 +
                     count_outbreak[start2+i-1,3] * poly_nonc3 +
-                    world_infect*month_cases[start2+i-1] +
                     Q_supp[start2+i-1,1:S]*suppress_effect_raw +
                     Q_lock[start2+i-1,1:L]*lockdown_effect_raw +
                     Q_mob[start2+i-1,1:G]*mob_effect_raw) + prop_infected[i - 1];
@@ -184,18 +182,16 @@ functions {
           
         }
         
-          
-        
         // observed data model
         // loop over serology surveys to add informative prior information
-        
+
         for(n in start2:end2) {
           
           int q = r_in(n,sero_row);
           int p = r_in(n, sero_row_real);
           
           if(q <= 0 && p <= 0 && type==3) {
-            
+
             log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
             log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
 
@@ -211,7 +207,7 @@ functions {
             // scaling function. we use seroprevalance data to 
             // set a ground truth for the relationship between covariates and
             // infections measured non-parametrically
-            
+
             log_prob += binomial_lpmf(sero[q,1]|sero[q,2],
                                       inv_logit(prop_infected[n-start2+1]));
             
@@ -219,6 +215,7 @@ functions {
         }
         
       }
+      
       return log_prob;
     }
     
@@ -342,7 +339,7 @@ model {
   matrix[G, G] M_Sigma;
   int grainsize = 1;
   
-  sigma_poly ~ exponential(.1);
+  sigma_poly ~ exponential(1);
   mu_poly ~ normal(0,30);
   mu_test_raw ~ normal(0,20);
   
@@ -353,7 +350,7 @@ model {
   alpha_infect ~ normal(0,10); // this can reach extremely low values
   alpha_test ~ normal(0,20);
 
-  phi_raw ~ exponential(1);
+  phi_raw ~ exponential(.1);
   mob_effect_raw ~ normal(0,5);
   suppress_effect_raw ~ normal(0,5);
   test_baseline ~ normal(0,20);
@@ -362,9 +359,9 @@ model {
   pcr_spec ~ normal(0,40);
   
   finding ~ normal(0,20);
-  sigma_test_raw ~ exponential(.1);
-  sigma_test_raw2 ~ exponential(.1);
-  sigma_test_raw3 ~ exponential(.1);
+  sigma_test_raw ~ exponential(1);
+  sigma_test_raw2 ~ exponential(1);
+  sigma_test_raw3 ~ exponential(1);
   sigma_fear ~ exponential(.1);
   fear_const ~ normal(0,5);
   
