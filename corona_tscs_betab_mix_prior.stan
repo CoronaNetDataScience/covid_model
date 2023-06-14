@@ -339,28 +339,28 @@ model {
   matrix[G, G] M_Sigma;
   int grainsize = 1;
   
-  sigma_poly ~ exponential(1);
-  mu_poly ~ normal(0,30);
-  mu_test_raw ~ normal(0,20);
+  sigma_poly ~ exponential(10);
+  mu_poly ~ normal(0,50);
+  mu_test_raw ~ normal(0,50);
   
-  mu_test_raw2 ~ normal(0,20);
-  mu_test_raw3 ~ normal(0,20);
+  mu_test_raw2 ~ normal(0,50);
+  mu_test_raw3 ~ normal(0,50);
   world_infect ~ normal(0,3);
   lockdown_effect_raw ~ normal(0,5);
   alpha_infect ~ normal(0,10); // this can reach extremely low values
-  alpha_test ~ normal(0,20);
+  alpha_test ~ normal(0,5);
 
   phi_raw ~ exponential(.1);
   mob_effect_raw ~ normal(0,5);
   suppress_effect_raw ~ normal(0,5);
-  test_baseline ~ normal(0,20);
+  test_baseline ~ normal(0,5);
   
   mob_alpha_const ~ normal(0,5);
-  pcr_spec ~ normal(0,40);
+  pcr_spec ~ normal(0,5);
   
-  finding ~ normal(0,20);
-  sigma_test_raw ~ exponential(1);
-  sigma_test_raw2 ~ exponential(1);
+  finding ~ normal(0,5);
+  sigma_test_raw ~ exponential(10);
+  sigma_test_raw2 ~ exponential(10);
   sigma_test_raw3 ~ exponential(1);
   sigma_fear ~ exponential(.1);
   fear_const ~ normal(0,5);
@@ -484,17 +484,13 @@ generated quantities {
         poly_nonc1 = mu_poly[1] + sigma_poly[1]*poly1[s];
         poly_nonc2 = mu_poly[2] + sigma_poly[2]*poly2[s];
         poly_nonc3 = mu_poly[3] + sigma_poly[3]*poly3[s];
-        
-        //poly_nonc1 = poly1[1];
-        //poly_nonc2 = poly2[2];
-        //poly_nonc3 = poly3[3];
     
     for(i in 1:obs) {
               if(i==1) {
                 prop_infect_out[start2] = alpha_infect + count_outbreak[start2,1] * poly_nonc1 +
                     count_outbreak[start2,2] * poly_nonc2  +
                     count_outbreak[start2,3] * poly_nonc3  +
-                    world_infect*month_cases[start2] +
+                    //world_infect*month_cases[start2] +
                     Q_supp[start2,1:S]*suppress_effect_raw +
                     Q_lock[start2,1:L]*lockdown_effect_raw +
                     Q_mob[start2,1:G]*mob_effect_raw;
@@ -505,7 +501,7 @@ generated quantities {
                 prop_infect_out[start2 + i - 1] = exp(alpha_infect + count_outbreak[start2+i-1,1] * poly_nonc1  +
                     count_outbreak[start2+i-1,2] * poly_nonc2 +
                     count_outbreak[start2+i-1,3] * poly_nonc3 +
-                    world_infect*month_cases[start2+i-1] +
+                    //world_infect*month_cases[start2+i-1] +
                     Q_supp[start2+i-1,1:S]*suppress_effect_raw +
                     Q_lock[start2+i-1,1:L]*lockdown_effect_raw +
                     Q_mob[start2+i-1,1:G]*mob_effect_raw) + prop_infect_out[start2 + i - 2];
