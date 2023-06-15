@@ -50,7 +50,6 @@ functions {
                    real pcr_spec,
                    real finding,
                    real test_baseline,
-                   //real test_lin_counter,
                    vector country_test_raw,
                    int S,
                    int G,
@@ -71,9 +70,6 @@ functions {
                    real[] sigma_test_raw,
                    vector country_test_raw2,
                    vector country_test_raw3,
-                   //real test_lin_counter2,
-                   //real test_max_par,
-                   //vector test_max,
                    matrix lin_counter,
                    real[] mu_test_raw,
                    real[] mu_test_raw2,
@@ -115,7 +111,6 @@ functions {
         
         country1s = mu_test_raw[1] + sigma_test_raw[1]*country_test_raw[s];
         country2s = mu_test_raw2[1] + sigma_test_raw2[1]*country_test_raw2[s];
-        country3s = mu_test_raw3[1] + sigma_test_raw3[1]*country_test_raw3[s];
         
         // latent infection rate (unobserved), on the logit scale (untransformed)
         // constrained to *always* increase
@@ -300,8 +295,8 @@ parameters {
   vector[num_country] poly2; // polinomial function of time
   vector[num_country] poly3; // polinomial function of time
   real mu_test_raw[1];
+  real mu_test_raw2[1];
   real finding; // difficulty of identifying infected cases 
-  real<lower=0> world_infect; // infection rate based on number of travelers
   vector[S] suppress_effect_raw; // suppression effect of govt. measures, cannot increase virus transmission rate
   vector[L] lockdown_effect_raw;
   vector[L] lockdown_med_raw[G];
@@ -309,8 +304,6 @@ parameters {
   vector[L] lockdown_med_raw_fear;
   vector[S-1] suppress_med_raw_fear;
   real test_baseline;
-  real mu_test_raw2[1];
-  real mu_test_raw3[1];
   real pcr_spec; 
   vector[3] mu_poly; // hierarchical mean for poly coefficients
   vector[G] mob_effect_raw;
@@ -324,7 +317,6 @@ parameters {
   vector<lower=0>[2] phi_raw; // shape parameter for infected
   real<lower=0> sigma_test_raw[1]; // estimate of between-state testing heterogeneity
   real<lower=0> sigma_test_raw2[1];
-  real<lower=0> sigma_test_raw3[1];
   cholesky_factor_corr[G] M_Omega; // these are for the MVN for mobility data
   vector<lower=0>[G] M_sigma;
   real fear_const;
@@ -345,7 +337,6 @@ model {
   
   mu_test_raw2 ~ normal(0,50);
   mu_test_raw3 ~ normal(0,50);
-  world_infect ~ normal(0,3);
   lockdown_effect_raw ~ normal(0,5);
   alpha_infect ~ normal(0,10); // this can reach extremely low values
   alpha_test ~ normal(0,5);
@@ -361,7 +352,6 @@ model {
   finding ~ normal(0,5);
   sigma_test_raw ~ exponential(10);
   sigma_test_raw2 ~ exponential(10);
-  sigma_test_raw3 ~ exponential(1);
   sigma_fear ~ exponential(.1);
   fear_const ~ normal(0,5);
   
@@ -407,7 +397,6 @@ target += reduce_sum_static(partial_sum, states,
                      pcr_spec,
                      finding,
                      test_baseline,
-                     //test_lin_counter,
                      country_test_raw,
                      S,
                      G,
@@ -428,9 +417,6 @@ target += reduce_sum_static(partial_sum, states,
                      sigma_test_raw,
                      country_test_raw2,
                      country_test_raw3,
-                     //test_lin_counter2,
-                     //test_max_par,
-                     //test_max,
                      lin_counter,
                      mu_test_raw,
                      mu_test_raw2,
