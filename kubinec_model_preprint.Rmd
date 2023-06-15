@@ -60,6 +60,7 @@ require(ggrepel)
 require(missRanger)
 require(cmdstanr)
 require(viridis)
+library(ggthemes)
 # update this package /w data
 
 set.seed(662817)
@@ -1268,7 +1269,7 @@ if(run_model) {
                            threads_per_chain = 10,init=init_vals,
                            iter_warmup = 250,
                            iter_sampling = 250,
-                           max_treedepth = 16,
+                           max_treedepth = 13,
                            chains=1)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
@@ -1360,18 +1361,6 @@ combined <- mutate(ungroup(combined),key=1:n()) %>%
   mutate(cum_sum_cases=cases,
          recovered=coalesce(recovered,0),
          deaths=coalesce(deaths,0))
-         # cum_sum_cases = cum_sum_cases - deaths - recovered,
-         # lag_case=ifelse(dplyr::lag(cum_sum_cases,n=14)<0 & !is.na(dplyr::lag(cum_sum_cases,n=19)),0,
-         #                 coalesce(dplyr::lag(cum_sum_cases,n=19),0)),
-         # cum_sum_cases = cum_sum_cases - lag_case)
-
-# add in sero data
-if(!("inf_pr" %in% names(combined)))
-    combined <- left_join(combined,select(serology,-key),
-                      by=c("state"="state_id",
-                                             "month_day"="date_end"))
-
-#prop_gen <- as.matrix(us_fit_scale,"out_infected")
 
 # need to calculate estimates by hand
 
@@ -1382,7 +1371,6 @@ mu_poly <- as.matrix(us_fit_scale,"mu_poly")
 poly1 <- as.matrix(us_fit_scale,"poly1")
 poly2 <- as.matrix(us_fit_scale,"poly2")
 poly3 <- as.matrix(us_fit_scale,"poly3")
-world_infect <- as.matrix(us_fit_scale,"world_infect")
 suppress_effect_raw <- as.matrix(us_fit_scale,"suppress_effect_raw")
 lockdown_effect_raw <- as.matrix(us_fit_scale,"lockdown_effect_raw")
 mob_effect_raw <- as.matrix(us_fit_scale,"mob_effect_raw")
@@ -1412,47 +1400,7 @@ check_suppress <- real_data$suppress %*% t(suppress_effect_raw)
 check_lockdown <- as.matrix(real_data$lockdown) %*% t(lockdown_effect_raw)
 check_mobility <- real_data$mobility %*% t(mob_effect_raw)
 
-  prop_infected_mat_raw <- alpha_infect_mat + 
-          poly_time +
-          t(world_infect %*% real_data$month_cases) +
-          real_data$suppress %*% t(suppress_effect_raw) +
-          as.matrix(real_data$lockdown) %*% t(lockdown_effect_raw) +
-          real_data$mobility %*% t(mob_effect_raw)
-
-if(trans) {
-  
-  # very complicated trying to reconstruct this positive-constrained variable
-  
-  # prop_infected_mat <- lapply(1:real_data$num_country, function(s) {
-  #   
-  #   this_iter <- combined$key[real_data$cc==s]
-  #   
-  #   out_mat <- apply(prop_infected_mat_raw[this_iter,], 2, function(col) {
-  #     
-  #     col2 <- numeric(length=length(col))
-  # 
-  #     for(i in 1:length(col)) {
-  #       
-  #       if(i==1) {
-  #         col2[i] = col[i]
-  #       } else {
-  #         col2[i] = col2[1] + sum(exp(col[2:i]))
-  #       }
-  # 
-  #     }
-  #     
-  #       return(col2);
-  #     
-  #   })
-  #   
-  # }) %>% do.call(rbind,.)
-  
-  prop_infected_mat <- t(as.matrix(us_fit_scale,"prop_infect_out"))
-  
-} else {
-  prop_infected_mat <- prop_infected_mat_raw
-} 
-
+prop_infected_mat <- t(as.matrix(us_fit_scale,"prop_infect_out"))
 
 prop_infected <- as_tibble(prop_infected_mat) %>% 
   mutate(key=1:n()) %>% 
@@ -1474,39 +1422,12 @@ country1s <- mu_test[,1] + country_test1[,1:real_data$num_country] * sigma_test[
 country2s <- mu_test2[,1] + country_test2[,1:real_data$num_country] * sigma_test2[,1]
 country3s <- mu_test3[,1] + country_test3[,1:real_data$num_country] * sigma_test3[,1]
 
-# country1f <- mu_test[,2] + country_test[,(real_data$num_country+1):ncol(country_test)] * sigma_test[,2]
-# country2f <- mu_test2[,2] + country_test2[,(real_data$num_country+1):ncol(country_test)] * sigma_test2[,2]
-# country3f <- mu_test3[,2] + country_test[,(real_data$num_country+1):ncol(country_test)] * sigma_test3[,2]
-
 finding <- as.matrix(us_fit_scale,"finding")
 pcr_spec <- as.matrix(us_fit_scale,"pcr_spec")
-# test_max_par <- as.matrix(us_fit_scale,"test_max_par")
 phi <- as.matrix(us_fit_scale,"phi")
-# test_lin <- as.matrix(us_fit_scale,"test_lin_counter")
-# test_lin2 <- as.matrix(us_fit_scale,"test_lin_counter2")
 test_base <- as.matrix(us_fit_scale,"test_baseline")
 
-# need to generate test/infection relationship first
-
-#prop_infected_mat_scale <- apply(prop_infected_mat,2,plogis)
 prop_infected_mat_scale <- prop_infected_mat
-#prop_infected_mat_scale1 <- apply(prop_infected_mat_scale,2,log)
-#prop_infected_mat_scale2 <- apply(prop_infected_mat_scale,2,function(c) {
-  
-#   log(1-c)
-#   
-# })
-
-# positive-only transformation
-
-prop_infect_trans <- apply(prop_infected_mat_scale,2,function(col) {
-  log(c(exp(col[1]),exp(col[2:length(col)]) + col[1:(length(col)-1)]))
-})
-
-prop_infected_trans <- as_tibble(prop_infect_trans) %>% 
-  mutate(key=1:n()) %>% 
-  gather(key="iter",value="estimate",-key) %>% 
-  mutate(estimate=qlogis(estimate))
 
 test_inf1 <- lapply(unique(real_data$cc), function(c) {
   
@@ -1524,24 +1445,13 @@ test_inf1 <- lapply(unique(real_data$cc), function(c) {
  
 }) %>% do.call(rbind,.)
 
-# test_inf2 <- lapply(unique(real_data$cc), function(c) {
-#   
-#   country1f[,c] * real_data$lin_counter[real_data$cc==c,1] +
-#    country2f[,c] * real_data$lin_counter[real_data$cc==c,2] +
-#     country3f[,c] * real_data$lin_counter[real_data$cc==c,3] 
-# }) %>% do.call(rbind,.)
-
 tests_pred <- lapply(1:ncol(test_inf1), function(i) {
   
-  # mu_tests <- plogis(alpha[i,1] + test_inf[,i] + combined$test_max * test_max_par[i,])
   
   mu_tests1 <- plogis(alpha_test[i,1] + 
                        test_base[i,]*prop_infected_mat_scale[,i] +
                        test_inf1[,i])
   
-  # mu_tests2 <- exp(alpha_test[i,2] + 
-  #                      test_base[i,2]*prop_infected_mat_scale2[,i] +
-  #                      test_inf2[,i])
   tibble(out_pr1=mu_tests1,
          #out_pr2=mu_tests2,
          out_pred=extraDistr::rbbinom(n=rep(1,length(mu_tests1)),
@@ -1556,7 +1466,6 @@ tests_pred <- lapply(1:ncol(test_inf1), function(i) {
 cases_pred <- lapply(sample(1:nrow(finding),100), function(i) {
   
   mu_cases1 <-  plogis(pcr_spec[i,] + finding[i,]*prop_infected_mat_scale[,i])
-  #mu_cases2 <-  exp(pcr_spec[i,2] + finding[i,2]*prop_infected_mat_scale2[,i])
   
   tibble(out_pred=extraDistr::rbbinom(n=rep(1,nrow(prop_infected_mat_scale)),
                                       real_data$country_pop,
@@ -1602,6 +1511,16 @@ c1 <- cases_pred %>%
 ggsave("cases_pred.png")
 
 
+c1 / t1 + plot_annotation(tag_levels = "A",caption = str_wrap("Plot shows posterior predictive values for cases and tests in black and the value from the data in red. The black region represents the 5% to 95% quantiles of the empirical predictive posterior distribution."))
+
+```
+
+We first report the model's estimates of infected counts for the U.S. population as a whole in Figure \@ref(fig:totalinf). Panel A in this plot shows the cumulative total both for reported cases (thin black line) and for the model's estimate of total infected (blue line). The interval in this plot, as with all figures presented, are the 5% and 95% quantiles of the empirical posterior distribution. As can be seen, the model estimates that there are approximately 3-4 times as many infected people in the United States as reported cases, with the total cumulative number of infected persons reaching 15 million with around 500,000 infected as of mid-July. Early expert estimates are shown as black points in panel A, revealing that even epidemiologists largely under-estimated the spread of the disease in its early stages, largely due to limitations in testing and case reporting.
+
+```{r calc_infect, include=FALSE}
+
+# create cumulative and present estimates of infected for plotting
+
 all_est_state <- select(combined,deaths,recovered,month_day,state,key,cum_sum_cases,state_pop,Difference,tests3,test_max) %>% 
   left_join(prop_infected,by="key")
 
@@ -1621,7 +1540,9 @@ all_est_state <- left_join(all_est_state,
 us_case_count <- group_by(combined,month_day) %>% 
   summarize(all_cum_sum=sum(cum_sum_cases),
             all_rec=sum(recovered),
-            all_death=sum(deaths))
+            all_death=sum(deaths),
+            all_tests=sum(tests)) %>% 
+  mutate(case_test_ratio=all_tests/all_cum_sum)
 
 all_est_state <- left_join(all_est_state,us_case_count,by="month_day")
 
@@ -1631,7 +1552,10 @@ calc_sum <- all_est_state %>%
   group_by(state,iter) %>% 
   arrange(state,month_day) %>% 
   mutate(cum_est=estimate) %>% 
-  group_by(month_day,iter,all_cum_sum,all_rec,all_death) %>%
+  group_by(month_day,iter,all_cum_sum,
+           all_rec,
+           all_death,
+           all_tests) %>%
   summarize(us_total=sum(cum_est)) %>%
   group_by(iter) %>%
   arrange(iter,month_day) %>%
@@ -1645,12 +1569,8 @@ calc_sum <- all_est_state %>%
             high_est_lag=quantile(us_total_lag,.95),
             low_est_lag=quantile(us_total_lag,.05)) 
 
-
-c1 / t1 + plot_annotation(tag_levels = "A",caption = str_wrap("Plot shows posterior predictive values for cases and tests in black and the value from the data in red. The black region represents the 5% to 95% quantiles of the empirical predictive posterior distribution."))
-
 ```
 
-We first report the model's estimates of infected counts for the U.S. population as a whole in Figure \@ref(fig:totalinf). Panel A in this plot shows the cumulative total both for reported cases (thin black line) and for the model's estimate of total infected (blue line). The interval in this plot, as with all figures presented, are the 5% and 95% quantiles of the empirical posterior distribution. As can be seen, the model estimates that there are approximately 3-4 times as many infected people in the United States as reported cases, with the total cumulative number of infected persons reaching 15 million with around 500,000 infected as of mid-July. Early expert estimates are shown as black points in panel A, revealing that even epidemiologists largely under-estimated the spread of the disease in its early stages, largely due to limitations in testing and case reporting.
 
 We compare these estimates with a popular COVID-19 forecaster employing SEIR models from @gu2020 by plotting their estimates as a yellow ribbon on the plot. As can be seen, the trajectories are similar although they diverge slightly at the end of the series in mid-July. On the whole it would seem that our estimate of infected individuals is on the conservative end compared to other approaches--in other words, while we do not know for certain what the true number is, we are unlikely to be under-estimating the total. Furthermore, our intervals are far more precise than other approaches, which is likely because we employ extensive covariate adjustment to better infer human behavior during the course of the pandemic.
 
@@ -1773,14 +1693,12 @@ require(ggrepel)
 calc_sum_state <- all_est_state %>% 
   ungroup %>% 
   mutate(cum_est=(plogis(estimate))*state_pop) %>% 
-  #mutate(estimate=(plogis(estimate))*((state_pop))) %>%
   group_by(state,iter) %>% 
   arrange(state,iter,month_day) %>% 
   mutate(cum_est_pres=cum_est  - deaths,
   cum_est_pres=cum_est_pres-coalesce(dplyr::lag(cum_est_pres,n=19),0),
     present_cases=cum_sum_cases - deaths,
-  present_cases = present_cases-coalesce(dplyr::lag(present_cases,n=19),0)) %>%
-  #cum_sum_cases = cum_sum_cases - coalesce(dplyr::lag(cum_sum_cases,n=14),0)) %>% 
+  present_cases = present_cases-coalesce(dplyr::lag(present_cases,n=19),0)) %>%  
   group_by(month_day,state,cum_sum_cases,inf_pr,present_cases) %>% 
   summarize(med_est=quantile(cum_est,.5),
             high_est=quantile(cum_est,.95),
@@ -1887,7 +1805,7 @@ ggsave("certain_state_rates.png")
 
 ```
 
-```{r priors, fig.cap="Comparison of Predicted Infections Versus Prior Information for States"}
+```{r priors, fig.cap="Comparison of Posterior Cumulative Infection Rates Compared to Priors on Infection Rates"}
 
 # plot prior vs. estimated
 
@@ -1895,10 +1813,14 @@ calc_sum_state %>%
   ggplot(aes(y=med_est, 
              x=inf_pr)) +
   geom_point() +
-  xlim(c(0,0.2)) +
-  ylim(c(0,0.2)) +
-  geom_abline(slope=1,intercept=0) +
-  stat_smooth(method="lm") 
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(y="Posterior Estimate",
+       x="Prior Estimate",
+       caption=stringr::str_wrap("Plot shows mean posterior estimates for the cumulative infection rate in different states versus the mean prior estimate based on expert survey data and seroprevalence surveys. The dotted line shows a 1:1 relationship while the regression line shows the estimated bivariate relationship.")) +
+  geom_abline(slope=1,intercept=0,linetype=2) +
+  stat_smooth(method="lm")+
+  theme_tufte(base_family="")
 
 
 
