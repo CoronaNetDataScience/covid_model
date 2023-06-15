@@ -334,9 +334,8 @@ model {
   sigma_poly ~ exponential(10);
   mu_poly ~ normal(0,50);
   mu_test_raw ~ normal(0,50);
-  
   mu_test_raw2 ~ normal(0,50);
-  mu_test_raw3 ~ normal(0,50);
+
   lockdown_effect_raw ~ normal(0,5);
   alpha_infect ~ normal(0,10); // this can reach extremely low values
   alpha_test ~ normal(0,5);
@@ -476,7 +475,6 @@ generated quantities {
                 prop_infect_out[start2] = alpha_infect + count_outbreak[start2,1] * poly_nonc1 +
                     count_outbreak[start2,2] * poly_nonc2  +
                     count_outbreak[start2,3] * poly_nonc3  +
-                    //world_infect*month_cases[start2] +
                     Q_supp[start2,1:S]*suppress_effect_raw +
                     Q_lock[start2,1:L]*lockdown_effect_raw +
                     Q_mob[start2,1:G]*mob_effect_raw;
@@ -487,7 +485,6 @@ generated quantities {
                 prop_infect_out[start2 + i - 1] = exp(alpha_infect + count_outbreak[start2+i-1,1] * poly_nonc1  +
                     count_outbreak[start2+i-1,2] * poly_nonc2 +
                     count_outbreak[start2+i-1,3] * poly_nonc3 +
-                    //world_infect*month_cases[start2+i-1] +
                     Q_supp[start2+i-1,1:S]*suppress_effect_raw +
                     Q_lock[start2+i-1,1:L]*lockdown_effect_raw +
                     Q_mob[start2+i-1,1:G]*mob_effect_raw) + prop_infect_out[start2 + i - 2];
