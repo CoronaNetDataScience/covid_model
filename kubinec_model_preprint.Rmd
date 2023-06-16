@@ -1266,11 +1266,12 @@ if(run_model) {
                                    cpp_options=list(stan_threads=TRUE))
   
    us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
-                           threads_per_chain = 10,init=init_vals,
-                           iter_warmup = 250,
-                           iter_sampling = 250,
-                           max_treedepth = 13,
-                           chains=1)
+                           threads_per_chain = 4,init=init_vals,
+                           iter_warmup = 500,
+                           iter_sampling = 500,
+                           max_treedepth = 15,
+                           chains=4,
+                           parallel_chains = 4)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
   
@@ -1410,17 +1411,14 @@ prop_infected <- as_tibble(prop_infected_mat) %>%
 
 country_test1 <- as.matrix(us_fit_scale,"country_test_raw")
 country_test2 <- as.matrix(us_fit_scale,"country_test_raw2")
-country_test3 <- as.matrix(us_fit_scale,"country_test_raw3")
+
 mu_test <- as.matrix(us_fit_scale,"mu_test_raw")
 sigma_test <- as.matrix(us_fit_scale,"sigma_test_raw")
 mu_test2 <- as.matrix(us_fit_scale,"mu_test_raw2")
 sigma_test2 <- as.matrix(us_fit_scale,"sigma_test_raw2")
-mu_test3 <- as.matrix(us_fit_scale,"mu_test_raw3")
-sigma_test3 <- as.matrix(us_fit_scale,"sigma_test_raw3")
 
 country1s <- mu_test[,1] + country_test1[,1:real_data$num_country] * sigma_test[,1]
 country2s <- mu_test2[,1] + country_test2[,1:real_data$num_country] * sigma_test2[,1]
-country3s <- mu_test3[,1] + country_test3[,1:real_data$num_country] * sigma_test3[,1]
 
 finding <- as.matrix(us_fit_scale,"finding")
 pcr_spec <- as.matrix(us_fit_scale,"pcr_spec")
@@ -1453,7 +1451,6 @@ tests_pred <- lapply(1:ncol(test_inf1), function(i) {
                        test_inf1[,i])
   
   tibble(out_pr1=mu_tests1,
-         #out_pr2=mu_tests2,
          out_pred=extraDistr::rbbinom(n=rep(1,length(mu_tests1)),
                                       real_data$country_pop,
                                       mu_tests1*phi[i,2],
