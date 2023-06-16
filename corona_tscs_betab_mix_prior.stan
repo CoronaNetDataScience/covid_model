@@ -68,7 +68,6 @@ functions {
                    vector lockdown_med_raw_fear,
                    real[] sigma_test_raw,
                    vector country_test_raw2,
-                   vector country_test_raw3,
                    matrix lin_counter,
                    real[] mu_test_raw,
                    real[] mu_test_raw2,
@@ -145,7 +144,6 @@ functions {
 
         log_prob += normal_lpdf(country_test_raw[s]|0,1); // more likely near the middle than the ends
         log_prob += normal_lpdf(country_test_raw2[s]|0,1); // more likely near the middle than the ends
-        log_prob += normal_lpdf(country_test_raw3[s]|0,1);
         
         log_prob += normal_lpdf(poly1[s]|0,1);
         log_prob += normal_lpdf(poly2[s]|0,1);
@@ -308,7 +306,6 @@ parameters {
   vector[G] mob_alpha_const; // mobility hierarchical intercepts
   vector[num_country] country_test_raw; // unobserved rate at which countries are willing to test vs. number of infected
   vector[num_country] country_test_raw2;
-  vector[num_country] country_test_raw3;
   real alpha_infect; // other intercepts
   real alpha_test[1];
   vector<lower=0>[2] phi_raw; // shape parameter for infected
@@ -411,7 +408,6 @@ target += reduce_sum_static(partial_sum, states,
                      lockdown_med_raw_fear,
                      sigma_test_raw,
                      country_test_raw2,
-                     country_test_raw3,
                      lin_counter,
                      mu_test_raw,
                      mu_test_raw2,
