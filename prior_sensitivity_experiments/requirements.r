@@ -1,0 +1,21 @@
+packs <- c("dplyr",
+           "tidyr",
+           "ggplot2",
+           "stan-dev/cmdstanr",
+           "stringr",
+           "lubridate",
+           "bayesplot",
+           "historydata",
+           "readr",
+           "datasets",
+           "extraDistr",
+           "patchwork",
+           "RcppRoll",
+           "readxl",
+           "ggrepel",
+           "missRanger", 
+           "viridis",
+           "posterior",
+           "ggthemes")
+
+requiRements::install(packages = packs)
