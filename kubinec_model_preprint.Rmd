@@ -1221,7 +1221,7 @@ init_vals <- function() {
        world_infect=0.1,
        finding=0.1,
        test_baseline=0.1,
-       mob_alpha_const=0,
+       mob_alpha_const=rep(0,real_data$G),
        suppress_effect_raw=rep(0,real_data$S),
        lockdown_effect_raw=rep(0,real_data$L),
        mob_effect_raw=rep(0,real_data$G),
