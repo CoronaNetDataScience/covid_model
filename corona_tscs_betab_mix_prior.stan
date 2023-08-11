@@ -325,7 +325,7 @@ model {
   matrix[G, G] M_Sigma;
   int grainsize = 1;
   
-  sigma_poly ~ exponential(10);
+  sigma_poly ~ exponential(100);
   mu_poly ~ normal(0,50);
   mu_test_raw ~ normal(0,50);
   mu_test_raw2 ~ normal(0,50);
@@ -343,8 +343,8 @@ model {
   pcr_spec ~ normal(0,5);
   
   finding ~ normal(0,5);
-  sigma_test_raw ~ exponential(10);
-  sigma_test_raw2 ~ exponential(10);
+  sigma_test_raw ~ exponential(100);
+  sigma_test_raw2 ~ exponential(100);
   sigma_fear ~ exponential(.1);
   fear_const ~ normal(0,5);
   
