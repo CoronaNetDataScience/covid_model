@@ -77,7 +77,7 @@ knitr::opts_chunk$set(warning=F,message=F,dev="png")
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
-run_model <- T
+run_model <- F
 
 # whether to use fresher coronanet policy data
 
@@ -1394,7 +1394,7 @@ prior_mat$prior_mat <- matrix(ncol=ncol(poly_time))
 
 alpha_infect_mat <- sapply(1:nrow(alpha_infect), function(i) rep(alpha_infect[i,],nrow(poly_time)))
 
-check_world_infect <- t(world_infect %*% real_data$month_cases)
+#check_world_infect <- t(world_infect %*% real_data$month_cases)
 check_suppress <- real_data$suppress %*% t(suppress_effect_raw) 
 check_lockdown <- as.matrix(real_data$lockdown) %*% t(lockdown_effect_raw)
 check_mobility <- real_data$mobility %*% t(mob_effect_raw)
@@ -1808,8 +1808,8 @@ calc_sum_state %>%
   ggplot(aes(y=med_est, 
              x=inf_pr)) +
   geom_point() +
-  scale_x_log10() +
-  scale_y_log10() +
+  scale_x_continuous(breaks=c(0.001,0.01,0.1)) +
+  scale_y_continuous(breaks=c(0.001,0.01,0.1)) +
   labs(y="Posterior Estimate",
        x="Prior Estimate",
        caption=stringr::str_wrap("Plot shows mean posterior estimates for the cumulative infection rate in different states versus the mean prior estimate based on expert survey data and seroprevalence surveys. The dotted line shows a 1:1 relationship while the regression line shows the estimated bivariate relationship.")) +
