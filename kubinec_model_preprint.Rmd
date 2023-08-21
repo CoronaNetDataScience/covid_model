@@ -75,9 +75,14 @@ knitr::opts_chunk$set(warning=F,message=F,dev="png")
 #system2("git",args=c("-C ~/covid-tracking-data","pull"))
 #system2("git",args=c("-C ~/covid-19-data","pull"))
 
+# what type of model to fit
+# one of prior_expert, prior_only or full (includes likelihood)
+
+model_type <- "prior_expert"
+
 # whether to run model (it will take a few hours) or load saved model from disk
 
-run_model <- F
+run_model <- T
 
 # whether to use fresher coronanet policy data
 
@@ -450,7 +455,8 @@ tests <- read_csv("~/covid-tracking-data/data/states_daily_4pm_et.csv") %>%
 
 combined <- left_join(nyt_data,tests,by=c("state.abb","month_day")) %>% 
   left_join(acs_data,by=c("state"="NAME")) %>% 
-  filter(!is.na(state_pop))
+  filter(!is.na(state_pop),
+         state.abb %in% c("NY","CA","DE","CT","OH"))
 
 # add protest data
 # need to impute
@@ -567,9 +573,9 @@ coronanet <- group_by(coronanet,country,province,policy_id) %>%
                        "Travel restrictions")) %>% 
     mutate(start_date=ymd(start_date),
            end_date=ymd(end_date),
-           policy_count=case_when(grepl(x=policy_change,pattern="Restricting")& target=="General population (inclusive)"~1,
+           policy_count=case_when(grepl(x=policy_change,pattern="Restricting|Other")& target=="General population (inclusive)"~1,
                                   grepl(x=policy_change,pattern="Relaxing") & target=="General population (inclusive)" ~ -1,
-    grepl(x=policy_change,pattern="Restricting") & target!="General population (inclusive)"~ 0.5,
+    grepl(x=policy_change,pattern="Restricting|Other") & target!="General population (inclusive)"~ 0.5,
                                   grepl(x=policy_change,pattern="Relaxing") & target!="General population (inclusive)" ~ -0.5,                              
                 TRUE~NA_real_)) %>% 
     filter(!is.na(policy_count))
@@ -1212,7 +1218,10 @@ real_data <- list(time_all=length(unique(combined$month_day)),
                  mobility=scale(covs_mob),
                  lockdown=as.matrix(covs_lock),
                  states=as.matrix(select(state,-state)),
-                 type=3)
+                 type=switch(model_type,
+                             full=3,
+                             prior_expert=2,
+                             prior_only=1))
 
 saveRDS(real_data,"real_data.rds")
 
@@ -1260,7 +1269,7 @@ We note that COVID-19 cases and deaths are available at the county level in the 
 trans <- TRUE
 
 if(run_model) {
-  pan_model_scale <- cmdstan_model("corona_tscs_betab_mix_prior.stan",
+  pan_model_scale <- cmdstan_model("corona_tscs_betab_mix_prior_v2.stan",
                                    cpp_options=list(stan_threads=TRUE))
   
    us_fit_scale_mod <- pan_model_scale$sample(data=real_data,
@@ -1268,8 +1277,8 @@ if(run_model) {
                            iter_warmup = 500,
                            iter_sampling = 500,
                            max_treedepth = 15,
-                           chains=4,
-                           parallel_chains = 4)
+                           chains=2,
+                           parallel_chains = 2)
    
    us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
   
@@ -1808,10 +1817,10 @@ calc_sum_state %>%
   ggplot(aes(y=med_est, 
              x=inf_pr)) +
   geom_point() +
-  scale_x_continuous(breaks=c(0.001,0.01,0.1)) +
-  scale_y_continuous(breaks=c(0.001,0.01,0.1)) +
+  scale_x_log10() +
+  scale_y_log10() +
   labs(y="Posterior Estimate",
-       x="Prior Estimate",
+        x="Prior Estimate",
        caption=stringr::str_wrap("Plot shows mean posterior estimates for the cumulative infection rate in different states versus the mean prior estimate based on expert survey data and seroprevalence surveys. The dotted line shows a 1:1 relationship while the regression line shows the estimated bivariate relationship.")) +
   geom_abline(slope=1,intercept=0,linetype=2) +
   stat_smooth(method="lm")+
@@ -1887,17 +1896,14 @@ alpha_test <- as.data.frame(us_fit_scale,pars="alpha_test")
 
 country_test1 <- as.matrix(us_fit_scale,"country_test_raw")
 country_test2 <- as.matrix(us_fit_scale,"country_test_raw2")
-country_test3 <- as.matrix(us_fit_scale,"country_test_raw3")
+
 mu_test <- as.matrix(us_fit_scale,"mu_test_raw")
 sigma_test <- as.matrix(us_fit_scale,"sigma_test_raw")
 mu_test2 <- as.matrix(us_fit_scale,"mu_test_raw2")
 sigma_test2 <- as.matrix(us_fit_scale,"sigma_test_raw2")
-mu_test3 <- as.matrix(us_fit_scale,"mu_test_raw3")
-sigma_test3 <- as.matrix(us_fit_scale,"sigma_test_raw3")
 
 country_nonc1 <- mu_test[,1] + country_test1 * sigma_test[,1]
 country_nonc2 <- mu_test2[,1] + country_test2 * sigma_test2[,1]
-country_nonc3 <- mu_test3[,1] + country_test3 * sigma_test3[,1]
 
 # loop over infections
 # loop over time
@@ -1909,11 +1915,11 @@ over_days <- lapply(seq(max(combined$month_day) - days(7), max(combined$month_da
       
       lin_val <- unique(real_data$lin_counter[combined$month_day==d,])
       counter <- which(seq(max(combined$month_day) - days(7), max(combined$month_day),by=1)==d)
-      
-      alpha_est <- plogis(alpha_test$`alpha_test[1]` + country_nonc1[,s] * lin_val[,1] +
+      lin_mod <- alpha_test$alpha_test + country_nonc1[,s] * lin_val[,1] +
                           country_nonc2[,s] * lin_val[,2] +
                            #country_nonc3[,s] * lin_val[,3] +
-                            test_base * qlogis(this_infect1[[counter]][,s]))
+                            test_base * qlogis(this_infect1[[counter]][,s])
+      alpha_est <- plogis(lin_mod)
       
      tibble(estimate=alpha_est,
          state_num=s,
