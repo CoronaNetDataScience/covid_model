@@ -30,10 +30,10 @@ functions {
                    int num_country,
                    int num_rows,
                    vector mu_poly,
-                   vector sigma_poly,
-                   vector poly1,
-                   vector poly2,
-                   vector poly3,
+                   //vector sigma_poly,
+                   //vector poly1,
+                   //vector poly2,
+                   //vector poly3,
                    real alpha_test,
                    real alpha_infect,
                    matrix count_outbreak,
@@ -89,9 +89,9 @@ functions {
         vector[end2 - start2 + 1] prop_infected; // modeled infection rates for domestic transmission\
         
         int obs = end2 - start2 + 1;
-        real poly_nonc1; // non-centered poly parameters
-        real poly_nonc2; // non-centered poly parameters
-        real poly_nonc3; // non-centered poly parameters
+        //real poly_nonc1; // non-centered poly parameters
+        //real poly_nonc2; // non-centered poly parameters
+        //real poly_nonc3; // non-centered poly parameters
         real country1s;
         real country2s;
         real country3s;
@@ -101,9 +101,9 @@ functions {
         vector[end2 - start2 + 1] mu_tests;
         vector[G] mu_mob[end2 - start2 + 1];
         
-        poly_nonc1 = mu_poly[1] + sigma_poly[1]*poly1[s];
-        poly_nonc2 = mu_poly[2] + sigma_poly[2]*poly2[s];
-        poly_nonc3 = mu_poly[3] + sigma_poly[3]*poly3[s];
+        //poly_nonc1 = mu_poly[1] + sigma_poly[1]*poly1[s];
+        //poly_nonc2 = mu_poly[2] + sigma_poly[2]*poly2[s];
+        //poly_nonc3 = mu_poly[3] + sigma_poly[3]*poly3[s];
         
         country1s = mu_test_raw + sigma_test_raw*country_test_raw[s];
         country2s = mu_test_raw2 + sigma_test_raw2*country_test_raw2[s];
@@ -114,17 +114,17 @@ functions {
         for(i in 1:obs) {
               if(i==1) {
                 prop_infected[1] = alpha_infect + 
-                count_outbreak[start2+i-1,1] * poly_nonc1  +
-                  count_outbreak[start2+i-1,2] *poly_nonc2 +
-                    count_outbreak[start2+i-1,3] * poly_nonc3 +
+                count_outbreak[start2+i-1,1] * mu_poly[1]  +
+                  count_outbreak[start2+i-1,2] *mu_poly[2] +
+                    count_outbreak[start2+i-1,3] * mu_poly[3] +
                     Q_supp[start2,1:S]*suppress_effect_raw +
                     Q_lock[start2,1:L]*lockdown_effect_raw +
                     Q_mob[start2,1:G]*mob_effect_raw;
               } else {
                 prop_infected[i] = exp(alpha_infect + 
-                count_outbreak[start2+i-1,1] * poly_nonc1  +
-                  count_outbreak[start2+i-1,2] *poly_nonc2 +
-                    count_outbreak[start2+i-1,3] * poly_nonc3 +
+                count_outbreak[start2+i-1,1] * mu_poly[1]  +
+                  count_outbreak[start2+i-1,2] *mu_poly[2] +
+                    count_outbreak[start2+i-1,3] * mu_poly[3] +
                     Q_supp[start2+i-1,1:S]*suppress_effect_raw +
                     Q_lock[start2+i-1,1:L]*lockdown_effect_raw +
                     Q_mob[start2+i-1,1:G]*mob_effect_raw) + prop_infected[i - 1];
@@ -145,9 +145,9 @@ functions {
         log_prob += normal_lpdf(country_test_raw[s]|0,1); // more likely near the middle than the ends
         log_prob += normal_lpdf(country_test_raw2[s]|0,1); // more likely near the middle than the ends
         
-        log_prob += normal_lpdf(poly1[s]|0,1);
-        log_prob += normal_lpdf(poly2[s]|0,1);
-        log_prob += normal_lpdf(poly3[s]|0,1);
+        //log_prob += normal_lpdf(poly1[s]|0,1);
+        //log_prob += normal_lpdf(poly2[s]|0,1);
+        //log_prob += normal_lpdf(poly3[s]|0,1);
         
         //mobility mediation
 
@@ -286,9 +286,9 @@ transformed data {
   
 }
 parameters {
-  vector[num_country] poly1; // polinomial function of time
-  vector[num_country] poly2; // polinomial function of time
-  vector[num_country] poly3; // polinomial function of time
+  // real poly1; // polinomial function of time
+  // real poly2; // polinomial function of time
+  // real poly3; // polinomial function of time
   real mu_test_raw;
   real mu_test_raw2;
   real finding; // difficulty of identifying infected cases 
@@ -302,7 +302,7 @@ parameters {
   real pcr_spec; 
   vector[3] mu_poly; // hierarchical mean for poly coefficients
   vector[G] mob_effect_raw;
-  vector<lower=0>[3] sigma_poly; // varying sigma polys
+  //vector<lower=0>[3] sigma_poly; // varying sigma polys
   vector[G] mob_alpha_const; // mobility hierarchical intercepts
   vector[num_country] country_test_raw; // unobserved rate at which countries are willing to test vs. number of infected
   vector[num_country] country_test_raw2;
@@ -325,7 +325,7 @@ model {
   matrix[G, G] M_Sigma;
   int grainsize = 1;
   
-  sigma_poly ~ exponential(100);
+  //sigma_poly ~ exponential(100);
   mu_poly ~ normal(0,50);
   mu_test_raw ~ normal(0,50);
   mu_test_raw2 ~ normal(0,50);
@@ -370,10 +370,10 @@ target += reduce_sum_static(partial_sum, states,
                      num_country,
                      num_rows,
                      mu_poly,
-                     sigma_poly,
-                     poly1,
-                     poly2,
-                     poly3,
+                     //sigma_poly,
+                     //poly1,
+                     //poly2,
+                     //poly3,
                      alpha_test,
                      alpha_infect,
                      count_outbreak,
@@ -447,24 +447,24 @@ generated quantities {
     
   
   for(s in 1:num_country) {
-    
-        real poly_nonc1; // non-centered poly parameters
-        real poly_nonc2; // non-centered poly parameters
-        real poly_nonc3; // non-centered poly parameters
+        // 
+        // real poly_nonc1; // non-centered poly parameters
+        // real poly_nonc2; // non-centered poly parameters
+        // real poly_nonc3; // non-centered poly parameters
         
         int start2 = states[s,2];
         int end2 = states[s,3];
         int obs = end2 - start2 + 1;
         
-        poly_nonc1 = mu_poly[1] + sigma_poly[1]*poly1[s];
-        poly_nonc2 = mu_poly[2] + sigma_poly[2]*poly2[s];
-        poly_nonc3 = mu_poly[3] + sigma_poly[3]*poly3[s];
+        // poly_nonc1 = mu_poly[1] + sigma_poly[1]*poly1[s];
+        // poly_nonc2 = mu_poly[2] + sigma_poly[2]*poly2[s];
+        // poly_nonc3 = mu_poly[3] + sigma_poly[3]*poly3[s];
     
     for(i in 1:obs) {
               if(i==1) {
-                prop_infect_out[start2] = alpha_infect + count_outbreak[start2,1] * poly_nonc1 +
-                    count_outbreak[start2,2] * poly_nonc2  +
-                    count_outbreak[start2,3] * poly_nonc3  +
+                prop_infect_out[start2] = alpha_infect + count_outbreak[start2,1] * mu_poly[1] +
+                    count_outbreak[start2,2] * mu_poly[2]  +
+                    count_outbreak[start2,3] * mu_poly[3]  +
                     Q_supp[start2,1:S]*suppress_effect_raw +
                     Q_lock[start2,1:L]*lockdown_effect_raw +
                     Q_mob[start2,1:G]*mob_effect_raw;
@@ -472,9 +472,9 @@ generated quantities {
                  cov_out[start2] = alpha_infect + Q_mob[start2,1:G]*mob_effect_raw;
                     
               } else {
-                prop_infect_out[start2 + i - 1] = exp(alpha_infect + count_outbreak[start2+i-1,1] * poly_nonc1  +
-                    count_outbreak[start2+i-1,2] * poly_nonc2 +
-                    count_outbreak[start2+i-1,3] * poly_nonc3 +
+                prop_infect_out[start2 + i - 1] = exp(alpha_infect + count_outbreak[start2+i-1,1] * mu_poly[1] +
+                    count_outbreak[start2+i-1,2] * mu_poly[2] +
+                    count_outbreak[start2+i-1,3] * mu_poly[3] +
                     Q_supp[start2+i-1,1:S]*suppress_effect_raw +
                     Q_lock[start2+i-1,1:L]*lockdown_effect_raw +
                     Q_mob[start2+i-1,1:G]*mob_effect_raw) + prop_infect_out[start2 + i - 2];

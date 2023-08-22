@@ -75,10 +75,18 @@ knitr::opts_chunk$set(warning=F,message=F,dev="png")
 #system2("git",args=c("-C ~/covid-tracking-data","pull"))
 #system2("git",args=c("-C ~/covid-19-data","pull"))
 
+# whether to use a subset of states (for testing purposes)
+
+state_filter <- c('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'NA', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY') 
+
 # what type of model to fit
 # one of prior_expert, prior_only or full (includes likelihood)
 
 model_type <- "prior_expert"
+
+# set treedepth (determines sampler complexity)
+
+treedepth <- 13
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
@@ -456,7 +464,7 @@ tests <- read_csv("~/covid-tracking-data/data/states_daily_4pm_et.csv") %>%
 combined <- left_join(nyt_data,tests,by=c("state.abb","month_day")) %>% 
   left_join(acs_data,by=c("state"="NAME")) %>% 
   filter(!is.na(state_pop),
-         state.abb %in% c("NY","CA","DE","CT","OH"))
+         state.abb %in% state_filter)
 
 # add protest data
 # need to impute
@@ -1276,7 +1284,7 @@ if(run_model) {
                            threads_per_chain = 4,init=init_vals,
                            iter_warmup = 500,
                            iter_sampling = 500,
-                           max_treedepth = 15,
+                           max_treedepth = treedepth,
                            chains=2,
                            parallel_chains = 2)
    
@@ -1374,27 +1382,23 @@ combined <- mutate(ungroup(combined),key=1:n()) %>%
 
 alpha_test <- as.matrix(us_fit_scale,"alpha_test")
 alpha_infect <- as.matrix(us_fit_scale,"alpha_infect")
-sigma_poly <- as.matrix(us_fit_scale,"sigma_poly")
 mu_poly <- as.matrix(us_fit_scale,"mu_poly")
-poly1 <- as.matrix(us_fit_scale,"poly1")
-poly2 <- as.matrix(us_fit_scale,"poly2")
-poly3 <- as.matrix(us_fit_scale,"poly3")
 suppress_effect_raw <- as.matrix(us_fit_scale,"suppress_effect_raw")
 lockdown_effect_raw <- as.matrix(us_fit_scale,"lockdown_effect_raw")
 mob_effect_raw <- as.matrix(us_fit_scale,"mob_effect_raw")
 
 # need to make non-centered polys
 
-non1 <- mu_poly[,1] + sigma_poly[,1] * poly1
-non2 <- mu_poly[,2] + sigma_poly[,2] * poly2
-non3 <- mu_poly[,3] + sigma_poly[,3] * poly3
+non1 <- mu_poly[,1,drop=F]
+non2 <- mu_poly[,2,drop=F]
+non3 <- mu_poly[,3,drop=F]
 
 # calculate poly time trends
 
 poly_time <- lapply(unique(real_data$cc), function(c) {
-  real_data$count_outbreak[real_data$cc==c,1,drop=F] %*% t(non1[,c,drop=F])  +
-   real_data$count_outbreak[real_data$cc==c,2,drop=F] %*% t(non2[,c,drop=F]) +
-    real_data$count_outbreak[real_data$cc==c,3,drop=F] %*% t(non3[,c,drop=F])
+  real_data$count_outbreak[real_data$cc==c,1,drop=F] %*% t(non1[,1,drop=F])  +
+   real_data$count_outbreak[real_data$cc==c,2,drop=F] %*% t(non2[,1,drop=F]) +
+    real_data$count_outbreak[real_data$cc==c,3,drop=F] %*% t(non3[,1,drop=F])
 }) %>% do.call(rbind,.)
 
 prior_mat <- new.env()
@@ -1460,8 +1464,8 @@ tests_pred <- lapply(1:ncol(test_inf1), function(i) {
   tibble(out_pr1=mu_tests1,
          out_pred=extraDistr::rbbinom(n=rep(1,length(mu_tests1)),
                                       real_data$country_pop,
-                                      mu_tests1*phi[i,2],
-                                      (1-mu_tests1)*phi[i,2]),
+                                      mu_tests1*phi[i,1],
+                                      (1-mu_tests1)*phi[i,1]),
          iter=i) %>% 
     mutate(key=1:n())
 }) %>% bind_rows %>% 
@@ -1473,8 +1477,8 @@ cases_pred <- lapply(sample(1:nrow(finding),100), function(i) {
   
   tibble(out_pred=extraDistr::rbbinom(n=rep(1,nrow(prop_infected_mat_scale)),
                                       real_data$country_pop,
-                                      mu_cases1*phi[i,1],
-                                      (1-mu_cases1)*phi[i,1]),
+                                      mu_cases1*phi[i,2],
+                                      (1-mu_cases1)*phi[i,2]),
          out_pr1=mu_cases1,
          #out_pr2=mu_cases2,
          iter=i) %>% 
@@ -1720,7 +1724,7 @@ saveRDS(calc_sum_state,"calc_sum_state.rds")
 top_5 <- filter(calc_sum_state,month_day==max(calc_sum_state$month_day)) %>% 
   arrange(desc(med_est)) %>% 
   ungroup %>% 
-  slice(c(1:2,sample(6:length(unique(calc_sum_state$state)),3))) %>% 
+  #slice(c(1:2,sample(6:length(unique(calc_sum_state$state)),3))) %>% 
   distinct %>% 
   mutate(label=paste0(state,":",formatC(low_est,big.mark=",",format = "f",digits=0)," - ",
                                                          formatC(high_est,big.mark=",",format = "f",digits=0)))
@@ -1777,7 +1781,7 @@ top_5 <- filter(calc_sum_state,month_day==max(calc_sum_state$month_day)) %>%
   ungroup %>% 
   arrange(desc(med_est)) %>% 
   ungroup %>% 
-  slice(c(1:2,sample(6:length(unique(calc_sum_state$state)),3))) %>% 
+  #slice(c(1:2,sample(6:length(unique(calc_sum_state$state)),3))) %>% 
   distinct %>% 
   mutate(label=paste0(state,":",formatC(low_est*100,big.mark=",",format = "f",digits=1)," - ",
                                                          formatC(high_est*100,big.mark=",",format = "f",digits=1)))
