@@ -96,7 +96,7 @@ adapt_delta <- 0.95
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
-run_model <- T
+run_model <- F
 
 # whether to use fresher coronanet policy data
 
@@ -106,9 +106,10 @@ new_policy <- F
 
 new_cases <- F
 
-# whether to re-calculate new trump vote share interactions (takes a while, happens by default if new model estimated)
+# whether to re-calculate QOIs from posterior distribution
+# can take quite a while
 
-calc_int <- F
+calc_qoi <- F
 
 ```
 
@@ -348,6 +349,10 @@ We also include all of $M_{ct}$ and $F_{ct}$ as linear predictors in \@ref(eq:bi
 We fit this model using Markov Chain Monte Carlo in the Stan software package [@carpenter2017]. We run the sampler for 1000 iterations with 500 warmup iterations and two chains to test for convergence.
 
 ```{r munge_data,include=F}
+
+
+if(calc_qoi) {
+  
 
 # vote share
 # MIT Election Lab
@@ -741,6 +746,8 @@ count_pol_covidamp_wide <- spread(select(ungroup(count_pol_covidamp_sum),-type),
                                                                .)) %>% 
   fill(`Contact Tracing`:Welfare,.direction=c("down"))
 
+saveRDS(count_pol_covidamp_sum, "data/count_pol_covidamp_sum.rds")
+
 # combined <- left_join(combined, count_pol_sum,by=c("state"="province","month_day"))
 
 combined <- left_join(combined, count_pol_covidamp_wide,
@@ -871,6 +878,8 @@ combined <- mutate(ungroup(combined),key=1:n())
 state_id <- distinct(combined,state,state_pop) %>% 
   ungroup %>% 
   mutate(state_num=as.numeric(factor(state)))
+
+saveRDS(state_id, "data/state_id.rds")
 
 # need to calculate world infection parameter (use lag to adjust)
 
@@ -1059,13 +1068,13 @@ serology <- left_join(serology,
                       mutate(select(ungroup(combined),month_day,state,key)),
                       by=c("date_end"="month_day","state_id"="state"))
 
-saveRDS(serology,"serology.rds")
+saveRDS(serology,"data/serology.rds")
 
 serology_real <- left_join(over_states,
                       mutate(select(ungroup(combined),month_day,state,key)),
                       by=c("date_end"="month_day","state_id"="state"))
 
-saveRDS(serology_real,"serology_real.rds")
+saveRDS(serology_real,"data/serology_real.rds")
 
 # look at how days after lockdown versus days after emergency compare
 
@@ -1086,7 +1095,16 @@ saveRDS(serology_real,"serology_real.rds")
 # 
 # ggsave("check_scatter.png",width=8,height=6)
 
-saveRDS(combined,"combined.rds")
+saveRDS(combined,"data/combined.rds")
+
+} else {
+  
+  combined <- readRDS('data/combined.rds')
+  serology <- readRDS("data/serology.rds")
+  serology_real <- readRDS("data/serology_real.rds")
+  count_pol_covidamp_sum <- readRDS( "data/count_pol_covidamp_sum.rds")
+  
+}
 
 # create case dataset
 
@@ -1318,7 +1336,7 @@ max_sampler_stats <- apply(us_fit_scale_mod$sampler_diagnostics(),c(2:3),
 
 ```
 
-To analyze the effect of suppression policies, we use data on counts of social distancing policies, restrictions on mass gatherings, restrictions on businesses, mandatory mask orders, restrictions on government services, and stay-at-home orders from the CoronaNet Government Response dataset [@cheng2020]. For each type of policy, we include a variable representing the count of policies in that category effective for a particular day. For each update to an existing policy, we code it as +1 if the update increases the scope of the policy or -1 if it decreases the scope of the policy (down to a minimum of 0). While this is a simplification of the underlying data, we are still able to capture relative complexity over time without having to make judgments about stringency or other qualitative criteria. We then interact these policy counts with a linear trend to examine time-varying policy effects. We separately include policies designed to increase health resources like personal protective equipment (PPE) and also policies requiring mask use as we do not examine time-varying effects of these covariates.
+To analyze the effect of suppression policies, we use data on counts of social distancing policies, restrictions on mass gatherings, restrictions on businesses, mandatory mask orders, restrictions on government services, and stay-at-home orders from the CovidAMP dataset [@katz]. For each type of policy, we include a variable representing the count of policies in that category effective for a particular day. For each update to an existing policy, we code it as +1 if the update increases the scope of the policy or -1 if it decreases the scope of the policy (down to a minimum of 0). While this is a simplification of the underlying data, we are still able to capture relative complexity over time without having to make judgments about stringency or other qualitative criteria. We then interact these policy counts with a linear trend to examine time-varying policy effects. We separately include policies designed to increase health resources like personal protective equipment (PPE) and also policies requiring mask use as we do not examine time-varying effects of these covariates.
 
 <!-- The use of a variety of policy types is important as the adoption of policies is correlated and so including only stay-at-home orders could mask other distinct policies that were implemented at the same time. -->
 
@@ -1448,7 +1466,9 @@ test_base <- as.matrix(us_fit_scale,"test_baseline")
 
 prop_infected_mat_scale <- prop_infected_mat
 
-test_inf1 <- lapply(unique(real_data$cc), function(c) {
+if(calc_qoi) {
+  
+  test_inf1 <- lapply(unique(real_data$cc), function(c) {
   
   this_counter <- real_data$lin_counter[real_data$cc==c,]
   
@@ -1495,6 +1515,19 @@ cases_pred <- lapply(sample(1:nrow(finding),100), function(i) {
     mutate(key=1:n())
 }) %>% bind_rows %>% 
   left_join(select(combined,key,cases,state,month_day),by=c("key"))
+
+
+  saveRDS(tests_pred, "data/tests_pred.rds")
+  saveRDS(cases_pred, "data/cases_pred.rds")
+  
+} else {
+  
+  tests_pred <- readRDS("data/tests_pred.rds")
+  cases_pred <- readRDS("data/cases_pred.rds")
+  
+}
+
+
 
 # do some ggploting
 
@@ -1564,7 +1597,9 @@ us_case_count <- group_by(combined,month_day) %>%
 
 all_est_state <- left_join(all_est_state,us_case_count,by="month_day")
 
-calc_sum <- all_est_state %>% 
+if(calc_qoi) {
+  
+  calc_sum <- all_est_state %>% 
   ungroup %>% 
   mutate(estimate=(plogis(estimate))*(state_pop)) %>% 
   group_by(state,iter) %>% 
@@ -1586,9 +1621,18 @@ calc_sum <- all_est_state %>%
             med_est_lag=quantile(us_total_lag,.5),
             high_est_lag=quantile(us_total_lag,.95),
             low_est_lag=quantile(us_total_lag,.05)) 
+  
+  saveRDS(calc_sum, "data/calc_sum.rds")
+  
+} else {
+  
+  calc_sum <- readRDS("data/calc_sum.rds")
+  
+}
+
+
 
 ```
-
 
 We compare these estimates with a popular COVID-19 forecaster employing SEIR models from @gu2020 by plotting their estimates as a yellow ribbon on the plot. As can be seen, the trajectories are similar although they diverge slightly at the end of the series in mid-July. On the whole it would seem that our estimate of infected individuals is on the conservative end compared to other approaches--in other words, while we do not know for certain what the true number is, we are unlikely to be under-estimating the total. Furthermore, our intervals are far more precise than other approaches, which is likely because we employ extensive covariate adjustment to better infer human behavior during the course of the pandemic.
 
@@ -1708,7 +1752,9 @@ require(ggrepel)
 
 # need different figures for case-level deaths + recovere
 
-calc_sum_state <- all_est_state %>% 
+if(calc_qoi) {
+  
+  calc_sum_state <- all_est_state %>% 
   ungroup %>% 
   mutate(cum_est=(plogis(estimate))*state_pop) %>% 
   group_by(state,iter) %>% 
@@ -1725,7 +1771,16 @@ calc_sum_state <- all_est_state %>%
             high_est_pres=quantile(cum_est_pres,.95),
             low_est_pres=quantile(cum_est_pres,.05)) 
 
-saveRDS(calc_sum_state,"calc_sum_state.rds")
+  saveRDS(calc_sum_state,"data/calc_sum_state.rds")
+  
+  
+} else {
+  
+  calc_sum_state <- readRDS("data/calc_sum_state.rds")
+  
+}
+
+
 
 # Annotations
 
@@ -1759,7 +1814,9 @@ all <- calc_sum_state %>%
 
 # same calculations, but per capita
 
-calc_sum_state <- all_est_state %>% 
+if(calc_qoi) {
+  
+  calc_sum_state <- all_est_state %>% 
   ungroup %>% 
   mutate(cum_est=(plogis(estimate))) %>% 
   group_by(state,iter) %>% 
@@ -1781,7 +1838,15 @@ calc_sum_state <- all_est_state %>%
          test_pr=tests3/state_pop,
          inflation=med_est/case_pr)
 
-saveRDS(calc_sum_state,"percap.rds")
+  saveRDS(calc_sum_state,"data/percap.rds")
+  
+} else {
+  
+  calc_sum_state <- readRDS("data/percap.rds")
+  
+}
+
+
 
 # Annotations
 
@@ -1844,22 +1909,30 @@ calc_sum_state %>%
 
 ```
 
-
 In addition to the estimation of the cumulative count of infected individuals, the model provides further useful information by parameterizing the relationship between the unobserved infection rate and the number of tests conducted in a given state. These individual parameters are shown in Figure \@ref(fig:tpi). The scale of the y axis shows the number of people that a state was able to test relative to each person infected. The plot shows that some states have been able to test far more people than have been infected (New York, New Jersey), while other states like Pennsylvania and Oregon have tested barely twice as many as those who have been infected. The fact that new outbreaks have been seen in Texas and Arizona suggests that this shortfall in testing likely disguised early outbreaks that could have been detected otherwise.
 
 In addition, we know from Figure \@ref(fig:tpi) that because New York and New Jersey are quite high in the test/case distribution, having tested around four individuals per infected person, the high infection rates in Figure \@ref(fig:stateplot) for these states are not an artifact of more rigorous testing. The model is successfully able to separate the bias of increased testing from the actual level of new infections.
 
 ```{r tpi,fig.asp=.8,fig.cap="Measuring States' Testing Rates Relative to Infection Rates",echo=F,message=F,warning=F}
 
-us_fit_scale <- readRDS("data/us_fit_scale.rds")
-combined <- readRDS("combined.rds")
+if(calc_qoi) {
+  
+  us_fit_scale <- readRDS("data/us_fit_scale.rds")
+combined <- readRDS("data/combined.rds")
 real_data <- readRDS("real_data.rds")
+state_id <- readRDS("data/state_id.rds")
+
+
 combined <- mutate(ungroup(combined),key=1:n()) %>% 
   group_by(state) %>% 
   arrange(state,month_day) %>% 
   mutate(cum_sum_cases=cases,
          recovered=coalesce(recovered,0),
          deaths=coalesce(deaths,0))
+
+state_id <- distinct(combined,state,state_pop) %>% 
+  ungroup %>% 
+  mutate(state_num=as.numeric(factor(state)))
          # cum_sum_cases = cum_sum_cas
 
 prop_infected_mat <- t(as.matrix(us_fit_scale,"prop_infect_out"))
@@ -1947,7 +2020,18 @@ over_days <- lapply(seq(max(combined$month_day) - days(7), max(combined$month_da
 
 
 
-saveRDS(over_days,"test_data.rds")
+saveRDS(over_days,"data/test_data.rds")
+  
+  
+  
+} else {
+  
+  state_id <- readRDS("data/state_id.rds")
+  over_days <- readRDS("data/test_data.rds")
+  
+}
+
+
 
 over_days %>%
   left_join(state_id,by="state_num") %>%
@@ -2000,7 +2084,9 @@ state_means <- function(m) {
   rowMeans(do.call(cbind,m3))
 }
 
-# derivative of inverse logit with respect to x
+if(calc_qoi) {
+  
+  # derivative of inverse logit with respect to x
 
 p_infected1 <- select(all_est_state,iter,state,month_day,estimate) %>% 
   spread(key="iter",value="estimate") %>% 
@@ -2065,6 +2151,16 @@ over_all_sum_mob <- left_join(over_all_sum_mob,tibble(variable=1:ncol(covs_mob),
                       transit="Transit",
                       workplaces="Workplaces",
                       residential="Residential"))
+
+saveRDS(over_all_sum_mob, "data/over_all_sum_mob.rds")
+  
+} else {
+  
+  over_all_sum_mob <- readRDS("data/over_all_sum_mob.rds")
+  
+}
+
+
 
 p3 <- over_all_sum_mob %>%
   ggplot(aes(y=med_est,x=reorder(label,med_est))) +
@@ -2153,8 +2249,9 @@ lock_effect_fear <- rstan::extract(us_fit_scale,"lockdown_med_fear")[[1]]
 direct_effect <- rstan::extract(us_fit_scale,"lockdown_effect")[[1]]
 
 
+if(calc_qoi) {
   
-    over_all2 <- lapply(1:max(suppress_effect$variable), function(s) {
+  over_all2 <- lapply(1:max(suppress_effect$variable), function(s) {
 
       # get direct effect
       
@@ -2217,7 +2314,7 @@ direct_effect <- rstan::extract(us_fit_scale,"lockdown_effect")[[1]]
       
         
     
-saveRDS(over_all2,"data/over_all2.rds")
+
 
 over_all_sum2 <- group_by(over_all2,variable) %>% 
   summarize(med_est=median(total),
@@ -2261,6 +2358,19 @@ over_all_sum2 <- left_join(over_all_sum2,tibble(variable=1:ncol(covs),
                       trump="Trump Vote",
                       prop_foreign="% Foreign-Born",
                       public_health="Public Health"))
+
+  saveRDS(over_all_sum2,"data/over_all_sum2.rds")
+  
+  
+} else {
+  
+  over_all_sum2 <- readRDS('data/over_all_sum2.rds')
+  
+}
+
+
+  
+    
 
 p1 <- over_all_sum2 %>%
   filter(!(label %in% c("Trump Vote","Trump Approval","Vote ShareXApproval"))) %>% 
@@ -2336,7 +2446,9 @@ On the whole, this finding points to very strong associations between partisansh
 
 ```{r trumpint,fig.asp=1.2,fig.cap="Marginal Effects of Trump Vote Share in 2016 Conditional on State Approval Polls"}
 
-over_vote_share <- parallel::mclapply(seq(min(just_data$trendline_approve),
+if(calc_qoi) {
+  
+  over_vote_share <- parallel::mclapply(seq(min(just_data$trendline_approve),
                                           max(just_data$trendline_approve),
                                           length.out=100),
                                       function(p) {
@@ -2383,6 +2495,16 @@ over_vote_share <- parallel::mclapply(seq(min(just_data$trendline_approve),
                                                interact=mean(combined$trendline_approve) + p*sd(combined$trendline_approve))
                                         
                                       },mc.cores=3) %>% bind_rows
+  
+  saveRDS(over_vote_share, "data/over_vote_share.rds")
+  
+} else {
+  
+  over_vote_share <- readRDS("data/over_vote_share.rds")
+  
+}
+
+
 
 trump1 <- over_vote_share %>% 
   gather(key="Type",value="estimate",-interact) %>% 
@@ -2476,7 +2598,9 @@ lock_effect_fear <- rstan::extract(us_fit_scale,"lockdown_med_fear")[[1]]
     
     fear_id <- which(colnames(real_data$suppress)=="trendline_extremely_concerned")
     
-    over_med <- parallel::mclapply(1:ncol(covs_mob), function(m) {
+    if(calc_qoi) {
+      
+      over_med <- parallel::mclapply(1:ncol(covs_mob), function(m) {
       
       over_cov <- purrr::map2(lock_covs, int_locks,function(l,li) {
 
@@ -2539,6 +2663,18 @@ over_med_agg <- over_med %>%
                          mass_gathering="Mass Gatherings",
                          quarantine="Lockdowns",
                          social_distance="Social Distancing"),10))
+
+  saveRDS(over_med_agg, "data/over_med_agg.rds")
+      
+      
+      
+    } else {
+      
+      over_med_agg <- readRDS("data/over_med_agg.rds")
+      
+    }
+    
+    
 
 label_pts <- filter(over_med_agg,variable=="prop") %>% 
   group_by(lockdown,mobility) %>% 
