@@ -36,7 +36,7 @@ output:
       - '--lua-filter=scholarly-metadata.lua'
       - '--lua-filter=author-info-blocks.lua'
 bibliography: BibTexDatabase.bib
-abstract: "In this paper we present an original approach for measuring infections as a latent variable and making use of serological surveys to provide ground truth identification. Compared to existing approaches, our model makes much fewer assumptions and has a simpler form to permit extensive covariate adjustment and mediation analysis. To show the utility of the model, we analyzed COVID-19 case and test data from the fifty United States from March to July of 2020. With our modeling framework we are able to move beyond associations via linear models to more direct testing of hypothesized mechanisms for COVID-19 transmission as a function of human behavior and preferences. We are able to show with this analysis how social distancing measures, Trump approval rating, and mask-wearing are associated with COVID-19 infections through mediated changes in cell phone mobility and opinion polling.\\footnote{A reproducible version of this paper is available as an Rmarkdown file at \\url{https://github.com/CoronaNetDataScience/covid_model}}."
+abstract: "In this paper we present an original approach for measuring infections as a latent variable and making use of serological and expert surveys to provide ground truth identification during the early pandemic period. Compared to existing approaches, our model relies more on empirical information than strong structural forms, permitting both more realistic inference and the incorporation of path analysis. To show the utility of the model, we analyzed COVID-19 case and test data from the fifty United States from March to July of 2020. With our modeling framework, we are able to move beyond associations via linear models by parameterizing hypothesized mechanisms for COVID-19 transmission via polling data about mask usage, fears of the disease, and cellphone mobility measures. With path analysis we show how social distancing measures, Trump approval rating, and mask-wearing are associated with COVID-19 infections through mediated changes in theoretically relevant pathways.\\footnote{A reproducible version of this paper is available as an Rmarkdown file at \\url{https://github.com/CoronaNetDataScience/covid_model}}."
 ---
 
 ```{r setup, include=FALSE}
@@ -82,17 +82,17 @@ state_filter <- c('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'NA', 'FL', 'G
 # what type of model to fit
 # one of prior_expert, prior_only or full (includes likelihood)
 
-model_type <- "full"
+model_type <- "prior_expert"
 
 # set treedepth (determines sampler complexity)
 
 treedepth <- 10
 
-nchains <- 4
+nchains <- 2
 
-nsamples <- 4000
+nsamples <- 2000
 
-adapt_delta <- 0.95
+adapt_delta <- 0.90
 
 # whether to run model (it will take a few hours) or load saved model from disk
 
@@ -115,33 +115,33 @@ calc_qoi <- F
 
 \newpage
 
-The COVID-19 pandemic has led to a significant increase in disease modeling as the demands of a worldwide emergency spurred substantial innovation. Accurately modeling COVID-19 and similar diseases is no simple feat, however, due to multiple forms of selection and measurement bias that are difficult to overcome. The approach we present in this paper differs from existing work by conceptualizing the relative level of infections as a time-varying latent variable and applying Bayesian techniques to obtain a posterior distribution over likely estimates. Furthermore, we directly incorporate serological survey data into the model in a way that allows us to identify the scale of the latent variable without having to make extensive assumptions about transmission dynamics.
+The COVID-19 pandemic has led to a significant increase in disease modeling as the demands of a worldwide emergency spurred substantial innovation. Accurately modeling COVID-19 and similar diseases is no simple feat, however, due to multiple forms of selection and measurement bias that are difficult to overcome. The approach we present in this paper differs from existing work by conceptualizing the relative level of infections as a time-varying latent variable and applying Bayesian techniques to obtain a posterior distribution over likely estimates. Furthermore, we directly incorporate serological survey and expert survey data into the model in a way that allows us to identify the scale of the latent variable without having to make extensive assumptions about transmission dynamics.
 
-This approach has two advantages for applied research. First, the minimal set of assumptions makes the model more robust by incorporating as much uncertainty as possible about the actual infection rate. Existing approaches based on the SIR/SEIR framework often require multiple hard-coded values due to the large number of dynamic compartments that must be estimated. By employing a Bayesian model with weakly informative priors, we can obtain estimates that are more fully a reflection of our underlying uncertainty about the state of the world, rather than having to employ simulation inference or other tools to try to test for the reality of assumptions.
+This approach has two advantages for applied research. First, the minimal set of assumptions makes the model more robust by incorporating as much uncertainty as possible about the actual infection rate. Existing approaches based on the SIR/SEIR framework often require multiple hard-coded values due to the large number of dynamic compartments that must be estimated. Particularly in the early pandemic period, these assumptions can be difficult to justify with a lack of quality empirical data about hospitalizations and deaths. By employing a Bayesian model with weakly informative priors, we can obtain estimates that are more fully a reflection of our underlying uncertainty about the state of the world by incorporating the best available prior information.
 
 Second, conceptualizing the infection rate as a latent variable within a generative modeling framework permits us to examine covariate relationships in a manner that is more nuanced. As we show in this paper, it is possible for us to employ a wide range of covariates that predict the infection rate and consequently dramatically reduce the uncertainty of our estimates without having to assume any prior relationship between covariates and the attack rate. Second, we are able to examine mediation relationships between covariates and the infection rate, which permits us to be more specific about the pathways through which covariates may be associated with infections. Especially given how difficult it is to achieve causal identification with observational epidemiological data, we believe that employing causal graphs to test for plausible mediation relationships is a way to improve our understanding of potential disease transmission dynamics.
 
-To apply the model, we estimate the infection rate in the United States from March to July of 2020, a crucial time in the pandemic as substantial uncertainty existed about how to respond to the disease. This uncertainty manifested itself in rapidly changing patterns of human behavior and also political conflict as leaders diverged over their understanding of the disease's threat. While we have increasing evidence about the relationship between partisan identities and individual beliefs about COVID-19 [@fan2020; @Grossman202007835], data about partisan identity, along with other social and economic covariates, are rarely included in efforts to model and predict the spread of the disease in the population [@flaxman2020; @sharma2020; @haug2020]. As a result, we have difficulty understanding the causal pathways through which political and social variables affect the course of the pandemic, and in turn are affected by it. In this paper we disaggregate the effects of COVID-19 policies, partisanship and demographic factors on disease outcomes by examining the way that these variables are mediated by individual mobility and fear of the virus. Even when we cannot make exclusive claims of causal identification, we can still learn in much more detail about time-varying associations between covariates and the disease and the plausible pathways through which beliefs affected actions.
+To apply the model, we estimate the infection rate in the United States from March to July of 2020, a crucial time in the pandemic as substantial uncertainty existed about how to respond to the disease. This uncertainty manifested itself in rapidly changing patterns of human behavior and also political conflict as leaders diverged over their understanding of the disease's threat. While we have increasing evidence about the relationship between partisan identities and individual beliefs about COVID-19 [@fan2020; @Grossman202007835], data about partisan identity, along with other social and economic covariates, are rarely included in efforts to model and predict the spread of the disease in the population [@flaxman2020; @sharma2020; @haug2020]. As a result, we have difficulty understanding the causal pathways through which political and social variables affect the course of the pandemic, and in turn are affected by it. In this paper we disaggregate the effects of COVID-19 policies, partisanship and demographic factors on disease outcomes by examining the way that these variables are mediated by individual mobility, reported masking and fear of the virus. Even when we cannot make exclusive claims of causal identification, we can still learn in much more detail about time-varying associations between covariates and the disease and the plausible pathways through which beliefs affected actions.
 
-We show with this model that political partisanship in the United States had a very strong association with the spread of the pandemic by increasing or reducing people's fear of the virus and also by changing their mobility patterns. A 1-SD increase in a state's 2016 vote share for Donald Trump is associated with a cumulative increase of 0.5% to 0.7% of a state's population infected by SARS-CoV-2 mediated by decreasing people's concern over the pandemic. A 1-SD increase in a state's vote share for U.S. President Donald Trump is also associated with a 0.3% to 0.5% increase in a state's infections mediated by increased mobility. We show that offsetting these increases in infections from mobility associated with partisanship would require at least 100 additional days of a state-wide stay-at-home order.
+We show with this model that political partisanship in the United States had a very strong association with the spread of the pandemic by increasing or reducing people's fear of the virus and also by changing their mobility patterns. A 1-SD increase in a state's 2016 vote share for Donald Trump is associated with a cumulative increase of 0.5% to 0.7% of a state's population infected by SARS-CoV-2 mediated by decreasing people's concern over the pandemic. A 2% increase in a state's vote share for U.S. President Donald Trump is also associated with a 0.5% to 0.7% increase in a state's infections mediated by changes in mobility patterns.
 
-We also find evidence that political activity on the left is positively associated with the spread of the disease, with states that saw a 1-SD increase in social justice protests following the death of George Floyd witnessing an increase in infections as high as 0.4% over time. On the other hand, we do not find that the protests reduced people's fears of the disease or changed mobility patterns, suggesting that the spread of the disease happened solely through increased personal contact at the protests and subsequent chains of transmission rather than by changing behavioral patterns over long term.
+We also find evidence that in-person political activity is positively associated with the spread of the disease, with states that saw a 1-SD increase in social justice protests following the death of George Floyd witnessing an increase in infections as high as 0.6% over time. On the other hand, we do not find that the protests reduced people's fears of the disease or noticeably changed mobility patterns, suggesting that the spread of the disease happened solely through increased personal contact at the protests and subsequent chains of transmission rather than by changing behavioral patterns over long term.
 
 # Background
 
-As more and more data has become available on observed case counts of the SARS-CoV2 coronavirus, there have been increasing attempts to infer how contextual factors like government policies, partisanship, and temperature affect the disease's spread [@carleton2020; @sajadi2020; @dudel2020; @tansim2020 @brze2020]. The temptation to make inferences from the observed data, however, can result in misleading conclusions. Modeling approaches that fully account for disease dynamics like the SIR/SEIR specifications are very powerful but also require more information than is known about disease progression in the population, requiring researchers to rely on assumptions that are difficult to know with complete confidence [@flaxman2020; @ferguson2020]. For this reason, in this paper we present a retrospective Bayesian model that can adjust for testing bias by estimating the unobservable infection rate up to an unidentified constant. Furthermore, by incorporating informative priors based on serological surveys of infection prevalence, it is possible to put an informative prior on the unobserved infection rate and estimate both recent disease trends and the effect of covariates on the historical spread of the disease.
+As more and more data has become available on observed case counts of the SARS-CoV2 coronavirus, there have been increasing attempts to infer how contextual factors like government policies, partisanship, and temperature affect the disease's spread [@carleton2020; @sajadi2020; @dudel2020; @tansim2020; @brze2020]. The temptation to make inferences from the observed data, however, can result in misleading conclusions. Modeling approaches that fully account for disease dynamics like the SIR/SEIR specifications are very powerful but also require more information than is known about disease progression in the population--especially in its early stages--requiring researchers to rely on assumptions that are difficult to know with complete confidence [@flaxman2020; @ferguson2020]. For this reason, in this paper we present a retrospective Bayesian model that can adjust for testing bias by estimating the unobservable infection rate up to an unidentified constant. Furthermore, by incorporating informative priors based on serological and expert surveys of infection prevalence, it is possible to put an informative prior on the unobserved infection rate and estimate both recent disease trends and the effect of covariates on the historical spread of the disease. By employing a full Bayesian approach, we are able to allow our uncertainty about this prior information to propagate in the model, ensuring that we are not over-confident in our predictions of the latent infection rate.
 
 We can summarize the problem of modeling COVID-19 (and diseases more generally) in terms of two main challenges. The first is the challenge of modeling the spread of the disease given the limitations of testing and reported deaths, which could obfuscate the effect of any covariates with data reporting issues. Second, employing observational data requires nuanced comparisons to be made. To learn the effect of a stay-at-home order, for instance, we would want to compare two regions with similar demographic, social and political characteristics as these could be also influencing human behavior, masking the effect of the stay-at-home order. For example, regions with less political partisanship may be more likely to take prudent behaviors to mitigate COVID-19 and also may be more likely to see stay-at-home orders implemented.
 
 A vast and expanding literature documents connections between many political, economic and social factors with human behavior related to the COVID-19 pandemic [@abouk2021a; @adolph2021; @allcott2020a; @ashraf2020; @barceló2022; @bo2021; @brauner2020a; @courtemanche2020a; @dave2020b; @fellows2020; @flaxman2020b; @haug2020a; @islam2020; @murray; @perra2021; @sebhatu2020; @sharma2021; @zheng2020]. While existing studies have shown these associations primarily through surveys and other individual-level analyses, it is difficult to test whether these factors jointly have an effect on COVID-19 infections. The reason for this difficulty is due to how these variables affect human behavior in general equilibrium. For example, non-pharmaceutical interventions (NPIs) like stay-at-home orders have been associated with reduced infections, but stay-at-home orders were also implemented in a rapidly changing environment as public health policies, new suppression practices like masking and the health of the economy varied. People have faced myriad influences on their choices during the pandemic, and even if we have a strong reason to believe that a certain factor should influence their behavior, estimating that effect when many other contravening and contrasting factors were at play is challenging.
 
-At the same time, estimating these general equilibrium effects even within the limitations of available data is very important to learn what factors are associated with the spread of COVID-19 in realistic conditions. For example, some argued that masking would lead to increased infections because it would reduce concern over the risk of infection [@abaluck2020]. Evaluating this hypothesis ultimately requires general equilibrium analysis as it involves competing influences on human behavior. In other words, is the moral hazard of being falsely protected a greater threat than the positive benefits of reducing infections via masking? Being able to sort, rank and understand socio-economic, political and healthcare-related factors behind the disease's spread is crucial to better understand why and how COVID-19 overwhelmed countries' disease control systems.
+At the same time, estimating these general equilibrium effects even within the limitations of available data is very important to learn what factors are associated with the spread of COVID-19 in realistic conditions. For example, some argued that masking would lead to increased infections because it would reduce concern over the risk of infection [@abaluck2020]. Evaluating this hypothesis ultimately requires general equilibrium analysis as it involves competing influences on human behavior. In other words, is the moral hazard of being falsely protected a greater threat than the positive benefits of reducing infections via masking? Being able to sort, rank and understand socio-economic, political and healthcare-related factors behind the disease's spread is crucial to better understand why and how COVID-19 overwhelmed countries' disease control systems even when we lack a straightforward means of causal identification.
 
-In this paper, we seek to address these questions by collecting a rich set of important covariates, implementing models to adjust for bias in COVID-19 data and employ mediation analysis to understand the pathways that covariates affect the spread of the pandemic. We believe that doing so contributes to our emerging understanding of the factors that contributed to the spread of the pandemic, especially with respect to factors that we believe tend to be ignored in epidemiological modeling of COVID-19.
+In this paper, we seek to address these questions by collecting a set of important covariates, implementing models to adjust for bias in COVID-19 data and employ mediation analysis to understand the pathways that covariates affect the spread of the pandemic. We believe that pathway analysis allows us to uncover meaningful associations that do not obfuscate different time-varying processes. While causal identification in the pandemic is a non-trivial endeavor, employing models that can more realistically evaluate available data is arguably the best path forward.
 
 For example, in this paper we show that political partisanship may be equally as important to the spread of the pandemic as more conventional factors like the implementation of social-distancing measures. Political scientists have investigated to what extent partisanship has inhibited preventive measures against the COVID-19 pandemic as President Trump has argued against public health policies like face masks. Research has already shown that Republicans are less likely than Democrats to practice public health behaviors like hand washing [@gadarian2020], to practice social distancing [@andersen2020; @alcott2020; @qiu2020], and to comply with policies targeted against COVID-19 [@fan2020; @Grossman202007835].
 
-While partisanship in favor of President Trump and the Republican party has received the most attention, other types of political mobilization have also come under scrutiny. Of particular note were the protest movements against police brutality that spread across the United States in the summer and fall of 2020. Existing research suggests the protests have not had an adverse effect on COVID-19 infections [@protest2020], though it is again limited by the observational bias we describe later. As such, it is clear that political motivations on both the left and the right have at times led to reduced compliance with COVID-19 precautions, though it is not clear how severe these factors are, especially when compared to other covariates known to affect COVID-19.
+While partisanship in favor of President Trump and the Republican party has received the most attention, other types of political mobilization have also come under scrutiny. Of particular note were the protest movements against police brutality that spread across the United States in the summer and fall of 2020. Existing research suggests the protests have not had an adverse effect on COVID-19 infections [@protest2020], though it is again limited by the observational bias we describe later. As such, it is clear that political motivations on both the left and the right have been associated with reduced compliance with COVID-19 precautions, though it is not clear which potential pathways these variables could be affecting disease outcomes.
 
 <!-- The most important of these, which we also study in this article, are the role of government policies to prevent close personal interaction, which are often classified under the umbrella of non-pharmaceutical interventions (NPIs). Some of the most sophisticated of these studies, which employ state-of-the-art epidemiological models of COVID-19, have examined how country-level differences in the implementation of stay-at-home orders and business closures affected the spread of the pandemic in the critical early period [@flaxman2020; @sharma2020; @haug2020]. While these studies have emphasized the difficult inference issues involved with modeling COVID-19 data, they have largely avoided adjusting NPI estimates with sociopolitical covariates like partisanship, making an implicit assumption that the effect of NPI estimates is independent of these types of human behaviors and identities. For this reason, while these studies help us know much more precisely how NPIs affected the spread of the pandemic through exact measures like the reproduction number, they are more limited in making stronger claims of identification of the NPIs and even through what channels NPIs affect human behavior [@sharma2020a].-->
 
@@ -165,9 +165,9 @@ While partisanship in favor of President Trump and the Republican party has rece
 
 <!-- Existing models that address these questions generally fall into one of two categories. In the first, models by social scientists investigate how social, economic and political variables affect and are affected by the spread of COVID-19. These models generally attempt to avoid data measurement errors through implementing existing methods, such as time-to-event models and difference-in-difference estimation [@dave2020; @courtemanche2020; @protest2020; @abouk2021]. In a different vein, a growing literature examines the role of NPIs, or government policies attempting to control the pandemic. These studies tend to use more complicated epidemiological models, known as compartmental models, that are more suited to the complexity of the data, but also tend to have much less sophistication in terms of the range of covariates employed for adjustment [@flaxman2020; @ferguson2020; @haug2020; @brauner2020]. The more robust modeling of the disease comes at the cost of being able to employ more extensive and more nuanced covariate adjustment, such as the mediation analysis we employ in this paper. -->
 
-Fitting models that can allow for nuanced relationships between infections and disease trends while also minimizing assumptions is quite difficult. To address this crucial problem, we present a new Bayesian latent variable model that has a similar aim as epidemiological disease-tracking models in that it is designed explicitly to model disease dynamics. However, our model is a significant simplification of the compartmental models employed by epidemiologists to study disease, and in particular SARS-CoV2 [@peak2020; @riou2020; @verity2020; @perkins2020; @lourenco2020; @li2020; @ferguson2020; @carleton2020; @sajadi2020; @dudel2020; @tansim2020; @flaxman2020; @brze2020]. These models suppose different classes (compartments) of individuals in the population, denoted $S$ for susceptible, $I$ for infectious, and $R$ for removed (other compartments may be added, such as $E$ for exposed).
+Fitting models that can realistically model disease trends during the early pandemic period when data is limited can be quite difficult. To address this crucial problem, we present a new Bayesian latent variable model that has a similar aim as epidemiological disease-tracking models in that it is designed explicitly to model disease dynamics. However, our model is a significant simplification of the compartmental models employed by epidemiologists to study disease, and in particular SARS-CoV2 [@peak2020; @riou2020; @verity2020; @perkins2020; @lourenco2020; @li2020; @ferguson2020; @carleton2020; @sajadi2020; @dudel2020; @tansim2020; @flaxman2020; @brze2020]. These models suppose different classes (compartments) of individuals in the population, denoted $S$ for susceptible, $I$ for infectious, and $R$ for removed (other compartments may be added, such as $E$ for exposed).
 
-While these models are a powerful expression of the progress of a disease in the population, these models often struggle to provide straightforward estimates when employing empirical data. COVID-19 data, unfortunately, has serious flaws that are increasingly well-known, including limited testing and under-reporting of hospitalizations and deaths [@larremore2020; @sánchez-romero2021]. When such data is unavailable, modelers can compensate by simulating plausible random values or using informative prior distributions, but this makes the model estimates tied to the particular set of values used [@grinsztajn2021]. As a result, the challenges in the estimation of compartmental models with empirical data restrict the ability to employ more rigorous forms of covariate adjustment.
+While these models are a powerful expression of the progress of a disease in the population, these models often struggle to provide straightforward estimates when employing empirical data. COVID-19 data, especially in the early pandemic period, had serious flaws, including limited testing and under-reporting of hospitalizations and deaths [@larremore2020; @sánchez-romero2021]. When such data is unavailable, modelers can compensate by simulating plausible random values or using informative prior distributions, but this makes the model estimates tied to the particular set of values used [@grinsztajn2021]. As a result, the challenges in the estimation of compartmental models with empirical data restrict the ability to interpret covariate adjustment.
 
 By contrast, this paper endeavors to estimate a much simpler quantity than the entire evolution of the outbreak. We believe that many researchers and the general public often only want to learn about what has already happened, or the *empirical* infection rate (also called the attack rate in the epidemiological literature). For a number of time points $t \in T$ since the outbreak's start and states $c \in C$, we aim to identify the following quantity:
 
@@ -193,28 +193,28 @@ However, even with this simplification, we do not have estimates of the actual i
 ```
 To estimate the process in Figure 1, we assume that the unobserved state-specific cumulative infection rate $I_{ct}$ can be modeled as a time-varying Beta-distributed random variable with a mean parameter $\mu \in (0,1)$ and shape parameter $\phi>0$ . We also assume that the over-time change in the disease can be modeled as a 3-order polynomial time trend that is a function of the number of post-outbreak time periods $T_O < T$, where an outbreak begins at the first reported case in a given area.
 
-It is important to note that the reason we employ a cubic function is based on theoretical considerations. In our model, the polynomial represents the rate of infection increase in the absence of any other covariates, or equivalently the *counterfactual* rate of infections. We know from the SIR/SEIR simulations that, in the absence of any countervailing measures, epidemics occur in ever-increasing waves until the herd immunity threshold is reached, although the curve is unlikely to be symmetric as a simpler quadratic function would require. As such, we employ this function because it represents a credible baseline for what the epidemic would do if no other factors impeded its spread. We further allow the polynomial trends to vary by states hierarchically, i.e., the information about the trends is partially pooled across states.
+It is important to note that the reason we employ a cubic function is based on theoretical considerations. In our model, the polynomial represents the rate of infection increase in the absence of any other covariates, or equivalently the *counterfactual* rate of infections. We know from the SIR/SEIR simulations that, in the absence of any countervailing measures, epidemics occur in ever-increasing waves until the herd immunity threshold is reached, although the curve is unlikely to be symmetric as a simpler quadratic function would require. As such, we employ this function because it represents a credible baseline for what the epidemic would do if no other factors impeded its spread.
 
 We define the conditional distribution of the unobserved infection rate $I_{ct}$ as:
 
 ```{=tex}
 \begin{align}
 \operatorname{Pr}(I_{ct} \mid t=T) &\sim \operatorname{Beta}(\mu \phi, (1 - \mu)\phi)\\
-        \mu = & g^{-1}(\alpha_1 + \beta_{O1}\sum_{c=1}^{C} \sum_{t=1}^{T-14} a_{ct} + \\
+        \mu = & g^{-1}(\alpha_1 + \\
 &\beta_{I1}t_o + \beta_{I2}t_o^2 + \beta_{I3}t_o^3 +
                         \beta_C X_{ct})
   (\#eq:binom)
 \end{align}
 ```
-This parameterization of the Beta distribution in terms of $\mu$ and $\phi$ follows from the Beta regression literature [@ferrari2010] so that we can model the expected value $E[I_{ct}]$ directly via $\mu$. As such, we use $g^{-1}(\cdot)$, the inverse logit function, to scale the linear model in $\mu$ to the $(0,1)$ interval. For the parameters, $\beta_{O1}\sum_{c=1}^{C} \sum_{t=1}^{t-14} a_{ct}$ are the sum of observed cases in the country with a 14-day lag, which represents the possibility of cross-border spread in infections. The three $\beta_{Ii}$ are polynomial coefficients of the number of post-outbreak time periods $t_o$.
+This parameterization of the Beta distribution in terms of $\mu$ and $\phi$ follows from the Beta regression literature [@ferrari2010] so that we can model the expected value $E[I_{ct}]$ directly via $\mu$. As such, we use $g^{-1}(\cdot)$, the inverse logit function, to scale the linear model in $\mu$ to the $(0,1)$ interval. The three $\beta_{Ii}$ are polynomial coefficients of the number of post-outbreak time periods $t_o$.
 
-The parameter vector $\beta_C$ represents the effect of independent covariate matrix $X_{ct}$ on the latent infection rate. These are our main variables of interest, and have effects in addition to the polynomial time trends. Finally, the parameter $\phi$ becomes a dispersion parameter governing the variability of latent infection rate.
+The parameter vector $\beta_C$ represents the effect of independent covariate matrix $X_{ct}$ on the latent infection rate. These are our main variables of interest, and have effects in addition to the polynomial time trends. Finally, the parameter $\phi$ becomes a dispersion parameter which, intuitively, equals the effective sample size of the beta-binomial model. For each day $t$, $\phi$ is equal to the amount of information in the linear model about cases and tests expressed as a sample size.
 
 <!-- The second way suppression measures enter the model is through $\beta_{S2}X_c$, which can increase over time as the disease increases. This parameter reflects possible measures which will grow more effective as domestic transmission of the disease increases (i.e. as the polynomial time trend takes off). -->
 
 <!-- As such, it is assumed that any deviation from the common domestic transmission pattern is due to these time-varying suppression measures. -->
 
-Because we do not have measures of $I_{ct}$, we need to used the observed data, tests $q_{ct}$ and cases $a_{ct}$, to infer $I_{ct}$. First, we propose that the number of infections will almost certainly increase the number of tests as states try to stop the disease's spread via surveillance. Second, we can assume that a rising infection rate is associated with a higher ratio of positive results (reported cases) conditional on the number of tests, that is, COVID-19 is causing positive test results. We model both of these observed indicators, tests and cases, jointly to simultaneously adjust for the infection rate's influence on both factors. It is this joint modeling that permits us to directly incorporate testing bias. In fact, our model learns about the infection rate from the level of tests.
+Because we do not have measures of $I_{ct}$, we need to used the observed data, tests $q_{ct}$ and cases $a_{ct}$, to infer $I_{ct}$. First, we propose that the number of infections will almost certainly increase the number of tests as states try to stop the disease's spread via surveillance. Second, we can assume that a rising infection rate is associated with a higher ratio of positive results (reported cases) conditional on the number of tests, that is, COVID-19 is causing positive test results. We model both of these observed indicators, tests and cases, jointly to simultaneously adjust for the infection rate's influence on both factors. It is this joint modeling that permits us to directly incorporate testing bias. In fact, our model learns about the infection rate from the absolute number of tests.
 
 To model the number of tests, we assume that each state has an unobserved level of testing capacity, which increases at a non-linear rate during the course of the epidemic. We employ a quadratic function of testing capacity to express the concept of diminishing marginal returns. States were able to ramp up testing once PCR tests were approved by the FDA, but faced constraints due to shortages of supplies, personnel and labs. The cumulative number of observed tests $q_{ct}$ for a given time point $t$ and state $c$ and as a fraction of the states' population, $c_{p}$, then has a binomial distribution:
 
@@ -239,7 +239,7 @@ a_{ct} \sim \operatorname{Binomial}(c_p, g^{-1}(\alpha_3 + \beta_a I_{ct})),
 (\#eq:binom3)
 \end{equation} 
 ```
-where $g^{-1}(\cdot)$ is again the inverse logit function, $\alpha_3$ is an intercept that indicates how many cases would test positive with an infection rate of zero (approximately equal to the false positive rate of the test), and $\beta_a$ is a parameter that determines how hard it is to find the infected people and test them as opposed to people who are not actually infected. The multiplication of this parameter and the infection rate determines the cumulative number of cases, $a_{ct}$, as a proportion of the state population, $c_p$.
+where $g^{-1}(\cdot)$ is again the inverse logit function, $\alpha_3$ is an intercept that indicates how many cases would test positive with an infection rate of 50% (i.e., zero on the logit scale), and $\beta_a$ is a scaling parameter that reflects how much information about case counts comes from the latent infection process. The multiplication of this parameter and the infection rate determines the cumulative number of cases, $a_{ct}$, as a proportion of the state population, $c_p$.
 
 To summarize the model, infection rates determine how many tests a state is likely to undertake and also the number of positive tests they receive as cases. This simultaneous adjustment helps takes care of mis-interpreting the observed data by not taking into account varying testing rates, which has made it hard to generalize findings concerning the disease and also led some policy makers to claim that rising case rates are solely due to increasing numbers of tests. It also allows us to learn the likely location of the infection rate conditional on what we observe in terms of tests and cases.
 
@@ -262,15 +262,13 @@ a_{ct} &\sim \operatorname{Beta-Binomial}(q_{ct}, \mu_a \phi_a, (1 - \mu_a) \phi
 (\#eq:binom5)
 \end{align}
 ```
-where $I_{ct}$ is now equal to the linear model vector $\mu$ shown in \@ref(eq:binom) and mapped to $(0,1)$ via the inverse logit function.
+where $I_{ct}$ is now equal to the linear model shown in \@ref(eq:binom) and implicitly mapped to $(0,1)$ as a component of $\mu_a$.
 
 ## Identifiability
 
 This model contains an unobserved latent process $I_{ct}$, and as such the model as presented is not identified from the data alone without further information. For example, the parameters that control the influence of the infection rate on tests and cases could increase and the latent infection rate could decrease without the probability of the observed data changing.
 
-There two further steps taken to identify this model which we believe represent very limited additional assumptions, especially compared to existing modeling approaches. First, we must require that $I_{ct}$ is a non-decreasing quantity. The number of infected people cannot decrease in an epidemic, but the model as expressed does not require that to be true.[^1] We can eliminate that possibility from the model by imposing an ordered constraint on $I_{ct}$:
-
-[^1]: See <https://www.google.com/covid19/mobility/>
+There two further steps taken to identify this model which we believe represent very limited additional assumptions, especially compared to existing modeling approaches. First, we must require that $I_{ct}$ is a non-decreasing quantity. The number of infected people cannot decrease in an epidemic without a significant virus mutation, but the model as expressed does not require that to be true. We can eliminate that possibility from the model by imposing an ordered constraint on $I_{ct}$:
 
 ```{=tex}
 \begin{equation}
@@ -283,9 +281,11 @@ I_{ct} = \begin{cases}
 ```
 This transformation forces $I_{ct}$ to be no less than $I_{ct-1}$. At the same time, we do not need to impose any constraints on the covariates themselves, allowing us to sample those in an unconstrained space before we transform $I_{ct}$.
 
-However, we also need some information about the empirical scale of testing bias to produce identified estimates of $I_{ct}$. We could do so by adding a prior to the model about the plausible range of total infections to reported cases, though we prefer to use information that is more precise. The Centers for Disease Control's serology surveys conducted during the pandemic represent an empirical way of relating $I_{ct}$ to plausible estimates of infections at varying time points. We include a list of these surveys in the supplementary information. By including this information, we also implicitly account for many of the variables explicitly parameterized in compartmental models such as reporting delays. Because we have an estimate of the number infected at time $t$ that is independent of reported cases and tests, the model will find the parameter estimates that are most likely given the observed differences between the surveys and the reported data.
+However, we also need some information about the empirical scale of testing bias to produce identified estimates of $I_{ct}$. We could do so by adding a prior to the model about the plausible range of total infections to reported cases, though we prefer to use information that is more precise. Our information about the possible level of infections comes from two sources. First, the Centers for Disease Control's serology surveys conducted during the pandemic represent an empirical way of relating $I_{ct}$ to plausible estimates of infections at varying time points. We include a list of these surveys in the supplementary information. Second, we incorporate expert survey data from @mcandrew2022 who surveyed epidemiologists in the early weeks of the pandemic to obtain their best estimates of the total level of infections. Helpfully, this survey provided a robust estimate of uncertainty by eliciting distributions over infections.
 
-Because we model the infection rate as a cumulative count, it is straightforward to include this information in the model. For a given state $c$ and time point $t$ for which we have survey information, we model the count of infected $S_{ct}^P$ as a proportion of the total subjects in each serology survey $S^N_{ct}$ with the Binomial distribution:
+By including this information as informative priors, we also implicitly account for many of the variables explicitly parameterized in compartmental models such as reporting delays. Because we have an estimate of the number infected at time $t$ that is independent of reported cases and tests, the model will find the parameter estimates that are most likely given the observed differences between the surveys and the reported data.
+
+Because we model the infection rate as a cumulative count, it is straightforward to include this information in the model. For the serological surveys, given a state $c$ and time point $t$ for which we have survey information, we model the count of infected $S_{ct}^P$ as a proportion of the total subjects in each serology survey $S^N_{ct}$ with the Binomial distribution:
 
 ```{=tex}
 \begin{equation}
@@ -293,7 +293,18 @@ S_{ct} \sim \operatorname{Binomial}(S^N_{ct},g^{-1}(I_{ct}))
 (\#eq:fix)
 \end{equation}
 ```
-It is important that the serology surveys enter the model in this fashion so that we can model the survey count stochastically. This is necessary to propagate uncertainty in the CDC sample size through to our estimates of $I_{ct}$. This uncertainty matters as well because the serology surveys exhibit random noise and do not always increase over time, as can be seen in the supplementary information. By modeling the relationship as a probabilistic one, we are making the weaker assumption that the infected rate is probably close to the serology estimate, but the two do not need to be the identical. The combined posterior estimates for $I_{ct}$ will then be weighted with the case and test likelihoods to produce the most credible estimate of $I_{ct}$.
+
+For the expert survey data, which is expressed as a distribution of proportions $E_{ct}$, we use the Beta distribution to represent our uncertainty:
+```{=tex}
+\begin{equation}
+E_{ct} \sim \operatorname{Beta}(S^N_{ct},g^{-1}(I_{ct})*\phi_E,(1-g^{-1}(I_{ct}))*\phi_E ))
+(\#eq:expert)
+\end{equation}
+```
+
+where $E_{ct}$ is the average expert estimate and $\phi_E$ is an estimated shape parameter from the empirical distribution reported in @mcandrew2022. This empirical distribution is further stratified by state as the original estimates are for national totals; to do so we divide $E_{t}$ by the proportion of cases and tests that a given state $c$ had reported by that time $t$. 
+
+It is important that the serology and expert surveys enter the model in this fashion so that we can model the survey count stochastically and propagate our uncertainty from sample size and expert judgment through to our estimates of $I_{ct}$. This uncertainty matters as well because the serology surveys exhibit random noise and do not always increase over time, as can be seen in the supplementary information. By modeling the relationship as a probabilistic one, we are making the weaker assumption that the infected rate is probably close to the serology estimate, but the two do not need to be the identical. The combined posterior estimates for $I_{ct}$ will then be weighted with the case and test likelihoods to produce the most credible estimate of $I_{ct}$.
 
 As we show in the supplemental information with simulations, no other identification restrictions are necessary to estimate the model beyond weakly informative priors assigned to parameters.
 
@@ -301,23 +312,19 @@ These are:
 
 ```{=tex}
 \begin{align}
-\beta_a &\sim \operatorname{Normal}(30,10),\\
+\beta_a &\sim \operatorname{Normal}(0,5),\\
 \beta_{qci} &\sim \operatorname{Normal}(\mu_{qi},\sigma_{qi}),\\
-\sigma_{qi} &\sim \operatorname{Exponential}(1),\\
-\mu_{qi} &\sim \operatorname{Normal}(0, 20),\\
+\sigma_{qi} &\sim \operatorname{Exponential}(100),\\
+\mu_{qi} &\sim \operatorname{Normal}(0, 50),\\
 \beta_{C} &\sim \operatorname{Normal}(0, 5),\\
-\beta_{Ii} &\sim \operatorname{Normal}(\mu_{Ii}, \sigma_{Ii}),\\
-\mu_{Ii} &\sim \operatorname{Normal}(0, 10),\\
-\sigma_{Ii} &\sim \operatorname{Exponential}(1),\\
+\beta_{Ii} &\sim \operatorname{Normal}(0, 50),\\
 \alpha_1 &\sim \operatorname{Normal} (0,10),\\
 \alpha_2 &\sim \operatorname{Normal}(0,10),\\
 \alpha_3 &\sim \operatorname{Normal}(0,10)
 (\#eq:binom6)
 \end{align} 
 ```
-where the normal distribution is parameterized in terms of mean and standard deviation.
-
-The priors to note are the hierarchical regularizing prior put on the varying testing adjustment parameters $\beta_{qci}$ and varying polynomial trends $\beta_{Ii}$ with shared means and standard deviations. This partial pooling permits a reasonable degree of heterogeneity in the parameters while still constraining overall dispersion. Relatively informative priors are put on the hierarchical variance parameters $\sigma_{qi}$ and $\sigma_{Ii}$ to suggest that while state heterogeneity does exist, we do still expect the states' estimates to be within a given range.
+where the normal distribution is parameterized in terms of mean and standard deviation. The testing effect variance parameter $\sigma_{qi}$ receives a relatively tight prior to reflect that while we expect there to be some variability in inter-state testing production, this variability should not explain all of the variation in tests.
 
 <!-- We note that a crucial advantage of this framework is providing a way to measured the count of infected adjusting for known biases in the number of tests. By comparing numbers of tests per capita and growth rates in cases across regions, the model is able to backwards infer a likely number of infected individuals in a given area. As such it exploits both within-area and between-area variance to adjust for the biases of imperfect testing. The wide variety of covariates we add to the model, which we describe in the next section, provide the mechanism through which the model can infer test/case relationships even in states which have not had a CDC serology survey. -->
 
@@ -346,7 +353,7 @@ F_{ct} &\sim N(\alpha_f + \beta_f X'_{ct}, \sigma_f)
 ```
 We also include all of $M_{ct}$ and $F_{ct}$ as linear predictors in \@ref(eq:binom).
 
-We fit this model using Markov Chain Monte Carlo in the Stan software package [@carpenter2017]. We run the sampler for 1000 iterations with 500 warmup iterations and two chains to test for convergence.
+We fit this model using Markov Chain Monte Carlo in the Stan software package [@carpenter2017]. We run the sampler for 4000 iterations with 2000 warmup iterations and four independent chains to test for convergence.
 
 ```{r munge_data,include=F}
 
@@ -1308,15 +1315,32 @@ if(run_model) {
                            chains=nchains,
                            parallel_chains = nchains)
    
-   us_fit_scale_mod$save_object("data/us_fit_scale_mod.rds")
+   out_name <- switch(model_type, 
+          prior_only="us_fit_scale_mod_prior_only.rds",
+          prior_expert="us_fit_scale_mod_prior_expert.rds",
+          full="us_fit_scale_mod.rds")
+            
+    us_fit_scale_mod$save_object(paste0("data/",out_name))
   
    summaries <- us_fit_scale_mod$summary() 
   
   us_fit_scale <- rstan::sflist2stanfit(lapply(us_fit_scale_mod$output_files(),
                                           rstan::read_stan_csv))
   
-  saveRDS(us_fit_scale,"data/us_fit_scale.rds")
-  saveRDS(summaries, "data/rhat_summaries.rds")
+  out_name2 <- switch(model_type, 
+          prior_only="us_fit_scale_prior_only.rds",
+          prior_expert="us_fit_scale_prior_expert.rds",
+          full="us_fit_scale.rds")
+  
+  saveRDS(us_fit_scale,paste0("data/",out_name2))
+  
+  out_name3 <- switch(model_type, 
+          prior_only="rhat_summaries_prior_only.rds",
+          prior_expert="rhat_summaries_prior_expert.rds",
+          full="rhat_summaries.rds")
+  
+  saveRDS(summaries, paste0("data/",out_name3))
+  
 } else {
   us_fit_scale <- readRDS("data/us_fit_scale.rds")
   us_fit_scale_mod <- readRDS("data/us_fit_scale_mod.rds")
@@ -1333,6 +1357,7 @@ mean_sampler_stats <- apply(us_fit_scale_mod$sampler_diagnostics(),c(2:3),
 max_sampler_stats <- apply(us_fit_scale_mod$sampler_diagnostics(),c(2:3), 
                            max)
 
+phi <- us_fit_scale_mod$draws("phi")
 
 ```
 
@@ -1360,29 +1385,27 @@ count_pol_covidamp_sum %>%
 
 To better understand over-time factors that may also affect COVID-19, we include polling data from Civiqs and YouGov at the state level. From Civiqs we include state-level polling averages by day for the percentage of respondents favoring Trump, percentage reporting the economy is "very good", and the percentage reporting that they are "extremely concerned" about the coronavirus. From YouGov we use a poll from May 8th reporting average number of respondents who said they used masks by U.S. state. As this poll does not vary over time, we set the mask prevalence at one-half the minimum value of the poll prior to the WHO's revision of guidance concerning wearing masks on April 3rd, and equal to the poll's values thereafter. As described in the previous section, the poll asking respondents whether they are "extremely concerned" about COVID-19 represents our fear mediator, and is also included as a separate outcome with other covariates as predictors.
 
-To better understand the mediating effects of suppression policies, we include Google mobility data[^2] for retail, residential, parks, workplaces, transit and retail establishments. These estimates are by day and aggregated to the state level. They are measured in terms of an index that is initialized with a value of 100 at the index start on February 15th, 2020. To test for mediation, we include these as predictors of the infection rate, and separately fit a likelihood with each mobility covariate as an outcome and the other covariates as predictors.
+To better understand the mediating effects of suppression policies, we include Google mobility data[^1] for retail, residential, parks, workplaces, transit and retail establishments. These estimates are by day and aggregated to the state level. They are measured in terms of an index that is initialized with a value of 100 at the index start on February 15th, 2020. To test for mediation, we include these as predictors of the infection rate, and separately fit a likelihood with each mobility covariate as an outcome and the other covariates as predictors.
 
-[^2]: See <https://www.google.com/covid19/mobility/>
+[^1]: See <https://www.google.com/covid19/mobility/>
 
 We note that it is important to measure mediation for mobility because mobility is hypothesized to affect the spread of COVID-19 [@song2020]. As such, measuring the simultaneous effect on mobility for covariates in our model is important as the covariates could be affecting mobility, which subsequently affects COVID-19 spread. Ignoring this association would result in post-treatment bias that deflates the effect of predictors in the model, though our main interest in including these variables is because this mediation is substantively interesting to decompose.
 
-To measure protest activity, we include a covariate reflecting the proportion of a state's population engaged in social justice protests following the death of George Floyd on May 25, 2020. This data is drawn from publicly available information about the number and size of protests from three online sources: Wikipedia protest data, the Count Love protest web-crawling web site,[^3] and list of protests compiled by Ipsos.[^4] For protests present in only one of the three sources, we used information on both size and location. If a protest was present in three sources, we averaged reported protest size. If the sources had contradictory information about the type of protest, we had research assistants re-code the protest using secondary sources. For protests for which size was not available, we imputed missing data using random forest algorithms [@StekhovenBuehlmann2012].
+To measure protest activity, we include a covariate reflecting the proportion of a state's population engaged in social justice protests following the death of George Floyd on May 25, 2020. This data is drawn from publicly available information about the number and size of protests from three online sources: Wikipedia protest data, the Count Love protest web-crawling web site,[^2] and list of protests compiled by Ipsos.[^3] For protests present in only one of the three sources, we used information on both size and location. If a protest was present in three sources, we averaged reported protest size. If the sources had contradictory information about the type of protest, we had research assistants re-code the protest using secondary sources. For protests for which size was not available, we imputed missing data using random forest algorithms [@StekhovenBuehlmann2012].
 
-[^3]: <https://countlove.org/>
+[^2]: <https://countlove.org/>
 
-[^4]: See <https://www.ipsos.com/en-us/knowledge/society/Protests-in-the-wake-of-George-Floyd-killing-touch-all-50-states>
+[^3]: See <https://www.ipsos.com/en-us/knowledge/society/Protests-in-the-wake-of-George-Floyd-killing-touch-all-50-states>
 
 All time-varying covariates--polling, protests, policies and mobility data--are lagged by 14 days to account for the likely delay in events showing up in reported cases. This 14-day lag comes from the epidemiology literature [@flaxman2020] and is meant to take into the account the amount of time required for people to be infected, be tested and then have the test results reflected in case counts.
 
-We further add in non-varying state-level data on Donald Trump's vote share for the 2016 election from the MIT Election Lab, a 2019 estimate of state GDP from the Bureau of Economic Analysis, the 2018 percentage of foreign born residents, population under 18 years of age and population density from the U.S. Census Bureau, 2019 state-level average data on air pollution,[^5] cardiovascular deaths per capita, percentage of residents under age 18, number of dedicated health care providers, public health funding, and smoking rates provided by the United Health Foundation [@unhf2019]. All variables are standardized to permit comparability.
+We further add in non-varying state-level data on Donald Trump's vote share for the 2016 election from the MIT Election Lab, a 2019 estimate of state GDP from the Bureau of Economic Analysis, the 2018 percentage of foreign born residents, population under 18 years of age and population density from the U.S. Census Bureau, 2019 state-level average data on air pollution,[^4] cardiovascular deaths per capita, percentage of residents under age 18, number of dedicated health care providers, public health funding, and smoking rates provided by the United Health Foundation [@unhf2019]. All variables are standardized to permit comparability.
 
-[^5]: Defined as average exposure of the general public to particulate matter of 2.5 microns or less (PM$_{2.5}$) measured in micrograms per cubic meter (3-year estimate).
+[^4]: Defined as average exposure of the general public to particulate matter of 2.5 microns or less (PM$_{2.5}$) measured in micrograms per cubic meter (3-year estimate).
 
-We employ state-level data rather than country-level data because our aim is to have a rich adjustment set of covariates. While some of our data is available as well at the country level, crucial covariates such as polling about fears of COVID-19 and the state of the economy are only available at the state level. We believe that obtaining quality estimates of these crucial variables is more important than the statistical power we would obtain from dis-aggregation.
+We employ state-level data rather than country-level data because our aim is to have a theoretically relevant set of covariates. While some of our data is available as well at the country level, crucial covariates such as polling about fears of COVID-19 and the state of the economy are only available at the state level. We believe that obtaining quality estimates of these crucial variables is more important than the statistical power we would obtain from dis-aggregation.
 
-This is particularly true because in general we cannot make claims of causal identification as we can with our claims of statistical identification of the latent infection rate. COVID-19 is not a very likely candidate for meeting any kind of assumption about ignorable selection into treatment; it is a disease that is indirectly caused by human behavior. Our identification strategy primarily relies on including as many relevant adjustment variables as is prudent to isolate factors which are likely to or known to have an effect on COVID-19 spread and could be confounding variables.
-
-In addition, even when we cannot ensure causal identification, we can still learn important aspects of the underlying relationships by partitioning the variance via mediation analysis. Doing so allows us to isolate the part of the association which we have a strong theoretical reason to believe is causally related to the spread of COVID-19, such as via influencing people's fears over the severity of the virus in their area. While using observational data necessarily means there are inferential concerns we cannot rule out, we can still learn substantially from variables that we have a strong prior reason to believe are related to the outcome.
+This is particularly true because in general we cannot make claims of causal identification as we can with our claims of statistical identification of the latent infection rate. COVID-19 is not a very likely candidate for meeting any kind of assumption about ignorable selection into treatment; it is a disease that is indirectly caused by human behavior. What we are able to do is decompose variance into causally relevant pathways, but our results remain in the realm of association and are only identified insofar as our causal model is correct. 
 
 <!-- That being said, it is of course impossible to know for sure whether an association reported in this paper represents the effect of that variable or some other confounding factor. We make limited claims to causal identification in two cases. First, the time-varying variables included in the model with a 14-day lag are less likely to be confounded as they represent precisely measured day-to-day changes, and we can also rule out reverse causality. Second, we can separate out the possible channels of effect between covariates affecting the outcome directly and an effect mediated through mobility data and through changes in beliefs about the threat of the pandemic. While this does not allow us to state confidently whether the direct effect is identified, it does allow us to know whether a variable seems to to be linked through the outcome via social distancing behaviors or through some other means. While this may seem like a modest point, it will in fact help us to determine whether our hypotheses are supported as well as learn substantive information about how variables seem to affect the spread of COVID-19. -->
 
@@ -1390,11 +1413,309 @@ In addition, even when we cannot ensure causal identification, we can still lear
 
 <!-- For these reasons, we present these findings as observational associations with appropriate covariate adjustment so that we can at least say which associations are not related to well-known potential confounders.  That is, while we cannot always say whether an effect is identified, we can at least plausibly rule out some other explanations. In general, we believe that the best strategy for understanding the spread of the epidemic is to obtain the best data available and the clearest interpretations possible from models. There are issues which may never be resolved in terms of COVID-19 spread due to the difficulty of causal identification in a rapidly changing environment. However, we do think that we can learn from observational data so long as we remain aware of the ever-present possibility of alternative explanations. -->
 
+## Model Convergence
+
+```{r modelconv,fig.cap="Convergence Diagnostics for MCMC Chains with Stan"}
+
+rhat_plot <- mcmc_rhat(summaries$rhat) +
+  ggtitle(bquote(hat(R) ~ "From Four Chains")) +
+  ylab("Parameters")
+
+ess_plot <- mcmc_neff(summaries$ess_bulk/(1000*4)) +
+  ggtitle("Effective Sample Size /\nTotal Draws")
+
+rhat_plot + ess_plot +
+  plot_annotation(tag_levels = "A") & theme(legend.position="none")
+
+```
+
+While this model has a fairly high level of complexity, our Stan Hamiltonian Monte Carlo sampler is able to reach a stationary distribution as evidenced by convergence metrics. Figure \@ref(fig:modelconv) shows strong convergence diagnostics based on four independent chains with 2,000 post-warmup iterations each. Panel A in Figure \@ref(fig:modelconv) shows that all parameters had very low values of $\hat{R}$ calculated from the four chains, which suggests that the chains all converged to the same stationary distribution. Panel B in Figure \@ref(fig:modelconv) suggests that sampling efficiency was quite high as the number of effective samples ($N_{eff}$) was 50% or higher as a proportion of the total samples $N$. Because we had 8,000 total post-warmup samples, this means that each parameter had an effective sample size (equivalent to Monte Carlo independent draws) of at least 4,000 draws. This sampling efficiency again suggests that the Stan sampler reached convergence and that we have a large enough sample size to obtain quality estimates even in the tails of the distribution.
+
+## Prior Predictive Distribution
+
+We next show what the joint posterior distribution looks like when we sample only from the priors---that is, when we ignore any information in either the cases or test data. The prior predictive distribution helps us understand the robustness of the priors---do they cover a wide enough range of possible infection rates---as well as the scope for our model to learn from the data. For our model, we can fit two kinds of prior distributions: one distribution that samples solely from the independent parameter distributions shown in \@ref(eq:binom6) and a second that includes are informative priors from serology surveys and expert surveys about the total number of infections. We plot estimated cumulative national infections for both types of prior distributions in Figure \@ref(fig:priorpredict).
+
+```{r priorpredict, fig.cap="Prior Predictive Distributions",eval=FALSE}
+
+combined <- mutate(ungroup(combined),key=1:n()) %>% 
+  group_by(state) %>% 
+  arrange(state,month_day) %>% 
+  mutate(cum_sum_cases=cases,
+         recovered=coalesce(recovered,0),
+         deaths=coalesce(deaths,0))
+
+if(calc_qoi) {
+  
+  # first do the prior only distribution
+  
+  # need to calculate estimates by hand
+  
+  us_fit_scale_prior_only <- readRDS("data/us_fit_scale_prior_only.rds")
+
+  alpha_test <- as.matrix(us_fit_scale_prior_only,"alpha_test")
+  alpha_infect <- as.matrix(us_fit_scale_prior_only,"alpha_infect")
+  mu_poly <- as.matrix(us_fit_scale_prior_only,"mu_poly")
+  suppress_effect_raw <- as.matrix(us_fit_scale_prior_only,"suppress_effect_raw")
+  lockdown_effect_raw <- as.matrix(us_fit_scale_prior_only,"lockdown_effect_raw")
+  mob_effect_raw <- as.matrix(us_fit_scale_prior_only,"mob_effect_raw")
+
+# need to make non-centered polys
+
+non1 <- mu_poly[,1,drop=F]
+non2 <- mu_poly[,2,drop=F]
+non3 <- mu_poly[,3,drop=F]
+
+# calculate poly time trends
+
+poly_time <- lapply(unique(real_data$cc), function(c) {
+  real_data$count_outbreak[real_data$cc==c,1,drop=F] %*% t(non1[,1,drop=F])  +
+   real_data$count_outbreak[real_data$cc==c,2,drop=F] %*% t(non2[,1,drop=F]) +
+    real_data$count_outbreak[real_data$cc==c,3,drop=F] %*% t(non3[,1,drop=F])
+}) %>% do.call(rbind,.)
+
+prior_mat <- new.env()
+
+prior_mat$prior_mat <- matrix(ncol=ncol(poly_time))
+
+alpha_infect_mat <- sapply(1:nrow(alpha_infect), function(i) rep(alpha_infect[i,],nrow(poly_time)))
+
+#check_world_infect <- t(world_infect %*% real_data$month_cases)
+check_suppress <- real_data$suppress %*% t(suppress_effect_raw) 
+check_lockdown <- as.matrix(real_data$lockdown) %*% t(lockdown_effect_raw)
+check_mobility <- real_data$mobility %*% t(mob_effect_raw)
+
+prop_infected_mat <- t(as.matrix(us_fit_scale_prior_only,"prop_infect_out"))
+
+prop_infected <- as_tibble(prop_infected_mat) %>% 
+  mutate(key=1:n()) %>% 
+  gather(key="iter",value="estimate",-key)
+
+# let's generate posterior-predictive data
+
+country_test1 <- as.matrix(us_fit_scale_prior_only,"country_test_raw")
+country_test2 <- as.matrix(us_fit_scale_prior_only,"country_test_raw2")
+
+mu_test <- as.matrix(us_fit_scale_prior_only,"mu_test_raw")
+sigma_test <- as.matrix(us_fit_scale_prior_only,"sigma_test_raw")
+mu_test2 <- as.matrix(us_fit_scale_prior_only,"mu_test_raw2")
+sigma_test2 <- as.matrix(us_fit_scale_prior_only,"sigma_test_raw2")
+
+country1s <- mu_test[,1] + country_test1[,1:real_data$num_country] * sigma_test[,1]
+country2s <- mu_test2[,1] + country_test2[,1:real_data$num_country] * sigma_test2[,1]
+
+finding <- as.matrix(us_fit_scale_prior_only,"finding")
+pcr_spec <- as.matrix(us_fit_scale_prior_only,"pcr_spec")
+phi <- as.matrix(us_fit_scale_prior_only,"phi")
+test_base <- as.matrix(us_fit_scale_prior_only,"test_baseline")
+
+prop_infected_mat_scale <- prop_infected_mat
+
+
+# create cumulative and present estimates of infected for plotting
+
+all_est_state <- select(combined,deaths,recovered,month_day,state,key,cum_sum_cases,state_pop,Difference,tests3,test_max) %>% 
+  left_join(prop_infected,by="key")
+
+# join in serology data
+
+all_est_state <- left_join(all_est_state,
+                          bind_rows(select(serology, 
+                                 inf_pr,
+                                 key),
+                          select(serology_real,
+                                 inf_pr,
+                                 key)),
+                          by="key")
+
+# merge in deaths/recovered
+
+us_case_count <- group_by(combined,month_day) %>% 
+  summarize(all_cum_sum=sum(cum_sum_cases),
+            all_rec=sum(recovered),
+            all_death=sum(deaths),
+            all_tests=sum(tests)) %>% 
+  mutate(case_test_ratio=all_tests/all_cum_sum)
+
+  all_est_state <- left_join(all_est_state,us_case_count,by="month_day")
+  
+  calc_sum_prior_only <- all_est_state %>% 
+  ungroup %>% 
+  mutate(estimate=(plogis(estimate))*(state_pop)) %>% 
+  group_by(state,iter) %>% 
+  arrange(state,month_day) %>% 
+  mutate(cum_est=estimate) %>% 
+  group_by(month_day,iter,all_cum_sum,
+           all_rec,
+           all_death,
+           all_tests) %>%
+  summarize(us_total=sum(cum_est)) %>%
+  group_by(iter) %>%
+  arrange(iter,month_day) %>%
+  mutate(us_total_lag=us_total - coalesce(dplyr::lag(us_total,n=19),0),
+         all_cum_sum_lag=all_cum_sum - coalesce(dplyr::lag(all_cum_sum,n=19),0)) %>%
+  group_by(month_day,all_cum_sum,all_cum_sum_lag) %>% 
+  summarize(med_est=quantile(us_total,.5),
+            high_est=quantile(us_total,.95),
+            low_est=quantile(us_total,.05),
+            med_est_lag=quantile(us_total_lag,.5),
+            high_est_lag=quantile(us_total_lag,.95),
+            low_est_lag=quantile(us_total_lag,.05)) 
+  
+  saveRDS(calc_sum_prior_only, "data/calc_sum_prior_only.rds")
+  
+  # now prior expert distribution
+  
+  
+    us_fit_scale_prior_expert <- readRDS("data/us_fit_scale_prior_expert.rds")
+
+  alpha_test <- as.matrix(us_fit_scale_prior_expert,"alpha_test")
+  alpha_infect <- as.matrix(us_fit_scale_prior_expert,"alpha_infect")
+  mu_poly <- as.matrix(us_fit_scale_prior_expert,"mu_poly")
+  suppress_effect_raw <- as.matrix(us_fit_scale_prior_expert,"suppress_effect_raw")
+  lockdown_effect_raw <- as.matrix(us_fit_scale_prior_expert,"lockdown_effect_raw")
+  mob_effect_raw <- as.matrix(us_fit_scale_prior_expert,"mob_effect_raw")
+
+# need to make non-centered polys
+
+non1 <- mu_poly[,1,drop=F]
+non2 <- mu_poly[,2,drop=F]
+non3 <- mu_poly[,3,drop=F]
+
+# calculate poly time trends
+
+poly_time <- lapply(unique(real_data$cc), function(c) {
+  real_data$count_outbreak[real_data$cc==c,1,drop=F] %*% t(non1[,1,drop=F])  +
+   real_data$count_outbreak[real_data$cc==c,2,drop=F] %*% t(non2[,1,drop=F]) +
+    real_data$count_outbreak[real_data$cc==c,3,drop=F] %*% t(non3[,1,drop=F])
+}) %>% do.call(rbind,.)
+
+prior_mat <- new.env()
+
+prior_mat$prior_mat <- matrix(ncol=ncol(poly_time))
+
+alpha_infect_mat <- sapply(1:nrow(alpha_infect), function(i) rep(alpha_infect[i,],nrow(poly_time)))
+
+#check_world_infect <- t(world_infect %*% real_data$month_cases)
+check_suppress <- real_data$suppress %*% t(suppress_effect_raw) 
+check_lockdown <- as.matrix(real_data$lockdown) %*% t(lockdown_effect_raw)
+check_mobility <- real_data$mobility %*% t(mob_effect_raw)
+
+prop_infected_mat <- t(as.matrix(us_fit_scale_prior_expert,"prop_infect_out"))
+
+prop_infected <- as_tibble(prop_infected_mat) %>% 
+  mutate(key=1:n()) %>% 
+  gather(key="iter",value="estimate",-key)
+
+# let's generate posterior-predictive data
+
+country_test1 <- as.matrix(us_fit_scale_prior_expert,"country_test_raw")
+country_test2 <- as.matrix(us_fit_scale_prior_expert,"country_test_raw2")
+
+mu_test <- as.matrix(us_fit_scale_prior_expert,"mu_test_raw")
+sigma_test <- as.matrix(us_fit_scale_prior_expert,"sigma_test_raw")
+mu_test2 <- as.matrix(us_fit_scale_prior_expert,"mu_test_raw2")
+sigma_test2 <- as.matrix(us_fit_scale_prior_expert,"sigma_test_raw2")
+
+country1s <- mu_test[,1] + country_test1[,1:real_data$num_country] * sigma_test[,1]
+country2s <- mu_test2[,1] + country_test2[,1:real_data$num_country] * sigma_test2[,1]
+
+finding <- as.matrix(us_fit_scale_prior_expert,"finding")
+pcr_spec <- as.matrix(us_fit_scale_prior_expert,"pcr_spec")
+phi <- as.matrix(us_fit_scale_prior_expert,"phi")
+test_base <- as.matrix(us_fit_scale_prior_expert,"test_baseline")
+
+prop_infected_mat_scale <- prop_infected_mat
+
+
+# create cumulative and present estimates of infected for plotting
+
+all_est_state <- select(combined,deaths,recovered,month_day,state,key,cum_sum_cases,state_pop,Difference,tests3,test_max) %>% 
+  left_join(prop_infected,by="key")
+
+# join in serology data
+
+all_est_state_prior <- left_join(all_est_state,
+                          bind_rows(select(serology, 
+                                 inf_pr,
+                                 key),
+                          select(serology_real,
+                                 inf_pr,
+                                 key)),
+                          by="key")
+
+# merge in deaths/recovered
+
+us_case_count <- group_by(combined,month_day) %>% 
+  summarize(all_cum_sum=sum(cum_sum_cases),
+            all_rec=sum(recovered),
+            all_death=sum(deaths),
+            all_tests=sum(tests)) %>% 
+  mutate(case_test_ratio=all_tests/all_cum_sum)
+
+  all_est_state_prior <- left_join(all_est_state_prior,us_case_count,by="month_day")
+  
+  calc_sum_prior_expert <- all_est_state_prior %>% 
+  ungroup %>% 
+  mutate(estimate=(plogis(estimate))*(state_pop)) %>% 
+  group_by(state,iter) %>% 
+  arrange(state,month_day) %>% 
+  mutate(cum_est=estimate) %>% 
+  group_by(month_day,iter,all_cum_sum,
+           all_rec,
+           all_death,
+           all_tests) %>%
+  summarize(us_total=sum(cum_est)) %>%
+  group_by(iter) %>%
+  arrange(iter,month_day) %>%
+  mutate(us_total_lag=us_total - coalesce(dplyr::lag(us_total,n=19),0),
+         all_cum_sum_lag=all_cum_sum - coalesce(dplyr::lag(all_cum_sum,n=19),0)) %>%
+  group_by(month_day,all_cum_sum,all_cum_sum_lag) %>% 
+  summarize(med_est=quantile(us_total,.5),
+            high_est=quantile(us_total,.95),
+            low_est=quantile(us_total,.05),
+            med_est_lag=quantile(us_total_lag,.5),
+            high_est_lag=quantile(us_total_lag,.95),
+            low_est_lag=quantile(us_total_lag,.05)) 
+  
+  saveRDS(calc_sum_prior_expert, "data/calc_sum_prior_expert.rds")
+  
+  
+  
+} else {
+  
+  calc_sum_prior_only <- readRDS("data/calc_sum_prior_only.rds")
+  
+  calc_sum_prior_expert <- readRDS("data/calc_sum_prior_expert.rds")
+  
+}
+
+e1_prior <- bind_rows(list(`Weakly Informative`=calc_sum_prior_only,
+                     `Informative`=calc_sum_prior_expert),
+                .id="Prior") %>% 
+  ggplot(aes(y=med_est,x=month_day)) +
+  geom_ribbon(aes(ymin=low_est,
+  ymax=high_est,
+  fill=Prior)) +
+  theme_tufte() +
+  scale_fill_viridis_d() +
+  ylab("Total Infected") +
+  scale_y_continuous(labels=scales::comma) +
+  theme(panel.grid = element_blank(),
+        legend.position = "top") +
+  xlab("")
+
+
+e1_prior
+
+```
+
+As can be seen with the weakly informative priors, the possible infection rate at $t=1$ is equal to anywhere from 0% of the United States infected up to 100% infected. The prior predictive distribution moves upward due to the ordered transformation imposed on the latent infection rates, but that is simply an artifact of the transformation. A priori, the weakly informative priors permit virtually any infection level at baseline and consequently any possible infection trajectory. 
+
+The informative prior, by contrast, shows very little infections until April, when infections rise considerably and then rise at a slower rate through July. Uncertainty with the informative priors is still quite high, with the final estimate in July allowing for between 50 million and 100 million infections in the United States at the time. We believe that this estimate is reasonable and admits a substantial amount of residual uncertainty. Importantly, this informative prior is expressed with uncertainty in terms of sample size for serology surveys and infection rate distributions for expert surveys, so the uncertainty in the infection rates reflects this propagated uncertainty. 
+
 # Results
 
-<!-- We first examine model performance to see how well the model is able to reproduce the observed data. While this kind of predictive validity is only partially useful given that we are interested in a latent quantity, it is still helpful to know whether the model is able to reproduce the empirical distribution. If the model could not fit the observed data very well, then we might be suspicious about whether we are informing our latent estimate correctly. To do so we estimate the *posterior predictive distribution*, i.e., we draw from the posterior distribution using the empirical data. -->
-
-<!-- The results of drawing from posterior values for the beta-binomial distribution of cases and tests are shown relative to the original observed values in Figure @ref(fig:postpredict) for five states. The plots show that although there is noise in the predictions (represented by the black shaded region), the model is generally able to capture the empirical values (represented by a red line) with relatively little uncertainty for confirmed cases. However, the relationship is more stochastic for test counts. While the model predicts that tests rise over time, it also allows for the possibility that test counts could have been higher or lower. This difference in predictive performance flows from the model as there are other factors which may impact testing whereas the latent trait is most directly related to confirmed case counts. Given that our intention is in bias adjustment rather than predicting test counts, the noise in the relationship for that part of the model is acceptable. To the extent that a relationship exists between tests and the infection rate, it will still be accounted for in the posterior estimates. -->
+The results of drawing from posterior values for the beta-binomial distribution of cases and tests are shown relative to the original observed values in Figure \@ref(fig:postpredict) for five states. The plots show that although there is noise in the predictions (represented by the black shaded region), the model is generally able to capture the empirical values (represented by a red line) with reasonable uncertainty. There is more uncertainty with the case rates than the test rates, but that is generally due to the fact that the case rates are much smaller and hence the relative uncertainty appears greater. Our posterior estimates of the dispersion parameter $\phi$ for cases is `r round(median(phi[,,2]),2)` UI (`r round(quantile(phi[,,2],.05),2)`, `r round(quantile(phi[,,2],.95),2)`) and for tests is `r round(median(phi[,,1]),2)` UI (`r round(quantile(phi[,,1],.05),2)`, `r round(quantile(phi[,,1],.95),2)`), which implies that our implicit sample size for estimating cases is roughly double that for tests. This difference is unsurprising as we would expect confirmed cases to have more information about infection rates than the total number of tests.
 
 ```{r postpredict,fig.asp=0.75,fig.cap="Predictive Validity of Model Vis-a-vis Observed Cases and Tests"}
 
@@ -1566,7 +1887,9 @@ c1 / t1 + plot_annotation(tag_levels = "A",caption = str_wrap("Plot shows poster
 
 ```
 
-We first report the model's estimates of infected counts for the U.S. population as a whole in Figure \@ref(fig:totalinf). Panel A in this plot shows the cumulative total both for reported cases (thin black line) and for the model's estimate of total infected (blue line). The interval in this plot, as with all figures presented, are the 5% and 95% quantiles of the empirical posterior distribution. As can be seen, the model estimates that there are approximately 3-4 times as many infected people in the United States as reported cases, with the total cumulative number of infected persons reaching 15 million with around 500,000 infected as of mid-July. Early expert estimates are shown as black points in panel A, revealing that even epidemiologists largely under-estimated the spread of the disease in its early stages, largely due to limitations in testing and case reporting.
+We next report the model's estimates of infected counts for the U.S. population as a whole in Figure \@ref(fig:totalinf). Panel A in this plot shows the cumulative total both for reported cases (thin black line) and for the model's estimate of total infected (blue line). The interval in this plot, as with all figures presented, are the 5% and 95% quantiles of the empirical posterior distribution. As can be seen, the model estimates that there are approximately 5-6 times as many infected people in the United States as reported cases, with the total cumulative number of infected persons reaching approximately 18 million total infected with around 4 million presently infected as of mid-July. The expert survey estimates we incorporate in the model are shown as black points in panel A, showing that our estimates hew fairly closely to this expert survey information, although our estimates are somewhat higher at the very early stage of the pandemic relative to the expert estimates.
+
+Comparing Figure \@ref(fig:totalinf) with our prior predictive plot in Figure \@ref(fig:priorpredict) shows that adding in the cases and tests data substantially reduces uncertainty and also reveals much more of the latent trend in infections. In particular, the addition of the cases and tests data reveals a spike in the latent infection rate towards the end of the time series that our serology survey understandably did not identify. As such, comparing these figures reveals how adding in additional data and appropriately adjusting for bias can result in relatively precise estimates of a latent quantity.
 
 ```{r calc_infect, include=FALSE}
 
@@ -1634,11 +1957,9 @@ if(calc_qoi) {
 
 ```
 
-We compare these estimates with a popular COVID-19 forecaster employing SEIR models from @gu2020 by plotting their estimates as a yellow ribbon on the plot. As can be seen, the trajectories are similar although they diverge slightly at the end of the series in mid-July. On the whole it would seem that our estimate of infected individuals is on the conservative end compared to other approaches--in other words, while we do not know for certain what the true number is, we are unlikely to be under-estimating the total. Furthermore, our intervals are far more precise than other approaches, which is likely because we employ extensive covariate adjustment to better infer human behavior during the course of the pandemic.
+We compare our estimates with a popular COVID-19 forecaster employing SEIR models from @gu2020 by plotting their estimates as a yellow ribbon in Figure \@ref(fig:totalinf). As can be seen, the trajectories are similar although we show a somewhat slower and more non-linear rate of growth during the early pandemic period. On the whole it would seem that our estimate of infected individuals is on the conservative end compared to other approaches. Furthermore, our intervals are far more precise than other approaches, which is likely because we employ extensive covariate adjustment to better infer human behavior during the course of the pandemic.
 
-Panel B in the plot shows our estimates of infected individuals, excepts that it adjusts the cumulative number with a 19-day lag to account for the approximate time that recovery from COVID-19 requires (deaths are first subtracted). This plot displays an imperfect but useful formulation of the likely number of people infected at any given time point. As of July 14, it would appear that there were approximately 500 thousand infected individuals in the United States, while the number peaked at about four million in late April.[^6]
-
-[^6]: While it is interesting to note that the model shows fewer infected people than observed cases for this plot at the end, this difference is merely an artifact of the 19-day lag. It is difficult to put a precise number on the presently infected as states do not always report how many recover from COVID-19.
+Panel B in the plot shows our estimates of infected individuals, excepts that it adjusts the cumulative number with a 19-day lag to account for the approximate time that recovery from COVID-19 requires (deaths are first subtracted). This plot displays an imperfect but useful formulation of the likely number of people infected at any given time point. As of July 14, it would appear that there were approximately 4 million infected individuals in the United States, while the number peaked at about five million in early May.
 
 <!-- It should be noted that the data used to fit the model did not include the latest wave of infections, and because the model is not predictive, it does not weight as strongly the last few observations in the series. Given these limitations, the estimate shows a declining case/infection ratio as testing increased, with the bias reaching a very low number at the end of the series. We expect given recent data that the bias would increase as case totals surged and testing lagged. -->
 
@@ -1706,7 +2027,7 @@ e1 <- calc_sum %>%
            vjust=0,
            fontface="bold",
            size=2.7,
-           label=c(paste0("Estimated Infected:\n",formatC(low_max_est,big.mark=",",format = "f",digits=0)," - ",
+           label=c(paste0("Estimated Total Infected:\n",formatC(low_max_est,big.mark=",",format = "f",digits=0)," - ",
                                                          formatC(high_max_est,big.mark=",",format = "f",digits=0)),
                    paste0("Total Reported Cases:\n",formatC(max_obs,big.mark=",",format = "f",digits=0)))) +
   geom_pointrange(data=expert_survey2,aes(ymin=low_est,ymax=high_est),alpha=0.5) +
@@ -1726,12 +2047,12 @@ e2 <- calc_sum %>%
   ylab("Present Infected") +
   scale_y_continuous(labels=scales::comma) +
   annotate("text",x=rep(max(combined$month_day,2)),
-           y=c(max_est_lag+2000000,max_obs_lag+300000),
+           y=c(max_est_lag,max_obs_lag+300000),
            hjust=1,
            vjust=0,
            fontface="bold",
            size=2.7,
-           label=c(paste0("Estimated Infected:\n",formatC(low_max_est_lag,big.mark=",",format = "f",digits=0)," - ",
+           label=c(paste0("Estimated Present Infected:\n",formatC(low_max_est_lag,big.mark=",",format = "f",digits=0)," - ",
                                                          formatC(high_max_est_lag,big.mark=",",format = "f",digits=0)),
                    paste0("Present Reported Cases:\n",formatC(max_obs_lag,big.mark=",",format = "f",digits=0)))) +
   #geom_pointrange(data=expert_survey,aes(ymin=low_est_lag,ymax=high_est_lag),alpha=0.5) +
@@ -1745,7 +2066,7 @@ ggsave("est_vs_obs_experts.png")
 
 ```
 
-By comparison, Figure \@ref(fig:stateplot) shows the cumulative totals of estimated infections by state. Plot A in this figure has the count of infections by state, while plot B shows the percentage of the population infected by state. Both the overall S-shape of the epidemic can be seen along with the substantial heterogeneity in infections, with early infected states like New York and New Jersey still in the top quartile of states with infections even though they successfully reduced the rate of disease spread.
+By comparison, Figure \@ref(fig:stateplot) shows the cumulative totals of estimated infections by state. Plot A in this figure has the count of infections by state, while plot B shows the percentage of the population infected by state. Both the overall S-shape of the epidemic can be seen along with the substantial heterogeneity in infections, with early infected states like New York and New Jersey still in the top quartile of states with infections even though they successfully reduced the rate of disease spread. Panel B in the figure includes the serology survey estimates as blue dots, showing that these estimates map fairly close to our posterior estimates except for very high serology numbers. Our posterior estimates shrink these outlier serology surveys, such as an estimate of almost 15% infected for New York in mid-April, back towards the overall mean infection rate. 
 
 ```{r stateplot,fig.cap="Average Cumulative Count of Infected People by U.S. State as of July 14th",echo=F,fig.asp=0.8}
 require(ggrepel)
@@ -1888,30 +2209,73 @@ ggsave("certain_state_rates.png")
 
 ```
 
+We examine the prior information to posterior estimates directly in Figure \@ref(fig:priors). On this plot, we show our posterior infection estimate on the $y$ axis and the prior estimate (either expert survey or serology survey) on the $x$ axis. The horizontal dotted line shows an exact 1:1 relationship between these two infection estimates. Panel A shows the relationship for the complete posterior with cases and tests data while panel B shows this relationship for the prior predictive distribution with the serology and expert survey information included. As can be seen, in panel A the posterior distribution diverges from the informative priors, with higher estimates of infections at lower levels of prior infection information and lower estimates of infections at higher levels of prior infection information. By contrast, panel B reveals a nearly exact 1:1 relationship between the informative priors and prior predictive distribution. These two panels show that the addition of information about cases and tests leads the model to shrink the estimates away from expert surveys and serology surveys that appear unlikely given the combined likelihood. 
+
 ```{r priors, fig.cap="Comparison of Posterior Cumulative Infection Rates Compared to Priors on Infection Rates"}
+
+# need state calculation for expert prior
+
+if(calc_qoi) {
+  
+  calc_sum_state_prior <- all_est_state_prior %>% 
+  ungroup %>% 
+  mutate(cum_est=(plogis(estimate))*state_pop) %>% 
+  group_by(state,iter) %>% 
+  arrange(state,iter,month_day) %>% 
+  mutate(cum_est_pres=cum_est  - deaths,
+  cum_est_pres=cum_est_pres-coalesce(dplyr::lag(cum_est_pres,n=19),0),
+    present_cases=cum_sum_cases - deaths,
+  present_cases = present_cases-coalesce(dplyr::lag(present_cases,n=19),0)) %>%  
+  group_by(month_day,state,cum_sum_cases,inf_pr,present_cases) %>% 
+  summarize(med_est=quantile(cum_est,.5),
+            high_est=quantile(cum_est,.95),
+            low_est=quantile(cum_est,.05),
+            med_est_pres=quantile(cum_est_pres,.5),
+            high_est_pres=quantile(cum_est_pres,.95),
+            low_est_pres=quantile(cum_est_pres,.05)) 
+
+  saveRDS(calc_sum_state_prior,"data/calc_sum_state_prior.rds")
+  
+  
+} else {
+  
+  calc_sum_state_prior <- readRDS("data/calc_sum_state_prior.rds")
+  
+}
+
 
 # plot prior vs. estimated
 
-calc_sum_state %>% 
+p1 <- calc_sum_state %>% 
   ggplot(aes(y=med_est, 
              x=inf_pr)) +
   geom_point() +
   scale_x_log10() +
   scale_y_log10() +
   labs(y="Posterior Estimate",
-        x="Prior Estimate",
-       caption=stringr::str_wrap("Plot shows mean posterior estimates for the cumulative infection rate in different states versus the mean prior estimate based on expert survey data and seroprevalence surveys. The dotted line shows a 1:1 relationship while the regression line shows the estimated bivariate relationship.")) +
+        x="Prior Estimate") +
   geom_abline(slope=1,intercept=0,linetype=2) +
   stat_smooth(method="lm")+
   theme_tufte(base_family="")
 
+p2 <- calc_sum_state_prior %>% 
+  ggplot(aes(y=med_est, 
+             x=inf_pr)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(y="Posterior Estimate",
+        x="Prior Estimate") +
+  geom_abline(slope=1,intercept=0,linetype=2) +
+  stat_smooth(method="lm")+
+  theme_tufte(base_family="")
+
+p1 + p2 + plot_annotation(caption=stringr::str_wrap("Plot shows mean posterior estimates for the cumulative infection rate in different states versus the mean prior estimate based on expert survey data and seroprevalence surveys. The dotted line shows a 1:1 relationship while the regression line shows the estimated bivariate relationship. Panel A contains the complete posterior with cases and tests data and panel B shows the prior predictive distribution with serology and expert survey information included."),tag_levels = "A")
 
 
 ```
 
-In addition to the estimation of the cumulative count of infected individuals, the model provides further useful information by parameterizing the relationship between the unobserved infection rate and the number of tests conducted in a given state. These individual parameters are shown in Figure \@ref(fig:tpi). The scale of the y axis shows the number of people that a state was able to test relative to each person infected. The plot shows that some states have been able to test far more people than have been infected (New York, New Jersey), while other states like Pennsylvania and Oregon have tested barely twice as many as those who have been infected. The fact that new outbreaks have been seen in Texas and Arizona suggests that this shortfall in testing likely disguised early outbreaks that could have been detected otherwise.
-
-In addition, we know from Figure \@ref(fig:tpi) that because New York and New Jersey are quite high in the test/case distribution, having tested around four individuals per infected person, the high infection rates in Figure \@ref(fig:stateplot) for these states are not an artifact of more rigorous testing. The model is successfully able to separate the bias of increased testing from the actual level of new infections.
+In addition to the estimation of the cumulative count of infected individuals, the model provides further useful information by parameterizing the relationship between the unobserved infection rate and the number of tests conducted in a given state. These individual parameters are shown in Figure \@ref(fig:tpi). The scale of the $y$ axis shows the number of people that a state was able to test relative to each person infected. The plot shows that those states that were worst-hit early in the pandemic were also those that under-counted infections through testing (New York, New Jersey).
 
 ```{r tpi,fig.asp=.8,fig.cap="Measuring States' Testing Rates Relative to Infection Rates",echo=F,message=F,warning=F}
 
@@ -2054,6 +2418,8 @@ ggsave("testing.png",height=5,width=8)
 ```
 
 We would note that this information is also helpful to policy makers and others trying to make sense of observed case counts given the limitation in testing thus far. Our estimates help take into account these known biases and adjust them based on differences between states and within states in terms of disease trajectories. We believe this model can be used to help understand disease trends and factors associated with it even in the relatively data-poor environment many countries find themselves in. Unlike SEIR/SIR approaches, we do not employ information about hospitalization and death reporting delays, the infection-age distribution, or initial seeds. While these other outcomes can provide additional information about the progress and severity of the disease, they also considerably complicate inference.
+
+## Covariates
 
 To calculate the effect of covariates on the infection rate, we report here average cumulative marginal effects by state, i.e., by how much a given covariate increased the proportion infected for a one-unit increase in the covariate over time. We report cumulative marginal effects rather than the sample average marginal effect because the outcome monotonically increases, and so the marginal effect at any one point in time is not as meaningful a statistic. The way to interpret the coefficients presented is how a 1-unit (1-SD) change would affect the infection rate if that increase were sustained for an average state's entire time series (March to July).
 
