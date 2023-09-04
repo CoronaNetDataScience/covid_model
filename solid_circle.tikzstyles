@@ -4,7 +4,7 @@
 % \tikzstyle{NAME}=[PROPERTY LIST]
 
 % Node styles
-\tikzstyle{filled circle}=[fill=white, draw=black, shape=circle]
+\tikzstyle{filled circle}=[fill=white, draw=black, shape=circle, dashed]
 \tikzstyle{dashed_node}=[fill=white, shape=circle, draw=black, dashed]
 \tikzstyle{square with border}=[fill=white, draw=black, shape=rectangle]
 
