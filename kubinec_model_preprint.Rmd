@@ -16,8 +16,6 @@ author:
       institute: tum
   - Matthew Sean Cottrell:
       institute: ucr
-  - Derek Duba:
-      institute: arizona
 institute:
   - gvf: School of Applied Mathematics, Getúlio Vargas Foundation, Brazil
   - tum: Hochschule für Politik at the Technical University of Munich (TUM) and the TUM School of Governance, Munich, Germany
@@ -188,7 +186,7 @@ However, even with this simplification, we do not have estimates of the actual i
 \label{tikzfig}
 \caption{Directed Acyclic Graph Showing Confounding of Covariate $X_{ct}$ on Observed Tests $q_{ct}$ and Cases $a_{ct}$ Due to Unobserved Infection Rate $I_{ct}$}
 \ctikzfig{policy_dag}
-\footnotesize{Figure shows the relationship between a covariate $X_{ct}$ representing a policy or social factor influencing the infection rate $I_{ct}$. Because the infection rate $I_{ct}$ influences both the number of reported tests $q_{ct}$ and reported cases $a_{ct}$, any regression of a covariate $X_{ct}$ on the reported data will be biased.}
+\footnotesize{Figure shows the relationship between a covariate $X_{ct}$ representing a policy or social factor influencing the infection rate $I_{ct}$. Because the infection rate $I_{ct}$ influences both the number of reported tests $q_{ct}$ and reported cases $a_{ct}$, any regression of a covariate $X_{ct}$ on the reported data will be biased. Latent variables are shown as circles and observed variables as rectangles.}
 \end{figure}
 ```
 To estimate the process in Figure 1, we assume that the unobserved state-specific cumulative infection rate $I_{ct}$ can be modeled as a time-varying Beta-distributed random variable with a mean parameter $\mu \in (0,1)$ and shape parameter $\phi>0$ . We also assume that the over-time change in the disease can be modeled as a 3-order polynomial time trend that is a function of the number of post-outbreak time periods $T_O < T$, where an outbreak begins at the first reported case in a given area.
@@ -333,7 +331,7 @@ where the normal distribution is parameterized in terms of mean and standard dev
 \label{tikzfig2}
 \caption{Directed Acyclic Graph for Latent Infection Rate with Mediators}
 \ctikzfig{policy_dag_mediate}
-\footnotesize{This figure adds mediators $M_{ct}$ (mobility data) and $F_{ct}$ (fear of COVID-19) that mediate the relationship between state-level covariates $X'_{ct}$ and the latent infection rate $I_{ct}$.} Because beliefs precede actions, $F_{ct}$ is causally prior to $M_{ct}$ and can affect infections both via reducing mobility (path $abd$) and directly apart from mobility (path $ae$), such as by encouraging individuals to remain socially distant.
+\footnotesize{This figure adds mediators $M_{ct}$ (mobility data) and $F_{ct}$ (fear of COVID-19) that mediate the relationship between state-level covariates $X'_{ct}$ and the latent infection rate $I_{ct}$. Because beliefs precede actions, $F_{ct}$ is causally prior to $M_{ct}$ and can affect infections both via reducing mobility (path $abd$) and directly apart from mobility (path $ae$), such as by encouraging individuals to remain socially distant. Latent variables are shown as circles and observed variables as rectangles.}
 \end{figure}
 ```
 We also extend this model in order to analyze the mediation of a subset of covariates $X'_{ct}$ by adding mediators $M_{ct}$ for mobility and $F_{ct}$ for fear of the disease to the causal diagram, as in Figure 2. Figure 2 has several paths due to the fact that the influence of covariates $X_{ct}$ affects the two mediators differently. Given that beliefs and preferences precede actions, the covariates $X'_{ct}$ first influence $I_{ct}$ along the $ae$ and $abd$ path through perceptions of how dangerous the disease is. These beliefs both affect the chance of an individual getting infected and thus $I_{ct}$ directly on the path $ae$, such as by causing an individual to adopt social distancing behaviors, and also on an indirect path $abd$ by which an increase in a people's fear of the disease reduces mobility as people prefer to stay home.
