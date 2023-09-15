@@ -34,7 +34,7 @@ functions {
                    vector poly1,
                    vector poly2,
                    vector poly3,
-                   real[] alpha_test,
+                   real alpha_test,
                    real alpha_infect,
                    matrix count_outbreak,
                    vector month_cases,
@@ -66,12 +66,12 @@ functions {
                    vector[] suppress_med_raw,
                    vector suppress_med_raw_fear,
                    vector lockdown_med_raw_fear,
-                   real[] sigma_test_raw,
+                   real sigma_test_raw,
                    vector country_test_raw2,
                    matrix lin_counter,
-                   real[] mu_test_raw,
-                   real[] mu_test_raw2,
-                   real[] sigma_test_raw2,
+                   real mu_test_raw,
+                   real mu_test_raw2,
+                   real sigma_test_raw2,
                    matrix M_Sigma,
                    vector fear,
                    real fear_const,
@@ -105,8 +105,8 @@ functions {
         poly_nonc2 = mu_poly[2] + sigma_poly[2]*poly2[s];
         poly_nonc3 = mu_poly[3] + sigma_poly[3]*poly3[s];
         
-        country1s = mu_test_raw[1] + sigma_test_raw[1]*country_test_raw[s];
-        country2s = mu_test_raw2[1] + sigma_test_raw2[1]*country_test_raw2[s];
+        country1s = mu_test_raw + sigma_test_raw*country_test_raw[s];
+        country2s = mu_test_raw2 + sigma_test_raw2*country_test_raw2[s];
         
         // latent infection rate (unobserved), on the logit scale (untransformed)
         // constrained to *always* increase
@@ -165,7 +165,7 @@ functions {
 
         if(type==3) {
           
-          mu_tests = inv_logit(alpha_test[1] + 
+          mu_tests = inv_logit(alpha_test + 
                           country1s * lin_counter[start2:end2,1] +
                           country2s * lin_counter[start2:end2,2] +
                           test_baseline * prop_success);
@@ -182,8 +182,8 @@ functions {
           
           if(q <= 0 && p <= 0 && type==3) {
 
-            log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[1],(1-mu_cases[n-start2+1])*phi[1]);
-            log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[2],(1-mu_tests[n-start2+1])*phi[2]);
+            log_prob += beta_binomial_lpmf(cases[n]|country_pop[n],mu_cases[n-start2+1]*phi[2],(1-mu_cases[n-start2+1])*phi[2]);
+            log_prob += beta_binomial_lpmf(tests[n]|country_pop[n],mu_tests[n-start2+1]*phi[1],(1-mu_tests[n-start2+1])*phi[1]);
 
           } else if(p>0 && (type==2 || type==3)) {
             
@@ -289,8 +289,8 @@ parameters {
   vector[num_country] poly1; // polinomial function of time
   vector[num_country] poly2; // polinomial function of time
   vector[num_country] poly3; // polinomial function of time
-  real mu_test_raw[1];
-  real mu_test_raw2[1];
+  real mu_test_raw;
+  real mu_test_raw2;
   real finding; // difficulty of identifying infected cases 
   vector[S] suppress_effect_raw; // suppression effect of govt. measures, cannot increase virus transmission rate
   vector[L] lockdown_effect_raw;
@@ -307,10 +307,10 @@ parameters {
   vector[num_country] country_test_raw; // unobserved rate at which countries are willing to test vs. number of infected
   vector[num_country] country_test_raw2;
   real alpha_infect; // other intercepts
-  real alpha_test[1];
+  real alpha_test;
   vector<lower=0>[2] phi_raw; // shape parameter for infected
-  real<lower=0> sigma_test_raw[1]; // estimate of between-state testing heterogeneity
-  real<lower=0> sigma_test_raw2[1];
+  real<lower=0> sigma_test_raw; // estimate of between-state testing heterogeneity
+  real<lower=0> sigma_test_raw2;
   cholesky_factor_corr[G] M_Omega; // these are for the MVN for mobility data
   vector<lower=0>[G] M_sigma;
   real fear_const;
@@ -325,7 +325,7 @@ model {
   matrix[G, G] M_Sigma;
   int grainsize = 1;
   
-  sigma_poly ~ exponential(10);
+  sigma_poly ~ exponential(100);
   mu_poly ~ normal(0,50);
   mu_test_raw ~ normal(0,50);
   mu_test_raw2 ~ normal(0,50);
@@ -343,8 +343,8 @@ model {
   pcr_spec ~ normal(0,5);
   
   finding ~ normal(0,5);
-  sigma_test_raw ~ exponential(10);
-  sigma_test_raw2 ~ exponential(10);
+  sigma_test_raw ~ exponential(100);
+  sigma_test_raw2 ~ exponential(100);
   sigma_fear ~ exponential(.1);
   fear_const ~ normal(0,5);
   

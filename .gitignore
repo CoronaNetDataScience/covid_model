@@ -6,3 +6,5 @@ data/pan_model_est.rds
 data/us_fit.rds
 data/mediator_eff.rds
 data/us_fit_scale.rds
+data/us_fit_scale_mod.rds
+data/tests_pred.rds
