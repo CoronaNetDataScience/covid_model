@@ -1,0 +1,365 @@
+---
+title: "A Bayesian Latent Variable Model for Semi-parametric Identification and Analysis of COVID-19 Infection Rates"
+subtitle: Presentation for the University of Virginia
+date: last-modified
+date-format: long
+incremental: true
+format:
+  revealjs: 
+    theme: [moon,customtext.css]
+    embed-resources: true
+author: 
+  - name: Robert Kubinec
+    affiliation: New York University Abu Dhabi
+    corresponding: true
+  - name: Luiz Max Carvalho
+    affiliation: Getúlio Vargas Foundation
+  - name: Joan Barceló
+    affiliation: New York University Abu Dhabi
+  - name: Cindy Cheng
+    affiliation: Technical University of Munich
+  - name: Luca Messerschmidt
+    affiliation: Technical University of Munich
+indent: true
+editor: visual
+bibliography: BibTexDatabase.bib
+---
+
+```{r setup, include=FALSE}
+
+library(tidyverse)
+library(ggplot2)
+
+```
+
+
+## When Is It Reasonable to Circumvent Lockdown Policies?
+
+![](images/download%20(8).jpeg){fig-align="center"}
+
+## Split Opinion About the Role of Floyd in Early COVID Spread {.smaller}
+
+1.  Higher 30-day pre/post growth trends in cities with Floyd protests vs. those without [@valentine2020].
+
+2.  Matching methods with "control" counties within-state: very small increase [@neyman2020].
+
+3.  Difference-in-difference of 208 counties found no relationship; offsetting behaviors reduced infections (fear of violence) [@dave].
+
+4.  No relationship between protests and hospitalizations in California counties [@bui2021].
+
+5.  Found high mask usage among protests & higher COVID-19 incidence in only 1 city (Miami) [@quigley2023].
+
+6.  BLM protests did increase cases but only big protests can have a significant impact [@hong].
+
+## The Challenges of Studying Emergent Events
+
+-   It is difficult to quantitatively estimate the impact of external shocks when we face a new complex phenomenon like a pandemic.
+
+    -   We lacked the physical infrastructure to robustly track a virus like SARS-CoV-2 by testing [@mercer2021].
+
+    -   Other indicators (deaths & hospitalizations) had related biases and substantial lags [@griffith2020].
+
+    -   Human behavior affected by government policy and their fear of the disease [@saad-roy2023]. Do we have adequate measures of behavior & beliefs?
+
+## CoronaNet: Robust Measurement of Government Efforts {.r-fit-text}
+
+-   Lockdowns and similar policies saved countless lives: but how many exactly?
+
+    -   Defining a lockdown is a tricky question.
+
+-   CoronaNet is a database of over 100,000 manually coded policy records with original sources (PDFs).
+
+-   It identifies specific regions and populations (including vulnerable groups like those with health conditions).
+
+-   Openly available and cited in over 400 studies to date.
+
+## Findings from Research Program {.r-fit-text}
+
+-   Authoritarian countries with worse human rights records more likely to implement longer-lasting lockdowns [@barceló2022].
+
+-   Companies with political connections in developing countries were less likely to follow lockdown orders or implement them within the firm [@kubinec_politically_2021a].
+
+-   Much of existing research that tests for the effects of COVID-19 policies is contaminated by measurement error due to unmodeled endogeneity between policy types [@kubinec2021].
+
+## Research Question
+
+> How can we responsibly and robustly model infections in the early pandemic period so that we can analyze the trends of important covariates via theoretically-informed mechanisms?
+
+## Approach: Making the Best Use of What We Have
+
+![](images/_80286848_capfacebookn.jpeg){fig-align="center"}
+
+## The (In)Famous March 2020 Imperial College Report
+
+![](images/Screen%20Shot%202023-12-22%20at%202.52.30%20PM.png){fig-align="center"}
+
+## Bayes to the Rescue {.smaller}
+
+Given a set of:
+
+1.  Latent infections $I$,
+2.  Covariates $X$ and regression parameters $\theta$,
+
+We can learn true infections $I$ as a function of covariates $X$ and parameters $\theta$:
+
+$$
+\begin{equation}\begin{aligned}\underbrace{P(I|X; \theta)}_{\text{Posterior}} &= \frac{\underbrace{P(X; \theta|I)}_{\text{Likelihood}} \cdot \underbrace{P(I)P(\theta)}_{\text{Prior}}}{\underbrace{P(X; \theta)}_{\text{Evidence}}}\end{aligned}\end{equation}
+$$
+
+What we need are good estimates for the value of infections *before* observing the data, i.e. $P(I)$.
+
+## Effect of Covariates X on Latent Infections I
+
+Infections $I_{ct}$ for each state $c$ and day $t$ affect both number of positive cases $a_{ct}$ and total number of tests $q_{ct}$. Covariates $X$ affect cases indirectly via infections.
+
+![](images/Screen%20Shot%202023-12-26%20at%2011.18.31%20AM.png){fig-align="center"}
+
+## Adding in Causal Pathways
+
+We can add in the role of mediators--fear of the virus $F_{ct}$ and mobility $M_{ct}$ which mediate the influence of $X_{ct}$ on infections $I_{ct}$.
+
+![](images/Screen%20Shot%202023-12-26%20at%2011.27.13%20AM.png){fig-align="center"}
+
+## Model Assumptions
+
+1.  Infections $I_{ct}$ are an ordered vector (they only increase over time).
+2.  Counterfactual infections $I_{ct}$ (infections without external influences) can be represented by a 3-order polynomial time trend (re: SIR/SEIR models).
+3.  At least some prior information $P(I_{ct})$ exists.
+4.  Weakly informative priors on other parameters ($\theta$) centered at 0.
+
+## Data {.smaller}
+
+-   We construct a state-day dataset from March 10th to July 14th of 2020 with counts of cases (positive tests) and total number of tests.
+
+-   Counts of daily protests related to social justice/BLM coded from news media aggregators.
+
+-   We use daily polling averages via the Facebook COVID-19 Trends and Impact Survey for our measure of % reporting strong fear of the virus.
+
+-   We use daily Google mobility data for cellphone-based activity in five domains (retail, workplaces, parks, transit, residences, and restaurants).
+
+-   Cross-sectional poll of masking prevalence from May of 2020.
+
+-   Baseline covariate adjustments (risk factors and availability of doctors/nurses).
+
+## A Good Prior Is Hard to Find {.r-fit-text}
+
+-   We use two primary sources of information to determine the approximate number of infections from March to July of 2020:
+
+    -   Serological surveys implemented by the CDC in different states starting in late March of 2020.
+
+    -   Survey of experts (epidemiologists) about the distribution of infection rates in the US as a whole [@mcandrew2022].
+
+    -   We stratify this survey to the state level via case/test ratios.
+
+## Effect of Informative Priors
+
+![](images/Screen%20Shot%202023-12-26%20at%2011.51.03%20AM.png){fig-align="center"}
+
+## Comparison to Other Methods
+
+![](est_vs_obs_experts.png){fig-align="center"}
+
+## Payoff: Theoretically-Informed Associations
+
+![](images/Screen%20Shot%202023-12-26%20at%204.38.32%20PM.png){fig-align="center"}
+
+## Versus Total Effects
+
+![](images/Screen%20Shot%202023-12-26%20at%204.38.39%20PM-01.png){fig-align="center"}
+
+## Conclusions {.r-fit-text}
+
+-   By exploiting prior information and robust Bayesian workflow, we can gain credible and precise estimates of early stage pandemic infections.
+
+-   When we analyze the plausible pathways of how protests could influence infections, we find that the George Floyd protests had offsetting effects--but still a noticeable increase in infections.
+
+-   Much uncertainty remains about the set of factors to adjust for & how they are related to infections.
+
+-   Does the effect of these factors vary during different time periods in the pandemic?
+
+## Future Research {.r-fit-text}
+
+-   We want to more directly test for the effect of COVID-19 policies on outcomes.
+
+    -   Need to grapple with partial causal identification & sensitivity analysis.
+
+    -   Need to do a robust meta-analysis of the existing literature.
+
+    -   Incorporate our policy intensity scores.
+
+-   Extend our model to other countries.
+
+    -   Need to account for missing data in the tests/case distributions.
+
+## Good Priors + Informative Covariates = Learning
+
+![](images/Screen%20Shot%202023-12-26%20at%2011.58.33%20AM.png){fig-align="center"}
+
+## COVID-19 Policy Counts
+
+![](images/Screen Shot 2023-12-29 at 9.39.15 AM.png){fig-align="center"}
+
+## Convergence Checks
+
+![](images/Screen Shot 2023-12-29 at 9.38.45 AM.png){fig-align="center"}
+
+## Posterior Predictive Checks
+
+![](images/Screen Shot 2023-12-29 at 9.38.09 AM.png){fig-align="center"}
+
+## State-level Infection Trends and Priors
+
+![](images/Screen Shot 2023-12-29 at 9.37.27 AM.png){fig-align="center"}
+
+## Number Tested Relative to Total Infections
+
+![](images/Screen Shot 2023-12-29 at 9.36.43 AM.png){fig-align="center"}
+
+## Residual Correlation of Mobility Indices
+
+![](images/Screen Shot 2023-12-29 at 9.30.15 AM.png){fig-align="center"}
+
+## Association of Mobility Indices with Infections
+
+![](images/Screen Shot 2023-12-29 at 9.31.07 AM.png){fig-align="center"}
+
+## Association of Time-Varying Trump Approval with Infections
+
+![](images/Screen Shot 2023-12-29 at 9.32.26 AM.png){fig-align="center"}
+
+# Mathematical Derivation
+
+## Define Infections as a Latent Variable $I$
+
+We can model infections $I_{ct}$ for each state $c$ and day $t$ as a Beta-distributed random variable with a mean $\mu$ as a function of covariates and polynomial time trend along with a dispersion parameter $\phi$:
+
+$$
+\begin{align}
+\operatorname{Pr}(I_{ct} \mid t=T) &\sim \operatorname{Beta}(\mu \phi, (1 - \mu)\phi)\\
+        \mu = & g^{-1}(\alpha_1 + \beta_{I1}t_o + \beta_{I2}t_o^2 + \beta_{I3}t_o^3 +
+                        \beta_C X_{ct})
+\end{align}
+$$
+
+## Model Total Number of Daily Tests as a Function of Infections
+
+We can model daily tests $q_{ct}$ as a Binomial random variable with a quadratic time trend (marginally decreasing returns to test production capacity) and infections as a latent variable.
+
+$$
+\begin{equation}
+q_{ct} \sim \operatorname{Binomial}(c_{p}, g^{-1}(\alpha_2 + \beta_b I_{ct} + 
+\beta_{cq1}L_t + \beta_{cq2} L_t^2)).
+\end{equation}
+$$
+
+## Model Positive Tests (Cases) As a Function of Infections
+
+We can model daily positive cases $a_{ct}$ as a Binomial random variable that is likewise a function of infections $I_{ct}$ with a scaling parameter $\beta_a$:
+
+$$
+\begin{equation}
+a_{ct} \sim \operatorname{Binomial}(c_p, g^{-1}(\alpha_3 + \beta_a I_{ct}))
+\end{equation} 
+$$
+
+## Combine Into a Beta-Binomial Model
+
+To improve sampling, implicitly define $I_{ct}$ as Beta-distributed by using the compound Beta-Binomial distribution with tests/cases as the outcome:
+
+$$
+\begin{align}
+q_{ct} & \sim \operatorname{Beta-Binomial}(c_p, \mu_q \phi_q, (1-\mu_q) \phi_q)\\
+\mu_q &= g^{-1}(\alpha_2 + \beta_b I_{ct} + 
+\beta_{cq1}L_t + \beta_{cq2}L_t^2)
+\end{align}
+$$
+$$
+\begin{align}
+a_{ct} &\sim \operatorname{Beta-Binomial}(q_{ct}, \mu_a \phi_a, (1 - \mu_a) \phi_a) \\
+\mu_a &= g^{-1}(\alpha_3 + \beta_a I_{ct}).
+\end{align}
+$$
+
+## Impose Ordered Constraint on Infections $I_{ct}$
+
+Absent additional information, $I_{ct}$ is not identified because it is a parameter, not data.
+
+$$
+\begin{equation}
+I_{ct} = \begin{cases}
+          I_{ct} & \text{if } t=1\\
+          I_{ct-1} + e^{I_{ct}} &  \text{if } 1 < t < T
+        \end{cases}
+\end{equation}
+$$
+
+## Add In Informative Prior Information
+
+To further identify the scale and location of $I_{ct}$, we can add in additional information about infections from serology surveys $S_{ct}$ and expert surveys $E_{ct}$ that incorporate uncertainty in these estimates:
+
+$$
+\begin{align}
+S_{ct} &\sim \operatorname{Binomial}(S^N_{ct},g^{-1}(I_{ct}))\\
+E_{ct} &\sim \operatorname{Beta}(S^N_{ct},g^{-1}(I_{ct})\phi_E,(1-g^{-1}(I_{ct}))\phi_E ))
+\end{align}
+$$
+
+## Other Weakly Informative Priors {.scrollable}
+
+We add in zero-centered weak priors on other parameters/intercepts/regression coefficients:
+
+$$
+\begin{align}
+\beta_a &\sim \operatorname{Normal}(0,5),\\
+\beta_{qci} &\sim \operatorname{Normal}(\mu_{qi},\sigma_{qi}),\\
+\sigma_{qi} &\sim \operatorname{Exponential}(100),\\
+\mu_{qi} &\sim \operatorname{Normal}(0, 50),\\
+\beta_{C} &\sim \operatorname{Normal}(0, 5),\\
+\beta_{Ii} &\sim \operatorname{Normal}(0, 50),\\
+\alpha_1 &\sim \operatorname{Normal} (0,10),\\
+\alpha_2 &\sim \operatorname{Normal}(0,10),\\
+\alpha_3 &\sim \operatorname{Normal}(0,10)
+\end{align} 
+$$
+
+
+## Incorporate Mediators: Fear and Mobility
+
+We include our daily measures of mobility $M_{ct}$ and fear of the virus $F_{ct}$ as additional likelihoods to allow for indirect causal pathways through covariates $X_{ct}$ to $I_{ct}$. Mobility is modeled using a multivariate Normal distribution to allow for correlation between mobility types.
+
+$$
+\begin{align}
+M_{ct} &\sim MVN(\alpha_m + \beta_m X'_{ct},\Sigma_m)\\
+F_{ct} &\sim N(\alpha_f + \beta_f X'_{ct}, \sigma_f)
+\end{align}
+$$
+
+# Background Information
+
+
+## CDC Serology Survey Data {.scrollable}
+
+```{r sero_data}
+
+serology <- readRDS("serology.rds")
+
+serology %>% 
+  mutate(`% Infected`=paste0(round(inf_pr*100,2),"%")) %>% 
+  select(State="state_id",
+         `% Infected`,
+         N="survey_size",
+         `Date Started`="date_begin",
+         `Date Ended`="date_end") %>% 
+  gt::gt()
+
+```
+
+
+
+# Additional Slides 
+
+## Class Determines Who Is Allowed to Disobey
+
+![](images/download%20(9).jpeg){fig-align="center"}
+
+## References {.scrollable}
