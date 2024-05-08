@@ -10,3 +10,4 @@
 
 % Edge styles
 \tikzstyle{pointer}=[->]
+\tikzstyle{dashed edge}=[->, dashed=]
